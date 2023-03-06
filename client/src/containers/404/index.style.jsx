@@ -3,10 +3,9 @@ import styled from 'styled-components'
 const NotFoundWrap = styled.div`
     padding-bottom: 100px;
     padding-top: 120px;
+    user-select: none;
     .container{
         width: 100%;
-        /* display: flex; */
-        /* flex-direction: column; */
         img{
             width: 100%;
             height: 100%;

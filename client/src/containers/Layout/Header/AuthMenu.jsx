@@ -9,12 +9,12 @@ const AuthMenu = () => {
             <ul className='form'>
                 <li>
                     <span>
-                        <Link to={LOGIN_PAGE}>Sign in</Link>
+                        <Link to={LOGIN_PAGE}>Đăng nhập</Link>
                     </span>
                 </li>
                 <li>
                     <span>
-                        <Link to={REGISTER_PAGE}>Sign up</Link>
+                        <Link to={REGISTER_PAGE}>Đăng kí</Link>
                     </span>
                 </li>
             </ul>

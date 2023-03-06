@@ -1,220 +1,123 @@
 import styled from "styled-components";
 
 const AuthWrap = styled.div`
-    background: linear-gradient(-135deg,#c850c0,#4158d0);
+    height: 100vh;
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 15px;
-    /* border: 1px solid rgba(0,0,0,0.5); */
+    /* overflow: hidden; */
     >div{
-        width: 960px;
-        background-color: #fff;
-        border-radius: 10px;
         display: flex;
-        flex-wrap: wrap;
-        overflow: hidden;
-        
+        align-items: center;
+        height: 100%;
         .image-form{
-            width: 50%;
-            position: relative;
-            @media (max-width: 768px){
-                display: none;
-            }
-            @media (max-width: 992px){
-                width: 50%;
-            }
-            img{
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-            }
+           /* width: 50%; */
+           flex-basis: 50%;
+           background: red;
+           display: none;
+           height: 100%;
+           @media (min-width: 768px){
+            display: block;
+           }
         }
-        form{
-            width: 50%;
-            padding: 177px 35px 33px;
-            
-            @media (max-width: 992px){
-                width: 50%;
-                padding: 177px 35px 33px;
+        .form{
+            /* float: right; */
+            display: block;
+            margin: 0 auto;
+            flex: 1;
+            width: 100%;
+            padding: 0 20px;
+            @media (min-width: 768px){
+                max-width: 500px;
             }
-            @media (max-width: 768px){
-                width: 100%;
-                padding: 100px 50px 33px;
-            }
-            @media (max-width: 576px){
-                padding: 100px 15px 33px;
-            }
-            >div{
-                >span{
-                    font-size: 24px;
-                    color: #333;
-                    line-height: 1.2;
-                    text-align: center;
-                    width: 100%;
-                    display: block;
-                    padding-bottom: 54px;
-                }
-                .form-group{
-                    width: 100%;
-                    margin-bottom: 10px;
-                    >div{
-                        z-index: 1;
-                        position: relative;
-                        >input{
-                            font-size: 15px;
-                            line-height: 1.5;
-                            color: #666;
-                            display: block;
-                            width: 100%;
-                            background: #e6e6e6;
-                            height: 50px;
-                            border-radius: 25px;
-                            padding: 0 30px 0 68px;
-                            border: none;
-                            &:focus {
-                                & + span.focus{
-                                    animation: anim-shadow 0.5s ease-in-out forwards;
-                                }
-                                & ~ span:last-child{
-                                    color: rgba(87,184,70,.8);
-                                    left: -5px;
-                                }
-                            }
-                        }
-                        span{
-                            &.focus{
-                                display: block;
-                                position: absolute;
-                                border-radius: 25px;
-                                bottom: 0;
-                                left: 0;
-                                z-index: -1;
-                                width: 100%;
-                                height: 100%;
-                                box-shadow: 0 0;
-                                
-                                color: rgba(87,184,70,.8);
-                            
-                            }
-                            &:last-child{
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                width: 100%;
-                                height: 100%;
-                                display: flex;
-                                align-items: center;
-                                border-radius: 25px;
-                                transition: all .4s;
-                                padding-left: 35px;
-                                pointer-events: none;
-                                color: #666;
-                            }
-                        }
-                    }
-                }
-                .btn{
-                    padding-top: 20px;
-                    button{
-                        font-size: 15px;
-                        line-height: 1.5;
-                        padding: 0 25px;
-                        color: #fff;
-                        text-transform: uppercase;
-                        width: 100%;
-                        height: 50px;
-                        border-radius: 25px;
-                        background: #57b846;
-                        transition: all .4s;
+            form{
+                >div{
+                    h1{
+                        font-size: 2.75em;
                         font-weight: 600;
-                        &:hover{
-                            background-color: #333;
+                        margin-bottom: 20px;
+                    }
+                    .form-group{
+                        width: 100%;
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px 0;
+                        >div{
+                            border: 1px solid gray;
+                            border-radius: 4px;
+                            padding: 5px;
+                            position: relative;
+                            >input{
+                                width: 100%;
+                                border: none;
+                                outline: none;
+                                height: 30px;
+                                padding-left: 10px;
+                            }
+                            >span{
+                                position: absolute;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                right: 15px;
+                            }
+                            &.btn{
+                                border: none;
+                                padding: 0;
+                                border-radius: 0;
+                                >button{
+                                    width: 100%;
+                                    padding: 12px 20px;
+                                    color: #fff;
+                                    background: #0162e8;
+                                    border-radius: 2px;
+                                    text-transform: uppercase;
+                                    &:hover{
+                                        opacity: 0.9;
+                                    }
+                                }
+                            }
+                        }
+                        >span{
                         }
                     }
                 }
-                .text-center{
-                    text-align: center;
-                    padding-top: 12px;
-                    >a{
-                        display: block;
-                        transition: all .4s;
-                        font-size: 13px;
-                        line-height: 1.5;
-                        color: #999;
-                        &:hover{
-                            color: #57b846;;
+            }
+            .footer{
+                margin-top: 3rem;
+                .forgot{
+                    font-weight: 600;
+                    color: #000;
+                    a{
+                        span{
+                            font-size: 16px;
                         }
                     }
-                    &:last-child{
-                        padding-top: 136px;
-                        >a{
+                }
+                .register,.login{
+                    display: flex;
+                    align-items: center;
+                    gap: 0 5px;
+                    margin-top: 8px;
+                    p{
+                        font-size: 17px;
+                        &:last-child{
+                        }
+                        a{
+                            margin-left: 2px;
+                            color: #0162e8;
+                            text-decoration: underline;
                             span{
-                                position: relative;
-                                vertical-align: middle;
-                                margin-left: 5px;
-                                top: 2px;
+                                font-size: 16px;
+                                font-weight: 600;
                             }
                         }
                     }
                 }
-            }
-            }
-        .content-form{
-            
-            
-        }
-        @keyframes anim-shadow {
-            to {
-                box-shadow: 0px 0px 70px 25px;
-                opacity: 0;
+                .login{
+                    margin-top: 0;
+                }
             }
         }
-    }
-    /* form{
-        >div{
-            width: 960px;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 177px 130px 33px 95px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            @media (min-width: 992px){
-                padding: 177px 90px 33px 85px;
-            }
-            .banner-form{
-                width: 316px;
-                @media (max-width: 992px){
-                    width: 35%;
-                }
-                img{
-                    width: 100%;
-                    object-fit: cover;
-                    aspect-ratio: 1 / 1;
-                }
-            }
-            .form{
-                width: 290px;
-                >span{
-                    
-                }
-                .form-group{
-                    
-                    
-                    
-                }
-                
-            }
-            
-        }
-    } */
+    }    
 `
 export const ResetWrap = styled.div`
     width: 100%;

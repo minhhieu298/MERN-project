@@ -584,6 +584,7 @@ export const AuthMenuWrap = styled.div`
         height: 100%;
         li{
             margin: 0;
+            margin-right: 10px;
             padding: 0;
             height: auto;
             margin-bottom: 0 !important;
@@ -605,6 +606,7 @@ export const AuthMenuWrap = styled.div`
                 }
             }
             &:last-child{
+                margin-right: 0;
                 span{
                     a{
                         color: #ffffff;
