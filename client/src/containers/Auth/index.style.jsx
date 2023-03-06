@@ -28,6 +28,26 @@ const AuthWrap = styled.div`
             @media (min-width: 768px){
                 max-width: 500px;
             }
+            .head{
+                margin-bottom: 20px;
+                a{
+                    span{
+                        vertical-align: middle;
+                        display: inline-flex;
+                        margin-right: 5px;
+                        font-size: 16px;
+                        >svg{
+                            font-size: 1.15em;
+                        }
+                        &:last-child{
+                            text-decoration: underline;
+                        }
+                    }
+                    &:hover{
+                        color: #0162e8;
+                    }
+                }
+            }
             form{
                 >div{
                     h1{

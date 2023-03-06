@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AuthWrap from '../index.style'
 import * as Icon from '../../../library/icons/index'
 import { Link, useNavigate } from 'react-router-dom'
-import { LOGIN_PAGE, REGISTER_PAGE } from '../../../setting/constants'
+import { HOME_PAGE, LOGIN_PAGE, REGISTER_PAGE } from '../../../setting/constants'
 import { callAPI } from '../../../api/callApi'
 import { validate } from '../../../library/helper/validateForm'
 
@@ -35,6 +35,14 @@ const SignUp = () => {
         <div className="image-form">
         </div>
         <div className="form">
+          <div className="head">
+            <div>
+              <Link to={HOME_PAGE}>
+                <span><Icon.BsArrowLeft /></span>
+                <span>Quay lại trang chủ</span>
+              </Link>
+            </div>
+          </div>
           <form onSubmit={handleSubmit}>
             <div>
               <h1>Đăng kí tài khoản</h1>

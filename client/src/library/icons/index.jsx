@@ -26,7 +26,7 @@ import DiscountIcon from '@mui/icons-material/Discount';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { FaThLarge } from 'react-icons/fa'
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
-import { BsListUl } from 'react-icons/bs'
+import { BsListUl, BsArrowLeft } from 'react-icons/bs'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineCloudUpload, AiOutlineEye } from 'react-icons/ai'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { TbDiscount } from 'react-icons/tb'
@@ -72,5 +72,6 @@ export {
     TbDiscount,
     GrUserAdmin,
     AdminPanelSettingsIcon,
-    IoLocationOutline
+    IoLocationOutline,
+    BsArrowLeft
 }
