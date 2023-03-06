@@ -16,11 +16,20 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.21"
   },
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src -d dist",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "both-dev": "concurrently \"npm run dev\" \"npm --prefix ../client/ run dev\""
   },
   "keywords": [],
   "author": "",
