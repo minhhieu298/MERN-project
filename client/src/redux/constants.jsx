@@ -6,11 +6,14 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 
 export const ALL_CATEGORIES = 'ALL_CATEGORIES';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+
 
 export const TOKEN = "TOKEN";
 export const LOGIN = "LOGIN";
 export const UPDATE_USER = 'UPDATE_USER'
-export const SIGN_IN = 'SIGN_IN'
+export const LOGOUT = 'LOGOUT'
 
 export const CREATE_NEW_ADDRESS = 'CREATE_NEW_ADDRESS';
 export const GET_USER_ADDRESS = 'GET_USER_ADDRESS';

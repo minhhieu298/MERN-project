@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import DiscountWrap, { Box, Grid, Title } from './index.style'
+import DiscountWrap, { Box, Grid } from './index.style'
 import useStore from '../../../library/hooks/useStore'
 import { createDiscount, getAllProducts } from '../../../redux/actions/product.action'
 import { createSearchParams, Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
@@ -9,10 +9,9 @@ import useWindowSize from '../../../library/hooks/useWindowSize'
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 import { getStateFromUrl, setStateToUrl } from '../Product/Seach/url_handler'
 import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
-import { getCates } from '../../../redux/actions/category.action'
 import { getDataAdmin } from '../../../redux/actions/initData.action'
 import { colors, getGender } from '../Product/Seach/SearchParams'
-import { ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE } from '../../../setting/constants'
+import { ADMIN_PAGE } from '../../../setting/constants'
 
 const Item = ({ product, id, pageSize }) => {
   const [discount, setDiscount] = useState(0)

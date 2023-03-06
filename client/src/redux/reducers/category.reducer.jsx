@@ -1,4 +1,4 @@
-import { ALL_CATEGORIES, CREATE_CATEGORY, ERROR_MESSAGE, GET_DATA } from '../constants'
+import { ALL_CATEGORIES, CREATE_CATEGORY, DELETE_CATEGORY, ERROR_MESSAGE, GET_DATA, UPDATE_CATEGORY } from '../constants'
 
 const buildNewCate = (parentName, categories, category) => {
     let myCates = [];
@@ -70,6 +70,16 @@ export const cateReducer = (state = { categories: [], error: '' }, action) => {
                 ...state,
                 // categories: updateCate,
             };
+
+        case UPDATE_CATEGORY:
+            return {
+                ...state
+            }
+
+        case DELETE_CATEGORY:
+            return {
+                ...state
+            }
 
         case ERROR_MESSAGE:
             return {

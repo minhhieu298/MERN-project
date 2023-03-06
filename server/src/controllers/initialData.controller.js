@@ -1,7 +1,6 @@
 const Product = require("../models/product.model");
 const Category = require("../models/category.model");
 const { pageService } = require("../services/page.service");
-const { Sizes, Colors } = require("../models/accessories.model");
 
 function createCategories(categories, parent_id = null) {
   const categoryList = [];
@@ -75,19 +74,7 @@ module.exports.getInitData = {
       const categories = await Category.find();
       const categoryList = createCategories(categories);
 
-      // accessories
-      const array = await Sizes.find();
-      let clothings = array.filter(
-        (item) => !isNaN(Number(item.size)) === false
-      );
-      let shoes = array.filter((item) => !isNaN(Number(item.size)) === true);
-      const colors = await Colors.find();
       res.status(200).json({
-        accessories: {
-          clothings,
-          shoes,
-          colors,
-        },
         categories: categoryList,
         data:
           products[0]?.products?.length > 0

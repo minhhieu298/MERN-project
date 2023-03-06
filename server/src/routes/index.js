@@ -3,11 +3,10 @@ const route = express.Router();
 
 route.use("/v1", require("./v1/product.admin.route"));
 route.use("/v1", require("./v1/category.admin.route"));
-route.use("/v1", require("./v1/accessory.admin.route"));
 route.use("/v1", require("./v1/order.admin.route"));
 route.use("/v1", require("./v1/auth.admin.route"));
 
-route.use("/v2", require("./v2/user.route"));
+route.use("/v2", require("./v2/auth.route"));
 route.use("/v2", require("./v2/product.route"));
 route.use("/v2", require("./v2/address.route"));
 route.use("/v2", require("./v2/cart.route"));

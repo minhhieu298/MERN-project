@@ -1,5 +1,5 @@
 import { callAPI } from "../../api/callApi";
-import { LIST_USER, LOGIN, SIGN_IN, TOKEN, UPDATE_USER } from "../constants";
+import { LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER } from "../constants";
 
 export function createUrl(urlData) {
     const keys = Object.keys(urlData);
@@ -94,3 +94,9 @@ export const getListUser = (url, token) => async (dispatch) => {
     }
 }
 
+export const logOut = () => async (dispatch) => {
+    await callAPI.post(`/v2/logout`)
+    dispatch({
+        type: LOGOUT
+    })
+}

@@ -5,8 +5,8 @@ const useStore = () => {
     const { products, meta, product } = useSelector(state => state.products)
     const { auth, token, isUser, isAdmin, users, total } = useSelector(state => state.auth)
     const { addresses } = useSelector(state => state.addresses)
-    // const { categories, error } = useSelector(state => state.categories)
-    const { accessories, categories } = useSelector(state => state.initData)
+    const { categories, error } = useSelector(state => state.categories)
+    const { accessories } = useSelector(state => state.initData)
     const { cartItems } = useSelector(state => state.cart)
     const { orders, totalOrder } = useSelector(state => state.order)
     return {

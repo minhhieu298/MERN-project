@@ -1,12 +1,15 @@
 import { callAPI } from "../../api/callApi"
-import { ALL_CATEGORIES, CREATE_CATEGORY, ERROR_MESSAGE } from "../constants"
+import { ALL_CATEGORIES, CREATE_CATEGORY, DELETE_CATEGORY, ERROR_MESSAGE, UPDATE_CATEGORY } from "../constants"
 
 export const getCates = () => async (dispatch) => {
     const res = await callAPI.get('/v2/list-categories')
+    console.log(res.data);
     if (res.status === 200) {
         dispatch({
             type: ALL_CATEGORIES,
-            payload: res.data
+            payload: {
+                categories: res.data.categories
+            }
         })
     }
 }
@@ -26,5 +29,38 @@ export const createCate = (data) => async (dispatch) => {
             type: ERROR_MESSAGE,
             payload: error.response.data.message
         })
+    }
+}
+
+export const updateCate = (payload, token) => async (dispatch) => {
+    console.log(payload);
+    const res = await callAPI.post('/v1/update-cate', {
+        payload
+    }, {
+        headers: {
+            Authorization: token,
+        },
+    })
+    if (res.status === 200) {
+        dispatch({
+            type: UPDATE_CATEGORY
+        })
+        dispatch(getCates())
+    }
+}
+
+export const deleteCate = (payload, token) => async (dispatch) => {
+    const res = await callAPI.post('/v1/delete-cate', {
+        payload
+    }, {
+        headers: {
+            Authorization: token,
+        },
+    })
+    if (res.status === 200) {
+        dispatch({
+            type: DELETE_CATEGORY
+        })
+        dispatch(getCates())
     }
 }

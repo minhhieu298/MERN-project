@@ -2,13 +2,26 @@ import styled, { css } from "styled-components";
 
 const DiscountWrap = styled.div`
     background-color: #1a223f;
+    margin-left: 20px;
     margin-right: 20px;
-    margin-left: 0;
-    padding: 20px;
     color: rgb(189, 200, 240); 
     height:100%;
-    @media (max-width:991px){
-        margin-left: 20px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    user-select: none;
+    padding: 24px;
+    border-radius: 4px;
+    @media (min-width: 992px){
+        margin-left: 90px;
+        margin-right: 90px;
+    }
+    @media (min-width: 1024px){
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    @media (min-width: 1024px){
+        margin-left: 120px;
+        margin-right: 120px;
     }
 
 `

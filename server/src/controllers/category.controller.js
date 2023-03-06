@@ -53,4 +53,31 @@ module.exports.cateCtrl = {
     const categoryList = createCategories(categories);
     res.status(200).json({ categories: categoryList });
   },
+  updateCate: async (req, res) => {
+    const { payload } = req.body;
+    let cate = await Category.findOne({ _id: payload._id });
+    if (!cate) {
+      return res.status(400).json({ message: "data cannot found" });
+    }
+    await Category.updateOne(
+      { _id: payload._id },
+      {
+        $set: payload,
+      }
+    ).exec((error, data) => {
+      if (error) return res.status(400).json({ message: error.message });
+      if (data) return res.status(200).json({ message: "success" });
+    });
+  },
+  deleteCate: async (req, res) => {
+    const { payload } = req.body;
+    let cate = await Category.findOne({ _id: payload._id });
+    if (!cate) {
+      return res.status(400).json({ message: "data cannot found" });
+    }
+    await Category.deleteOne({ _id: payload._id }).exec((error, data) => {
+      if (error) return res.status(400).json({ message: error.message });
+      if (data) return res.status(200).json({ message: "success" });
+    });
+  },
 };

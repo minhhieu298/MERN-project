@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import useWindowSize from '../../../library/hooks/useWindowSize'
 import HeaderContainer, { Div, MobileNav, Sticky } from './index.style'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useStore from '../../../library/hooks/useStore'
 import Navbar from '../../../components/Navbar/Navbar'
 import { LayoutContext } from '../../../context/LayoutProvider'
@@ -10,16 +10,22 @@ import AuthMenu from './AuthMenu'
 import ProfileMenu from './ProfileMenu'
 import * as Icon from '../../../library/icons/index'
 import MobileMenu from './MobileMenu'
+import { logOut } from '../../../redux/actions/auth.action'
 
 const Header = () => {
   let location = useLocation()
+  let navigate = useNavigate()
   const [{ searchVisibility }] = useContext(LayoutContext)
   const { width } = useWindowSize()
   const [scroll, setScroll] = useState(false)
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState(false)
   const headerType = location.pathname === '/' ? 'transparent' : 'default'
-  const { isUser, isAdmin, auth } = useStore()
+  const { isUser, isAdmin, auth, dispatch } = useStore()
+
+  const handleLogout = () => {
+    dispatch(logOut())
+  }
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 0 ? setScroll(true) : setScroll(false)
@@ -37,7 +43,7 @@ const Header = () => {
             headerType={headerType}
             mainMenu={<MainMenu isAdmin={isAdmin} />}
             authMenu={<AuthMenu />}
-            profile={<ProfileMenu auth={auth} />}
+            profile={<ProfileMenu auth={auth} handleLogout={handleLogout} />}
             searchVisibility={searchVisibility}
             isLogged={isUser}
           /> : <MobileNav className={headerType}>
@@ -59,7 +65,7 @@ const Header = () => {
                 </div>
               </div>
               <div className={`mobile-layout ${open ? 'active' : ''}`}>
-                <MobileMenu isAdmin={isAdmin} setOpen={setOpen} isUser={isUser} auth={auth} />
+                <MobileMenu isAdmin={isAdmin} setOpen={setOpen} isUser={isUser} auth={auth} handleLogout={handleLogout} />
               </div>
             </div>
           </MobileNav>

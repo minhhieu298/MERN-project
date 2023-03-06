@@ -383,6 +383,11 @@ export const MobileNav = styled.nav`
                             display: block;
                             padding: 0 40px;
                         }
+                        span{
+                            display: block;
+                            color: #000;
+                            padding: 0 40px;
+                        }
                     }
                 }
             }

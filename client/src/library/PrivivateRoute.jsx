@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
-import { HOME_PAGE, LOGIN_PAGE } from '../setting/constants';
+import { ADMIN_PAGE, HOME_PAGE, LOGIN_PAGE } from '../setting/constants';
 import useStore from './hooks/useStore';
 
 const PrivivateRoute = ({ allowedRoles }) => {

@@ -1,4 +1,4 @@
-import { LIST_USER, LOGIN, TOKEN, UPDATE_USER } from "../constants";
+import { LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER } from "../constants";
 
 
 export const authReducer = (
@@ -30,6 +30,14 @@ export const authReducer = (
                 ...state,
                 users: action.payload.users,
                 total: action.payload.total
+            }
+
+        case LOGOUT:
+            return {
+                ...state,
+                isUser: false,
+                isAdmin: false,
+                auth: []
             }
         default:
             return state;
