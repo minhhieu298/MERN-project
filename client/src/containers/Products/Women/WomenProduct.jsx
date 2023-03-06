@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useSearchParams, createSearchParams, useNavigate } from 'react-router-dom';
 import useStore from '../../../library/hooks/useStore';
 import useWindowSize from '../../../library/hooks/useWindowSize';
-import { getDataAdmin } from '../../../redux/actions/initData.action';
 import { getAllProducts } from '../../../redux/actions/product.action';
 import { getStateFromUrl, setStateToUrl } from '../Search/url_handler';
 import * as Icon from '../../../library/icons/index'
@@ -13,6 +12,7 @@ import Container from '../../../components/UI/container/Container';
 import Category from '../Search/Category/Category';
 import CategoryMobile from '../Search/Category/CategoryMobile';
 import ProductItem from '../Search/ProductItem';
+import { getCates } from '../../../redux/actions/category.action';
 
 const WomenProduct = () => {
   const { products, dispatch, meta, categories } = useStore()
@@ -34,6 +34,7 @@ const WomenProduct = () => {
     sort: params.sort || '',
     size: params.size || '',
     color: params.color || '',
+    q: searchParam.get('q') || '',
     page: 1
   }
 
@@ -120,6 +121,7 @@ const WomenProduct = () => {
       sort: searchParam.get('sort') || '',
       color: searchParam.get('color') || '',
       size: searchParam.get('size') || '',
+      keyword: searchParam.get('q') || '',
       page: p || 1,
     }
     const search = setStateToUrl(query);
@@ -135,24 +137,25 @@ const WomenProduct = () => {
     dispatch(getAllProducts({
       page: searchParam.get('page') || 1,
       pageSize: pageSize,
-      gender: location.pathname.split('/')[1][0].toUpperCase() + location.pathname.split('/')[1].slice(1) || '',
+      gender: location.pathname.split('/')[1],
       cp: searchParam.get('cp') || '',
       cc: searchParam.get('cc') || '',
       sort: searchParam.get('sort') || '',
       color: searchParam.get('color') || '',
-      size: searchParam.get('size') || ''
+      size: searchParam.get('size') || '',
+      keyword: searchParam.get('q') || ''
     }))
   }, [dispatch, location.pathname, page, searchParam])
 
   useEffect(() => {
-    dispatch(getDataAdmin())
+    dispatch(getCates())
   }, [dispatch])
   return <ProductWrap>
     <Container fluid={true}>
       <Box>
         <Grid left={true}>
           {
-            width > 991 ? <Category categories={categories} /> : <CategoryMobile categories={categories} />
+            width > 991 ? <Category page={page} categories={categories} /> : <CategoryMobile categories={categories} />
           }
         </Grid>
         <Grid right={true}>

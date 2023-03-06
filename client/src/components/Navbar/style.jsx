@@ -45,6 +45,14 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+  .logo{
+    width: 100px;
+    img{
+        width:100%;
+        height: 100%;
+        object-fit: cover;
+    }
+  }
 `;
 
 export const MenuArea = styled.div`

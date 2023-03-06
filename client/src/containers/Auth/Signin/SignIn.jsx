@@ -18,10 +18,11 @@ const Signin = () => {
         e.preventDefault()
         let user = Object.fromEntries(new FormData(e.target))
         try {
-            await callAPI.post('/v2/login', user)
-
-            navigate('/', { replace: true })
-
+            const res = await callAPI.post('/v2/login', user)
+            if (res.status === 200) {
+                navigate('/', { replace: true })
+                window.location.reload()
+            }
             setErrMsg({ errors: '' })
         } catch (error) {
             setErrMsg({ ...errMsg, errors: error.response.data.message })

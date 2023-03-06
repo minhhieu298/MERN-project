@@ -150,6 +150,8 @@ export const Grid = styled.div`
                     /* overflow-y: hidden; */
                     /* height: calc(100% - 20px); */
                     /* max-height: 500px; */
+                    max-height: 500px;
+                    overflow: auto;
                     &.active{
                         /* overflow-y: scroll; */
                         /* padding-right: 10px; */
@@ -321,7 +323,7 @@ export const Grid = styled.div`
                             position: absolute;
                             background: #fff;
                             width: 100%;
-                            height: calc(150px - 70px);
+                            max-height: 150px;
                             left: 0;
                             top: 115%;
                             transform: rotateX(90deg);

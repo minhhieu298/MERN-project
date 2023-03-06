@@ -33,7 +33,6 @@ export const createCate = (data) => async (dispatch) => {
 }
 
 export const updateCate = (payload, token) => async (dispatch) => {
-    console.log(payload);
     const res = await callAPI.post('/v1/update-cate', {
         payload
     }, {

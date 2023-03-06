@@ -36,7 +36,7 @@ const OrderPageAdmin = lazy(() => import('./containers/Admin/Order/Order'))
 const NotFound = lazy(() => import('./containers/404/404'))
 const ProfileAdminPage = lazy(() => import('./containers/Admin/ProflieAdmin/ProfileAdmin'))
 const UserAdminPage = lazy(() => import('./containers/Admin/Users/ListUser'))
-const LayoutProductPage = lazy(() => import('./containers/Products/LayoutProduct'))
+// const LayoutProductPage = lazy(() => import('./containers/Products/LayoutProduct'))
 
 export default function AppRoutes() {
     return (
@@ -48,11 +48,11 @@ export default function AppRoutes() {
                             <HomePage />
                         </React.Suspense>
                     } />
-                    <Route path={PRODUCT_PAGE} element={
+                    {/* <Route path={PRODUCT_PAGE} element={
                         <React.Suspense fallback={<Loader />}>
                             <LayoutProductPage />
                         </React.Suspense>
-                    } />
+                    } /> */}
                     <Route path={MEN_CATEGORY_PRODUCT_PAGE} element={
                         <React.Suspense fallback={<Loader />}>
                             <MenCategoryPage />
@@ -157,12 +157,6 @@ export default function AppRoutes() {
                                 <DiscountPage />
                             </React.Suspense>
                         } />
-                        {/* <Route path={ACCESSORIES_PAGE} element={
-                            <React.Suspense fallback={<Loader />}>
-                                <AccessoriesPage />
-                            </React.Suspense>
-                        }
-                        /> */}
                         <Route path={ORDER_PAGE_ADMIN} element={
                             <React.Suspense fallback={<Loader />}>
                                 <OrderPageAdmin />

@@ -6,7 +6,7 @@ import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'r
 import { getStateFromUrl, setStateToUrl } from '../url_handler'
 import { colors, sizes } from '../SearchParams'
 
-const Category = ({ categories }) => {
+const Category = ({ categories, page }) => {
     let location = useLocation()
     let navigate = useNavigate()
     const params = getStateFromUrl(location)
@@ -17,6 +17,7 @@ const Category = ({ categories }) => {
         sort: params.sort || '',
         size: params.size || '',
         color: params.color || '',
+        q: params.q || '',
         page: 1
     }
     const onChange = (e, type) => {
@@ -164,7 +165,7 @@ const Category = ({ categories }) => {
                         </div>
                     </div>
                     <div className="size">
-                        <h3>size</h3>
+                        <h3>Size</h3>
                         <div>
                             {
                                 sizes.filter(s => s.name.toLowerCase() === categories?.filter(e => e.slug === searchParam.get('cp'))[0]?.name.toLowerCase()).map((x => (

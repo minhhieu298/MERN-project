@@ -8,16 +8,13 @@ const MainMenu = ({ isAdmin }) => {
         <MainMenuWrap>
             <ul>
                 <li>
-                    <Link to={HOME_PAGE}>Home</Link>
-                </li>
-                {/* <li>
-                    <Link to={PRODUCT_PAGE}>Products</Link>
-                </li> */}
-                <li>
-                    <Link to={MEN_CATEGORY_PRODUCT_PAGE}>Men</Link>
+                    <Link to={HOME_PAGE}>Trang chủ</Link>
                 </li>
                 <li>
-                    <Link to={WOMEN_CATEGORY_PRODUCT_PAGE}>Women</Link>
+                    <Link to={MEN_CATEGORY_PRODUCT_PAGE}>Sản phẩm cho Nam</Link>
+                </li>
+                <li>
+                    <Link to={WOMEN_CATEGORY_PRODUCT_PAGE}>Sản phẩm cho Nữ</Link>
                 </li>
                 {
                     isAdmin && <li>

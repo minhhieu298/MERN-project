@@ -46,6 +46,7 @@ const Header = () => {
             profile={<ProfileMenu auth={auth} handleLogout={handleLogout} />}
             searchVisibility={searchVisibility}
             isLogged={isUser}
+            scroll={scroll}
           /> : <MobileNav className={headerType}>
             <div className="logo">logo</div>
             <div className="menu-wrap">

@@ -1,13 +1,15 @@
 import React from 'react'
 import NavWrap, { AuthWrapper, AvatarWrapper, Container, MenuArea, MenuWrapper } from './style'
-
+import logo from '../../assets/logo.png'
+import logo_2 from '../../assets/logo_2.png'
 const Navbar = ({
     headerType,
     mainMenu,
     authMenu,
     searchVisibility,
     isLogged,
-    profile
+    profile,
+    scroll
 }) => {
     const addAllClasses = ['navbar'];
     if (headerType) {
@@ -16,7 +18,12 @@ const Navbar = ({
     return (
         <NavWrap className={addAllClasses.join(' ')}>
             <Container>
-                <div>logo</div>
+                <div className='logo'>
+                    {
+                        headerType === 'transparent' && scroll ? <img src={logo} alt="" /> :
+                            headerType === 'transparent' && !scroll ? <img src={logo_2} alt="" /> : <img src={logo} alt="" />
+                    }
+                </div>
                 <MenuArea>
                     {
                         mainMenu && (

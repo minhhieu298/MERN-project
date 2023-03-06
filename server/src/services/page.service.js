@@ -14,7 +14,6 @@ module.exports.pageService = {
     color,
     size,
   }) => {
-    // let data = queryParams({ page, pageSize, keyword, cc, cp, sort, gender, color })
     let query = [
       {
         $lookup: {
@@ -34,11 +33,6 @@ module.exports.pageService = {
         },
       },
       { $unwind: "$category_parent" },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
       {
         $project: {
           user: 0,
@@ -77,221 +71,35 @@ module.exports.pageService = {
     ];
 
     if (cp) {
-      if (gender) {
-        query[6] = {
-          $match: {
-            "category_parent.slug": {
-              $regex: cp,
-              $options: "i",
-            },
-            gender:
-              gender === "Women"
-                ? {
-                    $regex: gender,
-                    $options: "i",
-                  }
-                : gender === "Men"
-                ? {
-                    $regex: gender,
-                    // $options: "i",
-                  }
-                : {
-                    $regex: gender,
-                  },
-          },
-        };
-        query[7] = {
-          $facet: {
-            meta: [
-              {
-                $count: "total",
-              },
-              {
-                $addFields: {
-                  page: page,
-                },
-              },
-            ],
-            products: [
-              { $skip: (Number(page) - 1) * Number(pageSize) },
-              { $limit: Number(pageSize) },
-            ],
-          },
-        };
-      } else {
-        query[6] = {
-          $match: {
-            "category_parent.slug": {
-              $regex: cp,
-              $options: "i",
-            },
-          },
-        };
-        query[7] = {
-          $facet: {
-            meta: [
-              {
-                $count: "total",
-              },
-              {
-                $addFields: {
-                  page: page,
-                },
-              },
-            ],
-            products: [
-              { $skip: (Number(page) - 1) * Number(pageSize) },
-              { $limit: Number(pageSize) },
-            ],
-          },
-        };
-      }
-    }
-    if (cc) {
-      if (gender) {
-        query[6] = {
-          $match: {
-            "category_id.slug": {
-              $regex: cc,
-              $options: "i",
-            },
-            gender:
-              gender === "Women"
-                ? {
-                    $regex: gender,
-                    $options: "i",
-                  }
-                : gender === "Men"
-                ? {
-                    $regex: gender,
-                  }
-                : {
-                    $regex: gender,
-                  },
-          },
-        };
-        query[7] = {
-          $facet: {
-            meta: [
-              {
-                $count: "total",
-              },
-              {
-                $addFields: {
-                  page: page,
-                },
-              },
-            ],
-            products: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
-          },
-        };
-      } else {
-        query[6] = {
-          $match: {
-            "category_id.slug": {
-              $regex: cc,
-              $options: "i",
-            },
-          },
-        };
-        query[7] = {
-          $facet: {
-            meta: [
-              {
-                $count: "total",
-              },
-              {
-                $addFields: {
-                  page: page,
-                },
-              },
-            ],
-            products: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
-          },
-        };
-      }
-    }
-    if (cp && cc && gender) {
-      query[6] = {
-        $match: {
-          "category_id.slug": {
-            $regex: cc,
-            $options: "i",
-          },
-          gender:
-            gender === "Women"
-              ? {
-                  $regex: gender,
-                  $options: "i",
-                }
-              : gender === "Men"
-              ? {
-                  $regex: gender,
-                  // $options: "i",
-                }
-              : {
-                  $regex: gender,
-                },
-        },
-      };
-      query[7] = {
+      let cut = query.splice(0, 4);
+      query.unshift({
         $match: {
           "category_parent.slug": {
             $regex: cp,
             $options: "i",
           },
         },
-      };
-      query[8] = {
-        $facet: {
-          meta: [
-            {
-              $count: "total",
-            },
-            {
-              $addFields: {
-                page: page,
-              },
-            },
-          ],
-          products: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
-        },
-      };
+      });
+      query = cut.concat(query);
     }
-    if (!cp && !cc && gender) {
-      query[6] = {
+    if (cc) {
+      let cut = query.splice(0, 4);
+      query.unshift({
         $match: {
-          gender:
-            gender === "Women"
-              ? {
-                  $regex: gender,
-                  $options: "i",
-                }
-              : gender === "Men"
-              ? {
-                  $regex: gender,
-                  // $options: "i",
-                }
-              : {
-                  $regex: gender,
-                },
+          "category_id.slug": {
+            $regex: cc,
+            $options: "i",
+          },
         },
-      };
-      query[7] = {
-        $facet: {
-          meta: [
-            {
-              $count: "total",
-            },
-            {
-              $addFields: {
-                page: page,
-              },
-            },
-          ],
-          products: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
+      });
+      query = cut.concat(query);
+    }
+    if (gender) {
+      query.unshift({
+        $match: {
+          gender: new RegExp(`^${gender}$`, "i"),
         },
-      };
+      });
     }
     if (keyword) {
       query.unshift({
@@ -302,20 +110,21 @@ module.exports.pageService = {
           },
         },
       });
-      if (sort === "asc") {
-        query[5].$sort = { price: 1 };
-      }
-      if (sort === "desc") {
-        query[5].$sort = { price: -1 };
-      }
-    } else {
-      if (sort === "asc") {
-        query[4].$sort = { price: 1 };
-      }
-
-      if (sort === "desc") {
-        query[4].$sort = { price: -1 };
-      }
+    }
+    if (sort === "createdAt") {
+      query.unshift({
+        $sort: { createdAt: -1 },
+      });
+    }
+    if (sort === "asc") {
+      query.unshift({
+        $sort: { price: 1 },
+      });
+    }
+    if (sort === "desc") {
+      query.unshift({
+        $sort: { price: -1 },
+      });
     }
     if (color) {
       query.unshift({

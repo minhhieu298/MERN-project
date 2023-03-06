@@ -8,11 +8,11 @@ import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/m
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside';
 import useWindowSize from '../../../library/hooks/useWindowSize'
 import ProductWrap, { Box, Grid } from '../index.style'
-import { getDataAdmin } from '../../../redux/actions/initData.action'
 import { getStateFromUrl, setStateToUrl } from '../Search/url_handler'
 import Category from '../Search/Category/Category'
 import CategoryMobile from '../Search/Category/CategoryMobile'
 import ProductItem from '../Search/ProductItem'
+import { getCates } from '../../../redux/actions/category.action'
 
 const MenCategoryPage = () => {
     const { products, dispatch, meta, categories } = useStore()
@@ -34,6 +34,7 @@ const MenCategoryPage = () => {
         sort: params.sort || '',
         size: params.size || '',
         color: params.color || '',
+        q: searchParam.get('q') || '',
         page: 1
     }
 
@@ -120,6 +121,7 @@ const MenCategoryPage = () => {
             sort: searchParam.get('sort') || '',
             color: searchParam.get('color') || '',
             size: searchParam.get('size') || '',
+            q: searchParam.get('q') || '',
             page: p || 1,
         }
         const search = setStateToUrl(query);
@@ -135,24 +137,25 @@ const MenCategoryPage = () => {
         dispatch(getAllProducts({
             page: searchParam.get('page') || 1,
             pageSize: pageSize,
-            gender: location.pathname.split('/')[1][0].toUpperCase() + location.pathname.split('/')[1].slice(1) || '',
+            gender: location.pathname.split('/')[1],
             cp: searchParam.get('cp') || '',
             cc: searchParam.get('cc') || '',
             sort: searchParam.get('sort') || '',
             color: searchParam.get('color') || '',
-            size: searchParam.get('size') || ''
+            size: searchParam.get('size') || '',
+            keyword: searchParam.get('q') || ''
         }))
     }, [dispatch, location.pathname, page, searchParam])
 
     useEffect(() => {
-        dispatch(getDataAdmin())
+        dispatch(getCates())
     }, [dispatch])
     return <ProductWrap>
         <Container fluid={true}>
             <Box>
                 <Grid left={true}>
                     {
-                        width > 991 ? <Category categories={categories} /> : <CategoryMobile categories={categories} />
+                        width > 991 ? <Category page={page} categories={categories} /> : <CategoryMobile categories={categories} />
                     }
                 </Grid>
                 <Grid right={true}>
@@ -162,8 +165,8 @@ const MenCategoryPage = () => {
                                 <div className="select" ref={refDrop}>
                                     <div className='select-item' onClick={() => setDrop(!drop)}>
                                         <div className="inner-content">{searchParam.get('sort') === 'asc' ?
-                                            `Price: Low to High` : searchParam.get('sort') === 'desc' ?
-                                                `Price: High to Low` : 'Sort'}
+                                            `Giá: Thấp tới cao` : searchParam.get('sort') === 'desc' ?
+                                                `Giá: Cao tới thấp` : searchParam.get('sort') === 'createdAt' ? 'Gần đây nhất' : 'Sắp xếp'}
                                         </div>
                                         <div className={`arrow ${drop ? 'active' : ''}`}></div>
                                     </div>
@@ -171,8 +174,16 @@ const MenCategoryPage = () => {
                                         <FormGroup>
                                             <FormControlLabel
                                                 control={<Checkbox />}
+                                                value={'createdAt'}
+                                                label={'Gần đây nhất'}
+                                                onChange={(e) => onChange(e, 'sort')}
+                                                checked={searchParam.get('sort') === 'createdAt' ? true : false}
+                                                onClick={() => setDrop(false)}
+                                            />
+                                            <FormControlLabel
+                                                control={<Checkbox />}
                                                 value={'asc'}
-                                                label={'Price: Low to High'}
+                                                label={'Giá: Cao tới thấp'}
                                                 onChange={(e) => onChange(e, 'sort')}
                                                 checked={searchParam.get('sort') === 'asc' ? true : false}
                                                 onClick={() => setDrop(false)}
@@ -180,7 +191,7 @@ const MenCategoryPage = () => {
                                             <FormControlLabel
                                                 control={<Checkbox />}
                                                 value={'desc'}
-                                                label={'Price: High to Low'}
+                                                label={'Giá: Thấp tới cao'}
                                                 onChange={(e) => onChange(e, 'sort')}
                                                 checked={searchParam.get('sort') === 'desc' ? true : false}
                                                 onClick={() => setDrop(false)}
@@ -202,12 +213,11 @@ const MenCategoryPage = () => {
                             <button onClick={() => handleView('col-1')}><span><Icon.BsListUl /></span></button>
                         </div>
                     </div>
-                    {console.log(meta?.total)}
                     <ProductItem products={products} />
                     {
                         meta?.total > pageSize && <div className="page">
                             <Stack spacing={2}>
-                                <Pagination count={meta?.totalPage || 1} page={Number(searchParam.get('page') || page)} defaultPage={1} onChange={handleChange} siblingCount={0} color="primary" />
+                                <Pagination count={meta?.totalPage || 1} page={Number(searchParam.get('page') || 1)} defaultPage={1} onChange={handleChange} siblingCount={0} color="primary" />
                             </Stack>
                         </div>
                     }
