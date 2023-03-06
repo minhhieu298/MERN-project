@@ -33,14 +33,6 @@ app.use(
 
 mongoConnect();
 
-// //user
-// const product = require("./routes/v2/product.route");
-// app.use("/v1", product);
-
-// // admin
-
-// const productAdmin = require("./routes/v1/product.admin.route");
-// app.use("/v2", productAdmin);
 app.use(require("./routes/index"));
 
 app.listen(PORT, () => {
