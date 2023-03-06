@@ -1,0 +1,43 @@
+import React, { useEffect } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
+import LayoutProvider from '../../context/LayoutProvider'
+import useStore from '../../library/hooks/useStore'
+import { getCartItems } from '../../redux/actions/cart.action'
+import { ADMIN_PAGE, CART_PAGE, CHECKOUT_PAGE, LOGIN_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../setting/constants'
+import Footer from './Footer/Footer'
+import Header from './Header/Header'
+
+const Layout = () => {
+    const location = useLocation()
+    const { token, dispatch } = useStore()
+
+    useEffect(() => {
+        if (token) {
+            dispatch(getCartItems(token))
+        }
+    }, [dispatch, token])
+    return (
+        <LayoutProvider>
+            {
+                location.pathname === LOGIN_PAGE ||
+                    location.pathname === REGISTER_PAGE ||
+                    location.pathname === CHECKOUT_PAGE ||
+                    location.pathname === RESET_PASSWORD_PAGE ||
+                    // location.pathname === CART_PAGE ||
+                    location.pathname === ADMIN_PAGE ? (
+                    <React.Fragment>
+                        <Outlet />
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <Header />
+                        <Outlet />
+                        <Footer />
+                    </React.Fragment>
+                )
+            }
+        </LayoutProvider>
+    )
+}
+
+export default Layout
