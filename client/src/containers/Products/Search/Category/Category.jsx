@@ -164,33 +164,32 @@ const Category = ({ categories, page }) => {
                             }
                         </div>
                     </div>
-                    <div className="size">
-                        <h3>Size</h3>
-                        <div>
-                            {
-                                sizes.filter(s => s.name.toLowerCase() === categories?.filter(e => e.slug === searchParam.get('cp'))[0]?.name.toLowerCase()).map((x => (
-                                    <React.Fragment key={x.name}>
-                                        {
-                                            x.options.map(item => (
-                                                <FormGroup key={item.type}>
-                                                    <FormControlLabel
-                                                        control={<Checkbox />}
-                                                        value={item.type}
-                                                        label={<Div s={true} className={`${searchParam.get('size') === item.type ? 'active' : ''}`}>{item.type}</Div>}
-                                                        onChange={(e) => onChange(e, 'size')}
-                                                        checked={searchParam.get('size') === item.type ? true : false}
-                                                    />
-                                                </FormGroup>
-                                            ))
-                                        }
-                                    </React.Fragment>
-                                )))
-                                // sizes.map(item => (
-
-                                // ))
-                            }
+                    {
+                        searchParam.get('cp') && <div className="size">
+                            <h3>Size</h3>
+                            <div>
+                                {
+                                    sizes.filter(s => s.name.toLowerCase() === categories?.filter(e => e.slug === searchParam.get('cp'))[0]?.name.toLowerCase()).map((x => (
+                                        <React.Fragment key={x.name}>
+                                            {
+                                                x.options.map(item => (
+                                                    <FormGroup key={item.type}>
+                                                        <FormControlLabel
+                                                            control={<Checkbox />}
+                                                            value={item.type}
+                                                            label={<Div s={true} className={`${searchParam.get('size') === item.type ? 'active' : ''}`}>{item.type}</Div>}
+                                                            onChange={(e) => onChange(e, 'size')}
+                                                            checked={searchParam.get('size') === item.type ? true : false}
+                                                        />
+                                                    </FormGroup>
+                                                ))
+                                            }
+                                        </React.Fragment>
+                                    )))
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div className="clear-filter">
                         <button onClick={onSearchReset}>Clear Filter</button>
                     </div>
