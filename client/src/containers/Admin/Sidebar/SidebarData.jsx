@@ -37,9 +37,8 @@ export const SideData = [
         icon: <span><Icon.AdminPanelSettingsIcon /></span>,
         path: PROFILTE_ADMIN
     },
-    {
-        title: <div>Logout</div>,
-        icon: <span> <Icon.LogoutRoundedIcon /></span>,
-        // path: ACCESSORIES_PAGE
-    }
+    // {
+    //     title: <div>Logout</div>,
+    //     icon: <span> <Icon.LogoutRoundedIcon /></span>,
+    // }
 ]

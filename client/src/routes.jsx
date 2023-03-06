@@ -48,11 +48,6 @@ export default function AppRoutes() {
                             <HomePage />
                         </React.Suspense>
                     } />
-                    {/* <Route path={PRODUCT_PAGE} element={
-                        <React.Suspense fallback={<Loader />}>
-                            <LayoutProductPage />
-                        </React.Suspense>
-                    } /> */}
                     <Route path={MEN_CATEGORY_PRODUCT_PAGE} element={
                         <React.Suspense fallback={<Loader />}>
                             <MenCategoryPage />
@@ -106,6 +101,11 @@ export default function AppRoutes() {
                             </React.Suspense>
                         } />
                     </Route>
+                    <Route path="*" element={
+                        <React.Suspense fallback={<Loader />}>
+                            <NotFound />
+                        </React.Suspense>
+                    } />
                 </Route>
 
                 <Route path={LOGIN_PAGE} element={
@@ -123,11 +123,7 @@ export default function AppRoutes() {
                         <ResetPasswordPage />
                     </React.Suspense>
                 } />
-                <Route path="*" element={
-                    <React.Suspense fallback={<Loader />}>
-                        <NotFound />
-                    </React.Suspense>
-                } />
+
             </Route>
             <Route path={ADMIN_PAGE} element={<LayoutAdmin />}>
                 <Route element={<PersitLogin />}>

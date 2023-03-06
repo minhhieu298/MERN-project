@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import Container from '../../../components/UI/container/Container'
 import AgentWrap, { AvatarWrap, Box, Grid, Item, ItemWrap } from './index.style'
 import * as Icon from '../../../library/icons/index'
@@ -34,6 +34,8 @@ const data = [
 ]
 const ItemLink = () => {
   const [open, setOpen] = useState(false)
+  let location = useLocation()
+
   return (
     <React.Fragment>
       {
