@@ -1,28 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { createSearchParams, Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import * as Icon from '../../../library/icons/index'
 import Container from '../../../components/UI/container/Container'
 import useStore from '../../../library/hooks/useStore'
 import { getAllProducts } from '../../../redux/actions/product.action'
-import { numberWithCommas } from '../../../library/helper/numberComas'
 import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside';
 import useWindowSize from '../../../library/hooks/useWindowSize'
-import ProductWrap, { Box, Div, Grid, Item } from '../index.style'
-import { colors, getGender, sizes } from '../Search/SearchParams'
+import ProductWrap, { Box, Grid } from '../index.style'
 import { getDataAdmin } from '../../../redux/actions/initData.action'
 import { getStateFromUrl, setStateToUrl } from '../Search/url_handler'
+import Category from '../Search/Category/Category'
+import CategoryMobile from '../Search/Category/CategoryMobile'
+import ProductItem from '../Search/ProductItem'
 
 const MenCategoryPage = () => {
     const { products, dispatch, meta, categories } = useStore()
     let location = useLocation()
-    let pageSize = 5;
+    let pageSize = 2;
     let navigate = useNavigate()
     const [searchParam] = useSearchParams()
     const { width } = useWindowSize()
     const [page, setPage] = useState(1);
     const [drop, setDrop] = useState(false)
-    const [filter, setFiter] = useState(false)
     const [_, setView] = useState('')
     const refDrop = useRef(null)
     useOnClickOutside(refDrop, () => setDrop(false))
@@ -131,20 +131,6 @@ const MenCategoryPage = () => {
         setPage(p)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        let q = Object.fromEntries(new FormData(e.target))
-        navigate(`${location.pathname}?q=${q.keyword}&page=${page}`);
-    }
-
-    const onSearchReset = () => {
-        const search = setStateToUrl({ reset: '' });
-        navigate({
-            pathname: location.pathname,
-            search: `?${createSearchParams(search)}`,
-        });
-    };
-
     useEffect(() => {
         dispatch(getAllProducts({
             page: searchParam.get('page') || 1,
@@ -166,196 +152,7 @@ const MenCategoryPage = () => {
             <Box>
                 <Grid left={true}>
                     {
-                        width > 991 ? <>
-                            <div className="search">
-                                <h4>Search</h4>
-                                <div className="form">
-                                    <form onSubmit={handleSubmit}>
-                                        <input type="text" placeholder='Search here...' name='keyword' />
-                                        <button><Icon.SearchOutlinedIcon /></button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="categories">
-                                <div className={`box ${location.search ? 'active' : ''}`}>
-                                    <div className="filter">
-                                        {
-                                            !searchParam.get('cp') && <FormGroup>
-                                                {
-                                                    categories?.map(item => (
-                                                        <FormControlLabel
-                                                            key={item?._id} control={<Checkbox />}
-                                                            value={item?.slug}
-                                                            label={item?.name}
-                                                            onChange={(e) => onChange(e, 'cp')}
-                                                            checked={searchParam.get('cp') === item?.slug ? true : false}
-                                                        />
-                                                    ))
-                                                }
-                                            </FormGroup>
-                                        }
-                                        {
-                                            categories?.filter(e => e?.slug === searchParam.get('cp')) &&
-                                            <FormGroup>
-                                                {
-                                                    categories?.filter(e => e?.slug === searchParam.get('cp')).map(c => (
-                                                        <React.Fragment key={c?._id}>
-                                                            {
-                                                                c?.children?.map(item => (
-                                                                    <FormControlLabel
-                                                                        key={item?._id} control={<Checkbox />}
-                                                                        value={item?.slug}
-                                                                        label={item?.name}
-                                                                        onChange={(e) => onChange(e, 'cc')}
-                                                                        checked={searchParam.get('cc') === item?.slug ? true : false}
-                                                                    />
-                                                                ))
-                                                            }
-                                                        </React.Fragment>
-                                                    ))
-                                                }
-                                            </FormGroup>
-                                        }
-                                    </div>
-                                    <div className="color">
-                                        <h3>Color</h3>
-                                        <div>
-                                            {
-                                                colors.map(item => (
-                                                    <FormGroup key={item.type}>
-                                                        <FormControlLabel
-                                                            control={<Checkbox />}
-                                                            value={item.type}
-                                                            label={<Div c={true} b={item.type} className={`${searchParam.get('color') === item.type ? 'active' : ''}`} />}
-                                                            onChange={(e) => onChange(e, 'color')}
-                                                            checked={searchParam.get('color') === item.type ? true : false}
-                                                        />
-                                                    </FormGroup>
-                                                ))
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="size">
-                                        <h3>size</h3>
-                                        <div>
-                                            {
-                                                sizes.filter(s => s.name.toLowerCase() === categories?.filter(e => e.slug === searchParam.get('cp'))[0]?.name.toLowerCase()).map((x => (
-                                                    <React.Fragment key={x.name}>
-                                                        {
-                                                            x.options.map(item => (
-                                                                <FormGroup key={item.type}>
-                                                                    <FormControlLabel
-                                                                        control={<Checkbox />}
-                                                                        value={item.type}
-                                                                        label={<Div s={true} className={`${searchParam.get('size') === item.type ? 'active' : ''}`}>{item.type}</Div>}
-                                                                        onChange={(e) => onChange(e, 'size')}
-                                                                        checked={searchParam.get('size') === item.type ? true : false}
-                                                                    />
-                                                                </FormGroup>
-                                                            ))
-                                                        }
-                                                    </React.Fragment>
-                                                )))
-                                                // sizes.map(item => (
-
-                                                // ))
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="clear-filter">
-                                        <button onClick={onSearchReset}>Clear Filter</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </> : <>
-                            <div className="mobile">
-                                <button onClick={() => setFiter(true)}>Filter</button>
-                                <div className={`content ${filter ? 'active' : ''}`}>
-                                    {
-                                        filter && <div className="content-filter">
-                                            <div className="title">
-                                                <h3>Filter</h3>
-                                                <button onClick={() => setFiter(false)}><span><Icon.CancelIcon /></span></button>
-                                            </div>
-                                            <div className="inner-content">
-                                                <div className="sort">
-                                                    <h3>Sort</h3>
-                                                    <div>
-                                                        <FormGroup>
-                                                            <FormControlLabel
-                                                                control={<Checkbox />}
-                                                                value={'asc'}
-                                                                label={'Price: Low to High'}
-                                                                onChange={(e) => onChange(e, 'sort')}
-                                                                checked={searchParam.get('sort') === 'asc' ? true : false}
-                                                                onClick={() => setDrop(false)}
-                                                            />
-                                                            <FormControlLabel
-                                                                control={<Checkbox />}
-                                                                value={'desc'}
-                                                                label={'Price: High to Low'}
-                                                                onChange={(e) => onChange(e, 'sort')}
-                                                                checked={searchParam.get('sort') === 'desc' ? true : false}
-                                                                onClick={() => setDrop(false)}
-                                                            />
-                                                        </FormGroup>
-                                                    </div>
-                                                </div>
-                                                <div className="filter">
-                                                    <h3>Categories</h3>
-                                                    <div>
-                                                        {
-                                                            !searchParam.get('cp') && <FormGroup>
-                                                                {
-                                                                    categories?.map(item => (
-                                                                        <FormControlLabel
-                                                                            key={item?._id} control={<Checkbox />}
-                                                                            value={item?.slug}
-                                                                            label={item?.name}
-                                                                            onChange={(e) => onChange(e, 'cp')}
-                                                                            checked={searchParam.get('cp') === item?.slug ? true : false}
-                                                                        />
-                                                                    ))
-                                                                }
-                                                            </FormGroup>
-                                                        }
-                                                        {
-                                                            categories?.filter(e => e?.slug === searchParam.get('cp')) &&
-                                                            <FormGroup>
-                                                                {
-                                                                    categories?.filter(e => e?.slug === searchParam.get('cp')).map(c => (
-                                                                        <React.Fragment key={c?._id}>
-                                                                            {
-                                                                                c?.children?.map(item => (
-                                                                                    <FormControlLabel
-                                                                                        key={item?._id} control={<Checkbox />}
-                                                                                        value={item?.slug}
-                                                                                        label={item?.name}
-                                                                                        onChange={(e) => onChange(e, 'cc')}
-                                                                                        checked={searchParam.get('cc') === item?.slug ? true : false}
-                                                                                    />
-                                                                                ))
-                                                                            }
-                                                                        </React.Fragment>
-                                                                    ))
-                                                                }
-                                                            </FormGroup>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div className="color">dsadas</div>
-                                                {
-                                                    location.search && <div className="clear">
-                                                        <button onClick={onSearchReset}>Clear</button>
-                                                        <button onClick={() => setFiter(false)}>Cancel</button>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </>
+                        width > 991 ? <Category categories={categories} /> : <CategoryMobile categories={categories} />
                     }
                 </Grid>
                 <Grid right={true}>
@@ -405,41 +202,10 @@ const MenCategoryPage = () => {
                             <button onClick={() => handleView('col-1')}><span><Icon.BsListUl /></span></button>
                         </div>
                     </div>
-                    <div className='products'>
-                        {
-                            products?.map(product => (
-                                <Item key={product?._id} className={`${sessionStorage.getItem('view') ? sessionStorage.getItem('view') : ''}`}>
-                                    <div className="product-img">
-                                        {
-                                            sessionStorage.getItem('view') === 'col-1' ? <img src="https://flone.jamstacktemplates.dev/assets/img/product/fashion/3.jpg" alt="" /> : <Link to={`/product/${product?._id}`}>
-                                                <img src={product?.image} alt="" />
-                                            </Link>
-                                        }
-                                    </div>
-                                    <div className="product-content">
-                                        <h3>{product?.name}</h3>
-                                        <div className="price">
-                                            <span>{numberWithCommas(Number(product?.price))}</span>
-                                        </div>
-                                        <div className="rating"></div>
-                                        {
-                                            sessionStorage.getItem('view') === 'col-1' && <>
-
-                                                <p>{product?.description}</p>
-                                                <div className="btn-cart">
-                                                    <div>
-                                                        <Link to={`/product/${product?._id}`}>Select option</Link>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        }
-                                    </div>
-                                </Item>
-                            ))
-                        }
-                    </div>
+                    {console.log(meta?.total)}
+                    <ProductItem products={products} />
                     {
-                        products?.length > 0 && <div className="page">
+                        meta?.total > pageSize && <div className="page">
                             <Stack spacing={2}>
                                 <Pagination count={meta?.totalPage || 1} page={Number(searchParam.get('page') || page)} defaultPage={1} onChange={handleChange} siblingCount={0} color="primary" />
                             </Stack>

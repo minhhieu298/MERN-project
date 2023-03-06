@@ -1,104 +1,219 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react'
+import { useLocation, useSearchParams, createSearchParams, useNavigate } from 'react-router-dom';
 import useStore from '../../../library/hooks/useStore';
 import useWindowSize from '../../../library/hooks/useWindowSize';
-import { getCates } from '../../../redux/actions/category.action';
+import { getDataAdmin } from '../../../redux/actions/initData.action';
 import { getAllProducts } from '../../../redux/actions/product.action';
-import WomenContainer from './index.style'
-import banner_women from '../../../assets/banner_women.webp'
-import women1 from '../../../assets/women1.webp'
-import women2 from '../../../assets/women2.webp'
-import women3 from '../../../assets/women3.webp'
-import women4 from '../../../assets/women4.jpg'
-
-
+import { getStateFromUrl, setStateToUrl } from '../Search/url_handler';
+import * as Icon from '../../../library/icons/index'
+import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
+import useOnClickOutside from '../../../library/hooks/useOnClickOutside';
+import ProductWrap, { Box, Grid } from '../index.style';
+import Container from '../../../components/UI/container/Container';
+import Category from '../Search/Category/Category';
+import CategoryMobile from '../Search/Category/CategoryMobile';
+import ProductItem from '../Search/ProductItem';
 
 const WomenProduct = () => {
-  let location = useLocation();
+  const { products, dispatch, meta, categories } = useStore()
+  let location = useLocation()
   let pageSize = 2;
+  let navigate = useNavigate()
+  const [searchParam] = useSearchParams()
   const { width } = useWindowSize()
-  const { dispatch, products, meta, categories } = useStore()
   const [page, setPage] = useState(1);
+  const [drop, setDrop] = useState(false)
+  const [_, setView] = useState('')
+  const refDrop = useRef(null)
+  useOnClickOutside(refDrop, () => setDrop(false))
+
+  const params = getStateFromUrl(location)
+  const state = {
+    cp: params.cp || '',
+    cc: params.cc || '',
+    sort: params.sort || '',
+    size: params.size || '',
+    color: params.color || '',
+    page: 1
+  }
+
+  const onChange = (e, type) => {
+    if (e.target.checked) {
+      let query = {}
+      if (type === 'cp') {
+        query = {
+          // ...state,
+          cp: e.target.value,
+          cc: '',
+          sort: '',
+          size: '',
+          color: '',
+          page: 1
+        }
+      } else {
+        query = {
+          ...state,
+          [type]: e.target.value
+        }
+      }
+
+      const search = setStateToUrl(query);
+      navigate({
+        pathname: location.pathname,
+        search: `?${createSearchParams(search)}`,
+      });
+    } else {
+      let query = {}
+      if (type === 'cc') {
+        query = {
+          ...state,
+          cc: ''
+        }
+      }
+      if (type === 'sort') {
+        query = {
+          ...state,
+          sort: ''
+        }
+      }
+      if (type === 'color') {
+        query = {
+          ...state,
+          color: ''
+        }
+      }
+      if (type === 'size') {
+        query = {
+          ...state,
+          size: ''
+        }
+      }
+      const search = setStateToUrl(query);
+      navigate({
+        pathname: location.pathname,
+        search: `?${createSearchParams(search)}`,
+      });
+
+    }
+  }
+
+  const handleView = (type) => {
+    sessionStorage.setItem('view', type)
+    setView(type)
+  }
+
+  const handleChange = (e, p) => {
+    function createUrl(urlData) {
+      const keys = Object.keys(urlData);
+      let search = '?';
+      keys.forEach((key) => {
+        if (urlData[key] !== null && urlData[key] !== '') {
+          search += `${key}=${urlData[key]}&`;
+        }
+      });
+      return search.substring(0, search.length - 1);
+    }
+
+    let query = {
+      cp: searchParam.get('cp') || '',
+      cc: searchParam.get('cc') || '',
+      sort: searchParam.get('sort') || '',
+      color: searchParam.get('color') || '',
+      size: searchParam.get('size') || '',
+      page: p || 1,
+    }
+    const search = setStateToUrl(query);
+    navigate({
+      pathname: location.pathname,
+      search: `?${createSearchParams(search)}`,
+    });
+    createUrl(query)
+    setPage(p)
+  }
 
   useEffect(() => {
-    dispatch(getAllProducts({ page: page, pageSize: pageSize }))
-  }, [dispatch, page])
+    dispatch(getAllProducts({
+      page: searchParam.get('page') || 1,
+      pageSize: pageSize,
+      gender: location.pathname.split('/')[1][0].toUpperCase() + location.pathname.split('/')[1].slice(1) || '',
+      cp: searchParam.get('cp') || '',
+      cc: searchParam.get('cc') || '',
+      sort: searchParam.get('sort') || '',
+      color: searchParam.get('color') || '',
+      size: searchParam.get('size') || ''
+    }))
+  }, [dispatch, location.pathname, page, searchParam])
 
   useEffect(() => {
-    dispatch(getCates())
+    dispatch(getDataAdmin())
   }, [dispatch])
-
-  return (
-    <WomenContainer>
-      <nav>
-        <h1>Women</h1>
-        <ul>
+  return <ProductWrap>
+    <Container fluid={true}>
+      <Box>
+        <Grid left={true}>
           {
-            categories?.map(item => (
-              <li key={item?._id}>
-                <Link to={`/women/${item?.slug}`}>{item?.name}</Link>
-              </li>
-            ))
+            width > 991 ? <Category categories={categories} /> : <CategoryMobile categories={categories} />
           }
-        </ul>
-        {width > 991 && <div></div>}
-      </nav>
-      <section>
-        <div className="banner">
-          <div className='banner-image'>
-            <img src={banner_women} alt="" />
-          </div>
-          <div className="banner-title">
-            <h3>Nike running</h3>
-            <p>Styles that flex with you</p>
-            <div>
-              <Link to='/'>Find your shoe</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div className="image">
-          <div>
-            <img src={women1} alt="" />
-            <div>
-              <h3>Get more out of your run  </h3>
-              <div>
-                <Link to='/'>Start the playlist</Link>
+        </Grid>
+        <Grid right={true}>
+          <div className="filter">
+            {
+              width > 991 && <div className="drop-select">
+                <div className="select" ref={refDrop}>
+                  <div className='select-item' onClick={() => setDrop(!drop)}>
+                    <div className="inner-content">{searchParam.get('sort') === 'asc' ?
+                      `Price: Low to High` : searchParam.get('sort') === 'desc' ?
+                        `Price: High to Low` : 'Sort'}
+                    </div>
+                    <div className={`arrow ${drop ? 'active' : ''}`}></div>
+                  </div>
+                  <div className={`item ${drop ? 'active' : ''}`}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        value={'asc'}
+                        label={'Price: Low to High'}
+                        onChange={(e) => onChange(e, 'sort')}
+                        checked={searchParam.get('sort') === 'asc' ? true : false}
+                        onClick={() => setDrop(false)}
+                      />
+                      <FormControlLabel
+                        control={<Checkbox />}
+                        value={'desc'}
+                        label={'Price: High to Low'}
+                        onChange={(e) => onChange(e, 'sort')}
+                        checked={searchParam.get('sort') === 'desc' ? true : false}
+                        onClick={() => setDrop(false)}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
               </div>
+            }
+            {
+              width > 991 ? <div className='result'>{!products?.length ? `Not found` : `Showing ${pageSize} of ${meta?.total} results`}</div> :
+                <div className='result'>{!products?.length ? `Not found` : `${meta?.total} results`}</div>
+            }
+            <div className='view'>
+              <button onClick={() => handleView('col-2')}>
+                <span><Icon.FaThLarge /></span>
+              </button>
+              <button onClick={() => handleView('col-3')}><span><Icon.ViewModuleIcon /></span></button>
+              <button onClick={() => handleView('col-1')}><span><Icon.BsListUl /></span></button>
             </div>
           </div>
-          <div>
-            <img src={women2} alt="" />
-            <div>
-              <h3>Feel-good flow</h3>
-              <div>
-                <Link to='/'>Start workout</Link>
-              </div>
+          <ProductItem products={products} />
+          {
+            meta?.total > pageSize && <div className="page">
+              <Stack spacing={2}>
+                <Pagination count={meta?.totalPage || 1} page={Number(searchParam.get('page') || page)} defaultPage={1} onChange={handleChange} siblingCount={0} color="primary" />
+              </Stack>
             </div>
-          </div>
-          <div>
-            <img src={women3} alt="" />
-            <div>
-              <h3>Run with out coaches</h3>
-              <div>
-                <Link to='/'>See guided runs</Link>
-              </div>
-            </div>
-          </div>
-          <div>
-            <img src={women4} alt="" />
-            <div>
-              <h3>Qick core crush</h3>
-              <div>
-                <Link to='/'>Start workout</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </WomenContainer>
-  )
+          }
+        </Grid>
+      </Box>
+    </Container>
+  </ProductWrap>
 }
 
 export default WomenProduct

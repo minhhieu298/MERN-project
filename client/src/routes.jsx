@@ -5,11 +5,12 @@ import LayoutAdmin from "./containers/Admin/LayoutAdmin";
 import Layout from "./containers/Layout/Layout";
 import PersitLogin from "./library/PersitLogin";
 import PrivivateRoute from "./library/PrivivateRoute";
-import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ACCESSORIES_PAGE, PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE } from "./setting/constants";
+import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ACCESSORIES_PAGE, PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE } from "./setting/constants";
 
 const HomePage = lazy(() => import('./containers/Home/Home'))
 // const MenProductPage = lazy(() => import('./containers/Products/Men/MenProducts'))
 const MenCategoryPage = lazy(() => import('./containers/Products/Men/MenCategoryPage'))
+const WomenCategoryPage = lazy(() => import('./containers/Products/Women/WomenProduct'))
 const CartPage = lazy(() => import('./containers/Cart/Cart'))
 const DetailPage = lazy(() => import('./containers/Products/ProductDetail'))
 
@@ -55,6 +56,11 @@ export default function AppRoutes() {
                     <Route path={MEN_CATEGORY_PRODUCT_PAGE} element={
                         <React.Suspense fallback={<Loader />}>
                             <MenCategoryPage />
+                        </React.Suspense>
+                    } />
+                    <Route path={WOMEN_CATEGORY_PRODUCT_PAGE} element={
+                        <React.Suspense fallback={<Loader />}>
+                            <WomenCategoryPage />
                         </React.Suspense>
                     } />
                     <Route path={PRODUCT_DETAIL_PAGE} element={
