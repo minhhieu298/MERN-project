@@ -38,7 +38,8 @@ const NewAddress = (props) => {
       isSelected: isCheck
     }
     dispatch(createAdr(payload, token))
-    setOpen(false)
+    // setOpen(false)
+    setStep(0)
   }
 
   useEffect(() => {

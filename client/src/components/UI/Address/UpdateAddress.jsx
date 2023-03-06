@@ -8,7 +8,8 @@ import useStore from '../../../library/hooks/useStore'
 import { updateAdr } from '../../../redux/actions/address.action'
 
 const UpdateAddress = (props) => {
-    const { update, setUpdate, updateAd, setStep, step } = props
+    const { update, setUpdate, setStep, step, updateAdrs } = props
+    // console.log(updateAdr);
     const [drop, setDrop] = useState(false)
     const [isCheck, setIsCheck] = useState(false)
     const [stepDrop, setStepDrop] = useState(0)
@@ -29,19 +30,19 @@ const UpdateAddress = (props) => {
     const handleSubmit = e => {
         e.preventDefault()
         const payload = {
-            _id: updateAd?._id,
+            _id: updateAdrs?._id,
             name, phone, address,
-            district: district ? district?.state?.alt : updateAd?.district,
-            city: city ? city?.state?.alt : updateAd?.city,
-            state: state ? state?.state?.alt : updateAd?.state,
-            isSelected: isCheck ? isCheck : updateAd?.isSelected
+            district: district ? district?.state?.alt : updateAdrs?.district,
+            city: city ? city?.state?.alt : updateAdrs?.city,
+            state: state ? state?.state?.alt : updateAdrs?.state,
+            isSelected: isCheck ? isCheck : updateAdrs?.isSelected
         }
         if (!update) {
             setStep(0)
         }
         // console.log(payload);
         dispatch(updateAdr(payload, token))
-        setUpdate(false)
+        // setUpdate(false)
     }
 
     useEffect(() => {
@@ -61,13 +62,13 @@ const UpdateAddress = (props) => {
     }, [state?.target?.value, district?.target?.value])
 
     useEffect(() => {
-        setName(updateAd?.name || '')
-        setPhone(updateAd?.phone || '')
-        setAddres(updateAd?.address || '')
-        setCity(updateAd?.city || '')
-        setDistrict(updateAd?.district || '')
-        setState(updateAd?.state || '')
-        setIsCheck(updateAd?.isSelected || false)
+        setName(updateAdrs?.name || '')
+        setPhone(updateAdrs?.phone || '')
+        setAddres(updateAdrs?.address || '')
+        setCity(updateAdrs?.city || '')
+        setDistrict(updateAdrs?.district || '')
+        setState(updateAdrs?.state || '')
+        setIsCheck(updateAdrs?.isSelected || false)
     }, [])
     return (
         <AddressWrap>
@@ -91,7 +92,7 @@ const UpdateAddress = (props) => {
                                                 {district?.target?.alt ? `${district?.target?.alt},` : ``}
                                                 {city?.target?.alt ? `${city?.target?.alt}` : ``}
                                             </> : <>
-                                                {`${updateAd?.state},${updateAd?.district},${updateAd?.city}`}
+                                                {`${updateAdrs?.state},${updateAdrs?.district},${updateAdrs?.city}`}
                                             </>
                                         }
                                         {
@@ -145,7 +146,7 @@ const UpdateAddress = (props) => {
                             </div>
                             <div className="form-group">
                                 <label>
-                                    <input type="checkbox" checked={isCheck} disabled={updateAd?.isSelected ? true : false} onChange={e => setIsCheck(e.target.checked)} />
+                                    <input type="checkbox" checked={isCheck} disabled={updateAdrs?.isSelected ? true : false} onChange={e => setIsCheck(e.target.checked)} />
                                     Đặt làm địa chỉ mặc định
                                 </label>
                             </div>

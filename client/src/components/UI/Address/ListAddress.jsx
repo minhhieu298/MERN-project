@@ -5,7 +5,7 @@ import useStore from '../../../library/hooks/useStore'
 import { getDeliveryAdr } from '../../../redux/actions/address.action'
 
 const ListAddress = (props) => {
-    const { setOpen, setStep } = props
+    const { setOpen, setStep, setUpdateAdr } = props
     const [data, setData] = useState([])
     const { addresses, dispatch, token } = useStore()
     const [obj, setObj] = useState({})
@@ -32,6 +32,8 @@ const ListAddress = (props) => {
     }
     useEffect(() => {
         const adr = addresses.map(item => ({ ...item, isCheck: item?.is_delivery === true ? true : false }))
+        const upAdr = adr.filter(item => item.isCheck === true)[0]
+        setUpdateAdr(upAdr)
         setData(adr)
     }, [addresses])
     return (

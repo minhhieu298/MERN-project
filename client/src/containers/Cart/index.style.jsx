@@ -171,6 +171,63 @@ const CartWrap = styled.div`
         }
         
     }
+    .empty_cart{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 21rem;
+        flex-direction: column;
+        .bg{
+            background-position: 50% center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 12.5rem;
+            height: 11.1875rem;
+            /* background-image: url('../../assets/empty_cart.png'); */
+            width: 6.75rem;
+            height: 6.125rem;
+        }
+        .text{
+            color: rgba(0, 0, 0, 0.4);
+            font-size: 0.875rem;
+            font-weight: 700;
+            line-height: 1rem;
+            margin-top: 1.125rem;
+        }
+        button{
+            text-transform: uppercase;
+            margin-top: 1.0625rem;
+            background: rgb(238, 77, 45);
+            padding: 10px 40px;
+            &:hover{
+                opacity: 0.9;
+            }
+            a{
+                display: block;
+                color: #fff;
+                font-size: 17px;
+            }
+        }
+    }
+    >div{
+        /* .empty-cart{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 21rem;
+            flex-direction: column;
+            .bg{
+                background-position: 50% center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                width: 12.5rem;
+                height: 11.1875rem;
+                background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/cart/9bdd804….png);
+                width: 6.75rem;
+                height: 6.125rem;
+            }
+        } */
+    }
 `
 export const MobileCart = styled.div`
     .box{

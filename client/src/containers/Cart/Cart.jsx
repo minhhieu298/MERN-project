@@ -7,7 +7,8 @@ import { addToCart, deleteCart, getCartItems } from '../../redux/actions/cart.ac
 import CartWrap, { MobileCart } from './index.style'
 import * as Icon from '../../library/icons/index'
 import { Link } from 'react-router-dom'
-import { CHECKOUT_PAGE } from '../../setting/constants'
+import { CHECKOUT_PAGE, HOME_PAGE } from '../../setting/constants'
+import cartEmpty from '../../assets/empty_cart.png'
 
 const Item = (props) => {
   const { product, price, color, size } = props.cart
@@ -58,13 +59,13 @@ const Item = (props) => {
               </div>
               <div className="price">
                 <span>Price:</span>
-                <span>{numberWithCommas(props.cart?.price)}</span>
+                <span>₫{numberWithCommas(props.cart?.price)}</span>
               </div>
             </div>
           </div>
           <div className="col-2">
             <div className="price">
-              <p>{numberWithCommas(Number(props.cart?.price * props.cart?.quantity))}</p>
+              <p>₫{numberWithCommas(Number(props.cart?.price * props.cart?.quantity))}</p>
             </div>
           </div>
           <div className="col-2">
@@ -106,7 +107,7 @@ const Item = (props) => {
                 <button onClick={increaseQty}>+</button>
               </div>
               <div className="price">
-                <p>{numberWithCommas(Number(props.cart?.price * props.cart?.quantity))}</p>
+                <p>₫{numberWithCommas(Number(props.cart?.price * props.cart?.quantity))}</p>
               </div>
               <div className="delete-btn">
                 <button><span><Icon.RiDeleteBinLine /></span></button>
@@ -142,53 +143,73 @@ const Cart = () => {
     <CartWrap>
       <Container fluid={true}>
         {
-          width > 768 ? <div className="box">
-            <div className="col-top">
-              {
-                cart?.map(item => (
-                  <Item key={item?._id}
-                    cart={item}
-                    increase={increaseCart}
-                    decrease={decreaseCart}
-                  // token={token}
-                  />
-                ))
-              }
-            </div>
-            <div className="col-bottom">
-              <div className="checkout">
+          width > 768 ? <React.Fragment>
+            {
+              cartItems?.length > 0 ?
+                <div className="box">
+                  <div className="col-top">
+                    {
+                      cart?.map(item => (
+                        <Item key={item?._id}
+                          cart={item}
+                          increase={increaseCart}
+                          decrease={decreaseCart}
+                        />
+                      ))
+                    }
+                  </div>
+                  <div className="col-bottom">
+                    <div className="checkout">
+                      <button>
+                        <Link to={CHECKOUT_PAGE}>
+                          <span>Checkout</span>
+                          -
+                          <span>₫{numberWithCommas(Number(cartItems?.reduce((a, b) => a + b.price * b.quantity, 0)))}</span>
+                        </Link>
+                      </button>
+                    </div>
+                  </div>
+                </div> : <div className="empty_cart">
+                  <div className="bg" style={{ backgroundImage: `url(${cartEmpty})` }}></div>
+                  <div className="text">Giỏ hàng của bạn còn trống</div>
+                  <button>
+                    <Link to={HOME_PAGE}>Mua ngay</Link>
+                  </button>
+                </div>
+            }
+          </React.Fragment> : <MobileCart>
+            {
+              cartItems?.length > 0 ? <>
+                <div className="box">
+                  {
+                    cartItems?.map(item => (
+                      <Item key={item?._id}
+                        cart={item}
+                        increase={increaseCart}
+                        decrease={decreaseCart}
+                      />
+                    ))
+                  }
+                </div>
+                <div className="box">
+                  <div className="total">
+                    <h3>Total</h3>
+                    <div>₫{numberWithCommas(Number(cartItems?.reduce((a, b) => a + b.price * b.quantity, 0)))}</div>
+                  </div>
+                  <div className="checkout">
+                    <button>
+                      <Link to={CHECKOUT_PAGE}>Checkout</Link>
+                    </button>
+                  </div>
+                </div>
+              </> : <div className="empty_cart">
+                <div className="bg" style={{ backgroundImage: `url(${cartEmpty})` }}></div>
+                <div className="text">Giỏ hàng của bạn còn trống</div>
                 <button>
-                  <Link to={CHECKOUT_PAGE}>
-                    <span>Checkout</span>
-                    -
-                    <span>{numberWithCommas(Number(cartItems?.reduce((a, b) => a + b.price * b.quantity, 0)))}</span>
-                  </Link>
+                  <Link to={HOME_PAGE}>Mua ngay</Link>
                 </button>
               </div>
-            </div>
-          </div> : <MobileCart>
-            <div className="box">
-              {
-                cartItems?.map(item => (
-                  <Item key={item?._id}
-                    cart={item}
-                    increase={increaseCart}
-                    decrease={decreaseCart}
-                  />
-                ))
-              }
-            </div>
-            <div className="box">
-              <div className="total">
-                <h3>Total</h3>
-                <div>{numberWithCommas(Number(cartItems?.reduce((a, b) => a + b.price * b.quantity, 0)))}</div>
-              </div>
-              <div className="checkout">
-                <button>
-                  <Link to={CHECKOUT_PAGE}>Checkout</Link>
-                </button>
-              </div>
-            </div>
+            }
           </MobileCart>
         }
       </Container>

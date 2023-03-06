@@ -25,7 +25,6 @@ const UpdateAddress = ({ update, setUpdate, data }) => {
   const [stateArr, setStateArr] = useState([])
   const ref = useRef(null)
   useOnClickOutside(ref, () => setDrop(false));
-
   const handleSubmit = e => {
     e.preventDefault()
     const payload = {
@@ -61,11 +60,11 @@ const UpdateAddress = ({ update, setUpdate, data }) => {
   }, [state?.target?.alt, district?.target?.alt])
 
   useEffect(() => {
-    setName(data.name)
-    setPhone(data.phone)
-    setAddres(data.address)
+    setName(data.name || '')
+    setPhone(data.phone || '')
+    setAddres(data.address || '')
     setIsCheck(data.isSelected)
-  }, [data])
+  }, [])
   return (
     <Container>
       {
@@ -78,10 +77,10 @@ const UpdateAddress = ({ update, setUpdate, data }) => {
               <div>
                 <div className="form-group">
                   <div>
-                    <input type="text" placeholder='Họ tên' value={name} onChange={e => setName(e.target.name)} />
+                    <input type="text" placeholder='Họ tên' value={name} onChange={e => setName(e.target.value)} />
                   </div>
                   <div>
-                    <input type="number" placeholder='Số điện thoại' value={phone} onChange={e => setPhone(e.target.phone)} />
+                    <input type="number" placeholder='Số điện thoại' value={phone} onChange={e => setPhone(e.target.value)} />
                   </div>
                 </div>
                 <div className="form-group" ref={ref}>

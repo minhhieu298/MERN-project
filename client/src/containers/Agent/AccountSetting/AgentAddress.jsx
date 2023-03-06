@@ -5,13 +5,15 @@ import { deleteAdr, getAdr, setDefaultAdr } from '../../../redux/actions/address
 import useWindowSize from '../../../library/hooks/useWindowSize'
 import CreateAddress from './Address/CreateAddress'
 import UpdateAddress from './Address/UpdateAddress'
+import * as Icon from '../../../library/icons/index'
+
 const AgentAddress = () => {
   const [open, setOpen] = useState(false)
   const [update, setUpdate] = useState(false)
   const [updateAd, setUpdateAdr] = useState({})
   const { dispatch, addresses, token } = useStore()
   const { width } = useWindowSize()
-  
+
   const handleUpdate = (adr) => {
     setUpdate(true)
     setUpdateAdr(adr)
@@ -39,7 +41,12 @@ const AgentAddress = () => {
           </div>
         </div>
         {
-          !addresses.length ? <div>no address</div> : <div className='content-address'>
+          !addresses.length ? <div className='empty_address'>
+            <div>
+              <span><Icon.IoLocationOutline /></span>
+              <p>Bạn chưa có địa chỉ</p>
+            </div>
+          </div> : <div className='content-address'>
             <h5>Địa chỉ</h5>
             <div className="list-address">
               {
@@ -90,7 +97,7 @@ const AgentAddress = () => {
         }
       </AgentAddressWrap>
       {
-        open && <CreateAddress open={open} setOpen={setOpen} />
+        open && <CreateAddress open={open} setOpen={setOpen} newOrder={true} />
       }
       {
         update && <UpdateAddress update={update} setUpdate={setUpdate} data={updateAd} />

@@ -32,6 +32,7 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { TbDiscount } from 'react-icons/tb'
 import { GrUserAdmin } from 'react-icons/gr'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { IoLocationOutline } from 'react-icons/io5'
 
 export {
     MenuOutlinedIcon,
@@ -70,5 +71,6 @@ export {
     AiOutlineEye,
     TbDiscount,
     GrUserAdmin,
-    AdminPanelSettingsIcon
+    AdminPanelSettingsIcon,
+    IoLocationOutline
 }

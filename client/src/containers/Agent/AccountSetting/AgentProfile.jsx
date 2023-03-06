@@ -62,9 +62,9 @@ const AgentProfile = () => {
                   <img src={image} alt="" />
                   <input type="file" accept='.jpeg, .png, .jpg' onChange={e => handleUpload(e)} />
                 </div>
-                <div>
+                {/* <div>
                   <button type='button'>Chọn ảnh</button>
-                </div>
+                </div> */}
                 <div>
                   <div>Dụng lượng file tối đa 1 MB</div>
                   <div>Định dạng:.JPEG, .PNG, .JPG</div>

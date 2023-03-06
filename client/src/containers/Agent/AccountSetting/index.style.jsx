@@ -25,7 +25,7 @@ export const Grid = styled.div`
     }
     ${props => props.right && css`
             grid-column: span 12 / span 12;
-            /* background-color: #fff; */
+            background-color: #fff;
             border-radius: 4px;
             @media (min-width:992px){
                 grid-column: span 10/span 10;
@@ -274,6 +274,30 @@ export const AgentProfileWrap = styled.div`
 `
 
 export const AgentAddressWrap = styled.div`
+    height: 100%;
+    .empty_address{
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        >div{
+            span{
+                display: block;
+                text-align: center;
+                >svg{
+                    font-size: 2.5em;
+                }
+            }
+            p{
+                margin-top: 16px;
+                text-align: center;
+                font-weight: 500;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                color: rgba(0,0,0,.65);
+            }
+        }
+    }
     .title-address{
         border-bottom: 1px solid rgb(239, 239, 239);
         padding: 22px 30px;

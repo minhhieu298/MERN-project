@@ -5,6 +5,24 @@ const CheckoutWrap = styled.div`
     min-height: 100vh;
     background: #f5f5f5;
     
+    .empty_adr{
+        position: fixed;
+        background: rgba(0,0,0,0.5);
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        .container{
+            .box{
+                color: #000;
+                font-weight: 500;
+            }
+        }
+        .form-group{
+            color: #000;
+            font-weight: 500;
+        }
+    }
     .header-checkout{
         background-color: #fff;
         padding: 10px;

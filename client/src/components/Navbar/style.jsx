@@ -116,13 +116,22 @@ export const AvatarWrapper = styled.div`
                     margin: 4px 0 8px;
                     font-weight: 400;
                     height: auto;
+                    /* >span{
+                        display: inline-block;
+                    } */
                     a,span{
                         display: block;
                         padding: 8px 16px;
                         transition: all 0.5s ease 0s;
                         cursor: pointer;
+                    }
+                    >a{
                         &:hover{
                             color: #008489;
+                        }
+                        span{
+                            display: inline-block;
+                            padding: 0;
                         }
                     }
                 }

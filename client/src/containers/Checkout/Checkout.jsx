@@ -9,6 +9,7 @@ import { numberWithCommas } from '../../library/helper/numberComas'
 import { Link, useNavigate } from 'react-router-dom'
 import { CART_PAGE, PROFILE_PAGE, ORDER_PAGE } from '../../setting/constants'
 import { createOrder } from '../../redux/actions/order.action'
+import CreateAddress from '../Agent/AccountSetting/Address/CreateAddress'
 
 const Checkout = () => {
     const [open, setOpen] = useState(false)
@@ -16,6 +17,7 @@ const Checkout = () => {
     let navigate = useNavigate()
     const [address, setAddress] = useState({})
     const { dispatch, token, addresses, cartItems } = useStore()
+    const [updateAdrs, setUpdateAdr] = useState({})
     let total = cartItems?.reduce((a, b) => a + b.price * b.quantity, 0)
     let shipping = 30000
     const handleOrder = () => {
@@ -58,14 +60,21 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div>
-                                <div>
-                                    <div>{address?.name} - {address?.phone}</div>
-                                    <div>{address?.address},{address?.city},{address?.district},{address?.state}</div>
-                                    {
-                                        address?.isSelected && <div>Mặc định</div>
-                                    }
-                                </div>
-                                <div onClick={() => setOpen(true)}>Thay đổi</div>
+                                {
+                                    addresses?.length > 0 ? <>
+                                        <div>
+                                            <div>{address?.name} - {address?.phone}</div>
+                                            <div>{address?.address},{address?.city},{address?.district},{address?.state}</div>
+                                            {
+                                                address?.isSelected && <div>Mặc định</div>
+                                            }
+                                        </div>
+                                        <div onClick={() => setOpen(true)}>Thay đổi</div>
+                                    </> : <div className="empty_adr">
+                                        <CreateAddress newOrder={false} />
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div className="product">
@@ -143,7 +152,7 @@ const Checkout = () => {
             </CheckoutWrap>
             {
                 open && <Modal className='modal'>
-                    {getSteps(step, setStep, setOpen)}
+                    {getSteps(step, setStep, setOpen, updateAdrs, setUpdateAdr)}
                 </Modal>
             }
         </React.Fragment>
