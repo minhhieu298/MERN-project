@@ -9,6 +9,9 @@ export const CART_PAGE = '/cart'
 export const LOGIN_PAGE = '/login'
 export const REGISTER_PAGE = '/register'
 export const RESET_PASSWORD_PAGE = '/reset-password'
+export const FORGOT_PASSWORD = '/forgot-password'
+export const OTP_PAGE = '/verify-otp'
+
 
 export const PROFILE_PAGE = '/account'
 export const ADDRESS_PAGE = 'address'

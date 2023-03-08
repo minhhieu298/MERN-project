@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import AuthWrap from '../index.style'
 import * as Icon from '../../../library/icons/index'
 import { Link, useNavigate } from 'react-router-dom'
-import { HOME_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../../setting/constants'
+import { FORGOT_PASSWORD, HOME_PAGE, REGISTER_PAGE, } from '../../../setting/constants'
 import { callAPI } from '../../../api/callApi'
 import useStore from '../../../library/hooks/useStore'
+import bg from '../../../assets/banner_login.jpg'
 
 const Signin = () => {
     const [errMsg, setErrMsg] = useState({ errors: '' });
@@ -27,9 +28,9 @@ const Signin = () => {
     }
     return (
         <AuthWrap>
-            <div>
-                <div className="image-form" >
-                </div>
+            <div style={{ backgroundImage: `url(${bg})` }}>
+                {/* <div className="image-form" >
+                </div> */}
                 <div className="form">
                     <div className="head">
                         <div>
@@ -43,7 +44,7 @@ const Signin = () => {
                         <div>
                             <h1>Đăng nhập</h1>
                             <div className="form-group">
-                                <div>
+                                <div style={{ borderColor: Object.keys(errMsg.errors).toString() === 'email' ? 'red' : '#80808024' }}>
                                     <input type="text" placeholder='Email' name='email' onFocus={() => setErrMsg({ errors: '' })} />
                                 </div>
                                 {
@@ -51,7 +52,7 @@ const Signin = () => {
                                 }
                             </div>
                             <div className="form-group">
-                                <div>
+                                <div style={{ borderColor: Object.keys(errMsg.errors).toString() === 'password' ? 'red' : '#80808024' }}>
                                     <input type="password" placeholder='Password' name='password' onFocus={() => setErrMsg({ errors: '' })} />
                                 </div>
                                 {
@@ -67,7 +68,7 @@ const Signin = () => {
                     </form>
                     <div className="footer">
                         <div className="forgot">
-                            <Link to={RESET_PASSWORD_PAGE}><span>Quên mật khẩu?</span></Link>
+                            <Link to={FORGOT_PASSWORD}><span>Quên mật khẩu?</span></Link>
                         </div>
                         <div className="register">
                             <p>Bạn chưa có tài khoản?</p>

@@ -14,6 +14,8 @@ export const TOKEN = "TOKEN";
 export const LOGIN = "LOGIN";
 export const UPDATE_USER = 'UPDATE_USER'
 export const LOGOUT = 'LOGOUT'
+export const EMAIL = 'EMAIL'
+export const OTP = 'OTP'
 
 export const CREATE_NEW_ADDRESS = 'CREATE_NEW_ADDRESS';
 export const GET_USER_ADDRESS = 'GET_USER_ADDRESS';

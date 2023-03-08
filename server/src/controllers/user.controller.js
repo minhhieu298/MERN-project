@@ -68,12 +68,12 @@ module.exports.userCtrl = {
   },
   forgotPassword: async (req, res) => {
     const { email } = req.body;
-    const { code, message } = await useService.forgot({ email });
+    const { code, message } = await userService.forgot({ email });
     res.status(code).json({ message });
   },
   changePassword: async (req, res) => {
     const { otp, email, password } = req.body;
-    const { code, message } = await useService.verifyChange({
+    const { code, message } = await userService.verifyChange({
       otp,
       email,
       password,

@@ -681,119 +681,295 @@ export const CreateWrap = styled.div`
 `
 export const DetailWrap = styled.div`
     background-color: #1a223f;
+    margin-left: 20px;
     margin-right: 20px;
-    margin-left: 0;
-    padding: 20px;
     color: rgb(189, 200, 240); 
     height:100%;
-    margin-bottom: 20px;
-    @media (max-width:991px){
-        margin-left: 20px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    user-select: none;
+    padding: 10px;
+    border-radius: 4px;
+    @media (min-width: 992px){
+        padding: 24px;
+        margin-left: 90px;
+        margin-right: 90px;
     }
-    >div{
+    @media (min-width: 1024px){
+        margin-left: 100px;
+        margin-right: 100px;
+        padding: 24px;
+    }
+    /* @media (min-width: 1024px){
+        margin-left: 120px;
+        margin-right: 120px;
+    } */
+    .row{
         display: grid;
-        grid-template-columns: repeat(12,minmax(0,1fr));
-        column-gap: 20px;
-        row-gap: 20px;
+        grid-template-columns: repeat(12,1fr);
+        gap: 20px;
         align-items: flex-start;
-        &.modal{
-            /* display: block; */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            /* background: transparent; */
-            z-index: 9999999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            &.active{
-                opacity: 1;
-                visibility: visible;
-                background: rgba(0,0,0,0.65);
-                pointer-events: auto;
+        .col-4{
+            grid-column: span 12 / span 12;
+            position: relative;
+            @media (min-width: 1280px){
+                grid-column: span 4 / span 4;
+            }
+            &:hover{
+                >div{
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
             >div{
-                width: 600px;
-                border-radius: 4px;
-                /* height: 300px; */
-                background: #fff;
-                transition: all 0.4s ease-in-out 450ms;
-                color: #000;
-                position: relative;
-                >span{
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    cursor: pointer;
-                    z-index: 5;
-                }
-                >div{
-                    margin-top: 25px;
-                    padding: 20px 10px;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0,0,0,0.5);
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.5s ease 0s;
+            }
+        }
+        .col-8{
+            grid-column: span 12 / span 12;
+            @media (min-width: 1280px){
+                grid-column: span 8 / span 8;
+            }
+            form{
+                .form-group{
                     display: grid;
-                    grid-template-columns: auto;
+                    grid-template-columns: repeat(8,1fr);
+                    margin-bottom: 20px;
+                    gap: 20px;
+                    >label{
+                        grid-column: span 8 / span 8;
+                        @media (min-width: 1024px){
+                            padding: 0.25rem 0.75rem;
+                            grid-column: span 2 / span 2;
+                        }
+                    }
                     >div{
-                        &:first-child{
-                            >div{
-                                &:first-child{
-                                    line-height: 40px;
-                                    font-size: 20px;
-                                }
-                                &:nth-child(2){
-                                    border: 1px solid rgb(71 85 105);
-                                    padding: 0;
-                                    border-radius: 4px;
-                                    >input{
-                                        width: 100%;
-                                        height: 60px;
+                        grid-column: span 8 / span 8;
+                        color: rgb(189, 200, 240);
+                        border: 1px solid #4c4f52;
+                        padding: 0.25rem 0.75rem;
+                        border-radius: 4px;
+                        transition: all 0.5s ease 0s;
+                        @media (min-width: 1024px){
+                            grid-column: span 6 / span 6;
+                        }
+                        &:focus-within{
+                            border: 1px solid gray;
+                        }
+                        >input{
+                            width: 100%;
+                            background: transparent;
+                            padding-left: 10px;
+                            outline: none;
+                            border: none;
+                            height: 38px;
+                            color: rgb(189, 200, 240);
+                            &::placeholder{
+                                color: rgba(189, 200, 240, 0.418);
+                            }
+                        }
+                        >textarea{
+                            width: 100%;
+                            background: transparent;
+                            padding-left: 10px;
+                            outline: none;
+                            border: none;
+                            color: rgb(189, 200, 240);
+                        }
+                    }
+                    &:nth-child(5),:nth-child(6){
+                        margin-bottom: 30px;
+                        >div{
+                            border: 0;
+                            padding: 0;
+                            border-radius: 0;
+                            overflow: auto;
+                            max-height: 400px;
+                            padding-right: 10px;
+                            .item{
+                                margin-bottom: 15px;
+                                >div{
+                                    &:first-child{
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 0 10px;
+                                        .btn{
+                                            width: 46px;
+                                            height: 46px;
+                                            button{
+                                                width: 100%;
+                                                height: 100%;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                border: 1px solid #4c4f52;
+                                                color: rgb(189, 200, 240);
+                                                border-radius: 4px;
+                                            }
+                                        }
+                                        .input{
+                                            flex: 1;
+                                            border: 1px solid #4c4f52;
+                                            padding: 0.25rem 0.75rem;
+                                            border-radius: 4px;
+                                            transition: all 0.5s ease 0s;
+                                            &:focus-within{
+                                                border: 1px solid gray;
+                                            }
+                                            >input{
+                                                width: 100%;
+                                                background: transparent;
+                                                padding-left: 10px;
+                                                outline: none;
+                                                border: none;
+                                                height: 38px;
+                                                color: rgb(189, 200, 240);
+                                                &::placeholder{
+                                                    color: rgba(189, 200, 240, 0.418);
+                                                }
+                                            }
+                                        }
                                     }
-                                }
-                                &:nth-child(3){
-                                    width: 50px;
-                                    height: 50px;
-                                    margin-top: 10px;
-                                    img{
-                                        width: 100%;
-                                        height: 100%;
-                                        object-fit: cover;
-                                        aspect-ratio: 1 / 1;
+                                    &:nth-child(2){
+                                        margin-top: 10px;
+                                        width: 100px;
+                                        span.MuiButtonBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.PrivateSwitchBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-root.MuiCheckbox-colorPrimary.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root{
+                                            color: rgb(189, 200, 240);
+                                        }
                                     }
                                 }
                             }
                         }
-                        &:last-child{
-                            >div{
-                                &:first-child{
-                                    line-height: 40px;
-                                    font-size: 20px;
-                                }
-                                &:nth-child(2){
-                                    border: 1px solid rgb(71 85 105);
-                                    padding: 0;
-                                    border-radius: 4px;
-                                    >input{
-                                        width: 100%;
-                                        height: 60px;
-                                    }
-                                }
-                                &:nth-child(3){
+                    }
+                    &:nth-child(7),&:nth-child(8){
+                        >div{
+                            padding: 0;
+                            .dropdown{
+                                cursor: pointer;
+                                position: relative;
+                                height: 3rem;
+                                .item{
+                                    padding: .25em .75em;
                                     display: flex;
-                                    margin-top: 10px;
-                                    gap: 10px;
-                                    img{
-                                        width: 50px;
-                                        height: 50px;
-                                        object-fit: cover;
-                                        aspect-ratio: 1 / 1;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    height: 100%;
+                                    .label{
+                                        flex: 1;
+                                    }
+                                    .arrow{
+                                        display: inline-block;
+                                        top: 2px;
+                                        width: 14px;
+                                        height: 14px;
+                                        position: relative;
+                                        transform: rotate(0);
+                                        transition: all 0.4s ease;
+                                        &.active{
+                                            transform: rotate(180deg);
+                                        }
+                                        &::after,&::before{
+                                            content: "";
+                                            width: 9px;
+                                            height: 2px;
+                                            background: rgb(189, 200, 240);
+                                            display: block;
+                                            position: absolute;
+                                            top: 50%;
+                                        }
+                                        &::before{
+                                            border-top-left-radius: 1px;
+                                            border-bottom-left-radius: 1px;
+                                            left: 0px;
+                                            transform: translateY(-50%) rotate(46deg);
+                                        }
+                                        &::after{
+                                            border-top-left-radius: 1px;
+                                            border-bottom-left-radius: 1px;
+                                            left: 5px;
+                                            top: 5px;
+                                            transform: translateY(50%) rotate(-46deg);
+                                        }
                                     }
                                 }
+                                .drop-select{
+                                    position: absolute;
+                                    width: 100%;
+                                    background: white;
+                                    color: #000;
+                                    left: 0;
+                                    top: 110%;
+                                    border-radius: 2px;
+                                    opacity: 0;
+                                    visibility: hidden;
+                                    transform: rotateX(90deg);
+                                    transform-origin: center top 0;
+                                    transition: all 0.5s ease 0s;
+                                    z-index: 999;
+                                    max-height: 120px;
+                                    overflow: auto;
+                                    >div{
+                                        width: 100%;
+                                        height: 40px;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: .25em .75em;
+                                        color: #000;
+                                        &:hover{
+                                            background: rgba(0,0,0,0.14);
+                                        }
+                                    }
+
+                                    &.active{
+                                        visibility: visible;
+                                        opacity: 1;
+                                        transform: rotateX(0deg);
+
+                                        
+                                    }
+                                }
+                                
                             }
+                        }
+                    }
+                }
+                >.btn{
+                    display: flex;
+                    justify-content: flex-end;
+                    padding: 0 2px;
+                    >button{
+                        width: 100%;
+                        background: tomato;
+                        letter-spacing: 1px;
+                        height: 48px;
+                        margin-bottom: 15px;
+                        font-weight: 600;
+                        border-radius: 4px;
+                        color: #fff;
+                        text-transform: uppercase;
+                        font-size: 16px;
+                        &:hover{
+                            opacity: 0.9;
+                        }
+                        @media (min-width: 576px){
+                            width: 100px;
                         }
                     }
                 }

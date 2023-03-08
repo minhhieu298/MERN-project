@@ -1,5 +1,5 @@
 import { callAPI } from "../../api/callApi";
-import { LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER } from "../constants";
+import { EMAIL, LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER, } from "../constants";
 
 export function createUrl(urlData) {
     const keys = Object.keys(urlData);
@@ -35,6 +35,15 @@ export function setStateToUrl(state) {
         }
     }
     return createUrl(urlData)
+}
+
+export const getMail = (user) => async (dispatch, getState) => {
+    console.log(user);
+    dispatch({
+        type: EMAIL,
+        payload: user,
+    })
+    sessionStorage.setItem("auth", JSON.stringify(getState().auth.auth));
 }
 
 export const getToken = (token) => async (dispatch) => {

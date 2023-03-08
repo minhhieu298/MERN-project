@@ -7,8 +7,6 @@ import store from './redux/store'
 import { Provider } from "react-redux";
 
 const App = () => {
-  console.log(import.meta)
-
   return (
     <BrowserRouter>
       <AppRoutes />

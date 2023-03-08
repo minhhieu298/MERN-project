@@ -1,4 +1,4 @@
-import { LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER } from "../constants";
+import { EMAIL, LIST_USER, LOGIN, LOGOUT, TOKEN, UPDATE_USER } from "../constants";
 
 
 export const authReducer = (
@@ -6,6 +6,12 @@ export const authReducer = (
     action
 ) => {
     switch (action.type) {
+        case EMAIL:
+            return {
+                ...state,
+                user: action.payload
+            }
+
         case LOGIN:
             return {
                 ...state,

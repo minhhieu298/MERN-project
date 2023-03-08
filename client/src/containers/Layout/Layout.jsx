@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import LayoutProvider from '../../context/LayoutProvider'
 import useStore from '../../library/hooks/useStore'
 import { getCartItems } from '../../redux/actions/cart.action'
-import { ADMIN_PAGE, CART_PAGE, CHECKOUT_PAGE, LOGIN_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../setting/constants'
+import { ADMIN_PAGE, CART_PAGE, CHECKOUT_PAGE, FORGOT_PASSWORD, LOGIN_PAGE, OTP_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../setting/constants'
 import Footer from './Footer/Footer'
 import Header from './Header/Header'
 
@@ -23,7 +23,8 @@ const Layout = () => {
                     location.pathname === REGISTER_PAGE ||
                     location.pathname === CHECKOUT_PAGE ||
                     location.pathname === RESET_PASSWORD_PAGE ||
-                    // location.pathname === CART_PAGE ||
+                    location.pathname === OTP_PAGE ||
+                    location.pathname === FORGOT_PASSWORD ||
                     location.pathname === ADMIN_PAGE ? (
                     <React.Fragment>
                         <Outlet />

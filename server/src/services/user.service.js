@@ -26,8 +26,6 @@ module.exports.userService = {
       if (isValid && email === lastOtp.email) {
         const user = await User.create({
           email: email,
-          firstName: lastOtp.firstName,
-          lastName: lastOtp.lastName,
           username: lastOtp.username,
           password: lastOtp.password,
         });
@@ -160,7 +158,7 @@ module.exports.userService = {
     };
   },
   verifyChange: async ({ otp, email, password }) => {
-    const holdOtp = await _OTP.find({ email });
+    const holdOtp = await OTP.find({ email });
     if (!holdOtp.length) {
       return {
         code: 404,
@@ -172,13 +170,13 @@ module.exports.userService = {
     if (!isValid) {
       return {
         code: 404,
-        message: "OTP không hợp lệ",
+        message: "OTP đã hết hạn",
       };
     }
     if (isValid && email === lastOtp.email) {
       const user = await User.findOne({ email });
       if (user) {
-        await _OTP.deleteMany({ email });
+        await OTP.deleteMany({ email });
         user.password = password;
         await user.save();
       }
@@ -188,5 +186,4 @@ module.exports.userService = {
       };
     }
   },
-  
 };

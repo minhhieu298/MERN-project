@@ -6,7 +6,8 @@ import useStore from '../../../library/hooks/useStore'
 import { getSingleProduct, updateProduct } from '../../../redux/actions/product.action'
 import * as Icon from '../../../library/icons/index'
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
-import { getDataAdmin } from '../../../redux/actions/initData.action'
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { getCates } from '../../../redux/actions/category.action'
 
 const DropItem = ({ label, data, setData, cate, array, dataId, child }) => {
   const [drop, setDrop] = useState(false)
@@ -24,17 +25,17 @@ const DropItem = ({ label, data, setData, cate, array, dataId, child }) => {
                 <div className='label'>
                   <span>{data?.name ? data?.name : array?.filter(item => item._id === dataId)[0]?.name}</span>
                 </div>
-                <div className={`${drop ? 'active' : 'hidden'}`}>
-                  {
-                    array?.map(item => (
-                      <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
-                        <span>{item?.name}</span>
-                      </div>
-                    ))
-                  }
-                </div>
+                <div className="arrow"></div>
               </div>
-              <div className="arrow"></div>
+              <div className={`drop-select ${drop ? 'active' : ''}`}>
+                {
+                  array?.map(item => (
+                    <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
+                      <span>{item?.name}</span>
+                    </div>
+                  ))
+                }
+              </div>
             </div>
           </div>
         </> : cate === 'child' ? <div className="form-group">
@@ -50,44 +51,20 @@ const DropItem = ({ label, data, setData, cate, array, dataId, child }) => {
                   }
                   </span>
                 </div>
-                <div className={`${drop ? 'active overflow' : 'hidden'}`}
-                  style={{
-                    height: `${array?.filter(item => item?._id === dataId)[0]?.children?.length > 4 ? '12rem' : '3rem'}`,
-                    overflowY: `${array?.filter(item => item?._id === dataId)[0]?.children?.length > 4 ? 'auto' : 'hidden'}`
-                  }}>
-                  {
-                    array?.filter(item => item?._id === dataId)[0]?.children?.map(item => (
-                      <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
-                        <span>{item?.name}</span>
-                      </div>
-                    ))
-                  }
-                </div>
+                <div className="arrow"></div>
               </div>
-              <div className="arrow"></div>
+              <div className={`drop-select ${drop ? 'active' : ''}`}>
+                {
+                  array?.filter(item => item?._id === dataId)[0]?.children?.map(item => (
+                    <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
+                      <span>{item?.name}</span>
+                    </div>
+                  ))
+                }
+              </div>
             </div>
           </div>
-        </div> : <>
-          <label htmlFor="">{label}</label>
-          <div onClick={() => setDrop(!drop)} >
-            <div className="dropdown" ref={refDrop}>
-              <div className="item">
-                <div className='label'>
-                  <span>{data ? data : `Select type size`}</span>
-                </div>
-                <div className={`${drop ? 'active' : 'hidden'}`}>
-                  <div onClick={() => setData('Clothings')}>
-                    <span>Clothing</span>
-                  </div>
-                  <div onClick={() => setData('Shoes')}>
-                    <span>Shoes</span>
-                  </div>
-                </div>
-              </div>
-              <div className="arrow"></div>
-            </div>
-          </div>
-        </>
+        </div> : <></>
       }
     </React.Fragment >
   )
@@ -172,7 +149,7 @@ const ProductDetail = () => {
 
   }, [dispatch, id])
   useEffect(() => {
-    dispatch(getDataAdmin())
+    dispatch(getCates())
   }, [dispatch])
   useEffect(() => {
     setName(product?.name || '')
@@ -193,118 +170,127 @@ const ProductDetail = () => {
   return (
     <DetailWrap>
       <Container fluid={true}>
-        <Grid left={true}>
-          <img src={product?.image} alt="" />
-          <div onClick={() => setOpen(true)}>
-            <Icon.EditIcon />
+        <div className="row">
+          <div className="col-4">
+            <img src={product?.image} alt="" />
+            <div role='button' onClick={() => setOpen(true)}>
+              <Icon.EditIcon />
+            </div>
           </div>
-        </Grid>
-        <Grid right={true}>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="">Product name</label>
-              <div>
-                <input type="text" placeholder='Tên sản phẩm' value={name} onChange={e => setName(e.target.value)} />
+          <div className="col-8">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="">Product name</label>
+                <div>
+                  <input type="text" placeholder='Tên sản phẩm' value={name} onChange={e => setName(e.target.value)} />
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="">Description</label>
-              <div>
-                <textarea type="text" placeholder='Mô tả sản phẩm' value={description} onChange={e => setDesciption(e.target.value)} rows={5} />
+              <div className="form-group">
+                <label htmlFor="">Description</label>
+                <div>
+                  <textarea type="text" placeholder='Mô tả sản phẩm' value={description} onChange={e => setDesciption(e.target.value)} rows={5} />
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="">Price</label>
-              <div>
-                <input type="number" placeholder='Giá' value={price} onChange={e => setPrice(e.target.value)} />
+              <div className="form-group">
+                <label htmlFor="">Price</label>
+                <div>
+                  <input type="number" placeholder='Giá' value={price} onChange={e => setPrice(e.target.value)} />
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="">Quantity</label>
-              <div>
-                <input type="number" placeholder='Số lượng' value={stock} onChange={e => setStock(e.target.value)} />
+              <div className="form-group">
+                <label htmlFor="">Quantity</label>
+                <div>
+                  <input type="number" placeholder='Số lượng' value={stock} onChange={e => setStock(e.target.value)} />
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <DropItem label={'Category Parent'} cate='parent' data={cateParent} setData={setCateParent} array={categories} dataId={product?.category_parent} />
-            </div>
-            {
-              cateParent.id && <DropItem cate='child' label={'Child Category'} array={categories} data={cateChild} setData={setCateChild} child={product?.category_id} dataId={cateParent.id} />
-            }
-            <div className="form-group">
-              <label htmlFor="">Size</label>
-              <div>
-                {
-                  size.map((x, i) => (
-                    <div key={i}>
-                      <div>
+              <div className="form-group">
+                <label htmlFor="">Size</label>
+                <div>
+                  {
+                    size.map((x, i) => (
+                      <div key={i} className='item'>
                         <div>
-                          <input type="text" name='size' value={x.size} placeholder='Size' onChange={(e) => handleSize(e, i)} />
+                          <div className='btn'>
+                            {
+                              size.length <= 1 ? null : <button type='button' onClick={() => {
+                                const list = [...size]
+                                console.log(i)
+                                list.splice(i, 1)
+                                setSize(list)
+                              }} disabled={size.length !== 1 ? false : true}>-</button>
+                            }
+                          </div>
+                          <div className='input'>
+                            <input type="text" name='size' value={x.size} placeholder='Size' onChange={(e) => handleSize(e, i)} />
+                          </div>
+                          <div className='btn'>
+                            <button type='button' onClick={() => setSize([...size, { size: '', sold: false }])}>+</button>
+                          </div>
                         </div>
                         <div>
-                          {
-                            size.length <= 1 ? null : <button type='button' onClick={() => {
-                              const list = [...size]
-                              console.log(i)
-                              list.splice(i, 1)
-                              setSize(list)
-                            }} disabled={size.length !== 1 ? false : true}>-</button>
-                          }
-                          <button type='button' onClick={() => setSize([...size, { size: '', sold: false }])}>+</button>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={<Checkbox />}
+                              label={'Disable'}
+                              onChange={e => handleCheckSize(e, i)}
+                            />
+                          </FormGroup>
                         </div>
                       </div>
-                      <div>
-                        <label htmlFor="">
-                          <input type="checkbox" name='sold' onChange={e => handleCheckSize(e, i)} /> Disable
-                        </label>
-                      </div>
-
-                    </div>
-                  ))
-                }
+                    ))
+                  }
+                </div>
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="">Color</label>
-              <div style={{
-                height: `${color.length >= 4 ? '400px ' : 'auto'}`,
-                overflowY: `${color.length >= 4 ? 'scroll' : 'hidden !important'}`
-              }}>
-                {
-                  color.map((x, i) => (
-                    <div key={i}>
-                      <div>
+              <div className="form-group">
+                <label htmlFor="">Color</label>
+                <div>
+                  {
+                    color.map((x, i) => (
+                      <div key={i} className='item'>
                         <div>
-                          <input type="text" name='color' value={x.color} placeholder='Color' onChange={(e) => handleColor(e, i)} />
+                          <div className='btn'>
+                            {
+                              color.length <= 1 ? null : <button type='button' onClick={() => {
+                                const list = [...color]
+                                console.log(i)
+                                list.splice(i, 1)
+                                setColor(list)
+                              }} disabled={color.length !== 1 ? false : true}>-</button>
+                            }
+                          </div>
+                          <div className='input'>
+                            <input type="text" name='color' value={x.color} placeholder='Color' onChange={(e) => handleColor(e, i)} />
+                          </div>
+                          <div className="btn">
+                            <button type='button' onClick={() => setColor([...color, { color: '', sold: false }])}>+</button>
+                          </div>
                         </div>
                         <div>
-                          {
-                            color.length <= 1 ? null : <button type='button' onClick={() => {
-                              const list = [...color]
-                              console.log(i)
-                              list.splice(i, 1)
-                              setColor(list)
-                            }} disabled={color.length !== 1 ? false : true}>-</button>
-                          }
-                          <button type='button' onClick={() => setColor([...color, { color: '', sold: false }])}>+</button>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={<Checkbox />}
+                              label={'Disable'}
+                              onChange={e => handleCheckColor(e, i)}
+                            />
+                          </FormGroup>
                         </div>
                       </div>
-                      <div>
-                        <label htmlFor="">
-                          <input type="checkbox" name='sold' onChange={e => handleCheckColor(e, i)} /> Disabled
-                        </label>
-                      </div>
-                    </div>
-                  ))
-                }
+                    ))
+                  }
+                </div>
               </div>
-            </div>
-
-            <div className="form-group">
-              <button>Update</button>
-            </div>
-          </form>
-        </Grid>
+              <div className="form-group">
+                <DropItem label={'Category Parent'} cate='parent' data={cateParent} setData={setCateParent} array={categories} dataId={product?.category_parent} />
+              </div>
+              {
+                cateParent.id && <DropItem cate='child' label={'Child Category'} array={categories} data={cateChild} setData={setCateChild} child={product?.category_id} dataId={cateParent.id} />
+              }
+              <div className="btn">
+                <button>Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </Container>
       <div className={`modal ${open ? 'active' : ''}`}>
         {
