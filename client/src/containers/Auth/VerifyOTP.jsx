@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { HOME_PAGE, LOGIN_PAGE } from '../../setting/constants'
 import { callAPI } from '../../api/callApi'
 import useStore from '../../library/hooks/useStore'
-import { getMail } from '../../redux/actions/auth.action'
+import bg from '../../assets/banner_login.jpg'
 
 const VerifyOTP = () => {
   const [otp, setOtp] = useState('')
@@ -33,7 +33,8 @@ const VerifyOTP = () => {
     // dispatch(getMail())
   }, [dispatch])
   return (
-    <OTPWrap>
+    <OTPWrap style={{ backgroundImage: `url(${bg})` }}>
+      {/* <div > */}
       <form onSubmit={handleSubmitt}>
         <h1>Xác thực OTP</h1>
         <div>
@@ -44,12 +45,13 @@ const VerifyOTP = () => {
             err && <span>{err}</span>
           }
         </div>
-        <button>Gửi</button>
+        <button>Xác thực OTP</button>
         <div>
           <Link to={HOME_PAGE}>Quay về trang chủ</Link>
           <button type='button' onClick={sendOTP}>Gửi lại mã</button>
         </div>
       </form>
+      {/* </div> */}
     </OTPWrap>
   )
 }

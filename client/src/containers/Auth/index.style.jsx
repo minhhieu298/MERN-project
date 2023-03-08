@@ -65,9 +65,6 @@ const AuthWrap = styled.div`
                             position: relative;
                             background: rgba(255,255,255,0.2);
                             transition: all 0.5s ease 0s;
-                            /* &:focus-within{
-                                border: 1px solid #c7b4b4;
-                            } */
                             >input{
                                 width: 100%;
                                 border: none;
@@ -270,41 +267,55 @@ export const ResetWrap = styled.div`
     }
 `
 export const OTPWrap = styled.div`
-    width: 100%;
     min-height: 100vh;
-    background: #fff;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
     form{
         width: 100%;
         border-radius: 5px;
         padding: 20px 10px;
-        border: 1px solid #dfdfdf;
         @media (min-width: 768px){
             width: 500px;
         }
         h1{
-            font-size: 1.5em;
             margin-bottom: 20px;
             font-weight: 500;
+            font-weight: 600;
+            color: #fff;
+            font-size: 20px;
+            @media (min-width: 768px){
+                font-size: 1.5em;
+                /* font-size: 2.75em; */
+            }
         }
         >div{
             width: 100%;
             >div{
-                width: 100%;
+                border: 1px solid;
+                border-color: #80808024;
+                border-radius: 30px;
                 padding: 5px;
-                border: 1px solid #dfdfdf;
-                border-radius: 4px;
-                margin-bottom: 10px;
+                position: relative;
+                background: rgba(255,255,255,0.2);
+                transition: all 0.5s ease 0s;
                 >input{
                     width: 100%;
                     border: none;
                     outline: none;
-                    padding-left: 10px;
-                    height: 30px;
-                    font-size: 16px;
+                    height: 38px;
+                    color: #fff;
+                    background: transparent;
+                    padding-left: 20px;
+                    border-radius: 30px;
+                    font-size: 17px;
+                    &::placeholder{
+                        color: #ffffffb5;
+                    }
                 }
             }
             >span{
@@ -316,15 +327,15 @@ export const OTPWrap = styled.div`
                 justify-content: space-between;
                 padding: 10px 0;
                 >a{
-                    /* margin-top: 10px; */
-                    /* text-align: center; */
-                    /* display: block; */
+                    color: #fff;
                     &:hover{
                         text-decoration: underline;
                         color: #1877f2;
                     }
                 }
+                
                 >button{
+                    color: #fff;
                     &:hover{
                         color: #1877f2;
                     }
@@ -334,16 +345,17 @@ export const OTPWrap = styled.div`
         >button{
             margin-top: 10px;
             width: 100%;
-            padding: 10px 20px;
-            background: #1877f2;
-            color: #fff;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.5);
             text-transform: uppercase;
-            border-radius: 4px;
+            width: 100%;
+            padding: 12px 20px;
+            color: #000;
             &:hover{
                 opacity: 0.9;
             }
         }
-        
+
     }
 `
 
