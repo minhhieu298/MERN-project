@@ -22,12 +22,12 @@ const AuthWrap = styled.div`
             .head{
                 margin-bottom: 20px;
                 a{
+                    color: #014fff;
                     span{
                         vertical-align: middle;
                         display: inline-flex;
                         margin-right: 5px;
                         font-size: 16px;
-                        color: #014fff;
                         >svg{
                             font-size: 1.15em;
                         }
@@ -36,7 +36,7 @@ const AuthWrap = styled.div`
                         }
                     }
                     &:hover{
-                        color: #0162e8;
+                        color: #fff;
                     }
                 }
             }

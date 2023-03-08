@@ -29,8 +29,6 @@ const Signin = () => {
     return (
         <AuthWrap>
             <div style={{ backgroundImage: `url(${bg})` }}>
-                {/* <div className="image-form" >
-                </div> */}
                 <div className="form">
                     <div className="head">
                         <div>

@@ -34,7 +34,6 @@ const VerifyOTP = () => {
   }, [dispatch])
   return (
     <OTPWrap style={{ backgroundImage: `url(${bg})` }}>
-      {/* <div > */}
       <form onSubmit={handleSubmitt}>
         <h1>Xác thực OTP</h1>
         <div>
@@ -51,7 +50,6 @@ const VerifyOTP = () => {
           <button type='button' onClick={sendOTP}>Gửi lại mã</button>
         </div>
       </form>
-      {/* </div> */}
     </OTPWrap>
   )
 }
