@@ -45,28 +45,31 @@ export const Box = styled.div`
                 >div{
                     padding: 15px 5px 10px;
                     .form-group{
-                        width: 100%;
-                        padding: 5px;
-                        border: 1px solid rgb(71 85 105);
-                        border-radius: 4px;
-                        transition: all 0.4s;
-                        margin-bottom: 15px;
-                        &:focus-within{
-                            border-color: rgb(248 250 252);
-                        }
-                        >input{
+                        margin-bottom: 20px;
+                        >div{
                             width: 100%;
-                            background: transparent;
-                            outline: none;
-                            border: none;
-                            padding-left: 10px;
-                            height: 40px;
-                            font-size: 17px;
-                            color: rgb(189, 200, 240);
-                            &:read-only{
-                                text-transform: lowercase;
-                                cursor: not-allowed;
-                                pointer-events: none;
+                            padding: 5px;
+                            border: 1px solid rgb(71 85 105);
+                            border-radius: 4px;
+                            transition: all 0.4s;
+                            margin-bottom: 15px;
+                            &:focus-within{
+                                border-color: rgb(248 250 252);
+                            }
+                            >input{
+                                width: 100%;
+                                background: transparent;
+                                outline: none;
+                                border: none;
+                                padding-left: 10px;
+                                height: 40px;
+                                font-size: 17px;
+                                color: rgb(189, 200, 240);
+                                &:read-only{
+                                    text-transform: lowercase;
+                                    cursor: not-allowed;
+                                    pointer-events: none;
+                                }
                             }
                         }
                         &:last-child{

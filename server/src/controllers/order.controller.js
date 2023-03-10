@@ -1,8 +1,8 @@
 const Order = require("../models/order.model");
 const Cart = require("../models/cart.model");
 const Address = require("../models/address.model");
-const { orderService } = require("../services/order.service");
 const { pageService } = require("../services/page.service");
+const Product = require("../models/product.model");
 
 async function queryParams(query, req) {
   let orders = [];
@@ -315,71 +315,58 @@ module.exports.orderCtrl = {
         }
       });
     } else {
-      Order.updateOne(
-        {
-          _id: req.body.orderId,
-          "orderStatus.type": req.body.type,
-        },
-        {
-          $set: {
-            "orderStatus.$": [
-              { type: req.body.type, date: new Date(), isCompleted: true },
-            ],
+      if (req.body.type === "delivered") {
+        Order.updateOne(
+          {
+            _id: req.body.orderId,
+            "orderStatus.type": req.body.type,
           },
-        }
-      ).exec((error, order) => {
-        if (error) return res.status(400).json({ message: error.message });
-        if (order) {
-          res.status(200).json({ order });
-        }
-      });
+          {
+            $set: {
+              "orderStatus.$": [
+                { type: req.body.type, date: new Date(), isCompleted: false },
+              ],
+            },
+          }
+        ).exec(async (error, order) => {
+          if (error) return res.status(400).json({ message: error.message });
+          if (order) {
+            const order = await Order.findOne({ _id: req.body.orderId });
+
+            // console.log({ mergedArray });
+            await updateProduct(order.orderItems);
+            // Promise.all(order.orderItems).then((res) => {
+            //   res.forEach((item) => {
+            //     updateProduct(item.productId, item.purchaseQty);
+            //   });
+            // });
+            // order.orderItems.forEach(async (item) => {
+            //   await
+            // });
+            // return res.status(200).json({ message: "success" });
+          }
+        });
+      } else {
+        Order.updateOne(
+          {
+            _id: req.body.orderId,
+            "orderStatus.type": req.body.type,
+          },
+          {
+            $set: {
+              "orderStatus.$": [
+                { type: req.body.type, date: new Date(), isCompleted: true },
+              ],
+            },
+          }
+        ).exec((error, order) => {
+          if (error) return res.status(400).json({ message: error.message });
+          if (order) {
+            res.status(200).json({ order });
+          }
+        });
+      }
     }
-    // if (req.body.status) {
-    //   if (req.body.type) {
-    //     _order
-    //       .updateOne(
-    //         {
-    //           _id: req.body.orderId,
-    //           "orderStatus.type": req.body.type,
-    //         },
-    //         {
-    //           $set: {
-    //             "orderStatus.$": [
-    //               { type: req.body.type, date: new Date(), isCompleted: true },
-    //             ],
-    //             "paymentStatus.status": req.body.status,
-    //             "paymentStatus.user": req.user._id,
-    //             "paymentStatus.date": new Date(),
-    //           },
-    //         }
-    //       )
-    //       .exec((error, order) => {
-    //         if (error) return res.status(400).json({ message: error.message });
-
-    //   } else {
-    //     _order
-    //       .updateOne(
-    //         {
-    //           _id: req.body.orderId,
-    //         },
-    //         {
-    //           $set: {
-    //             "paymentStatus.status": req.body.status,
-    //             "paymentStatus.user": req.user._id,
-    //             "paymentStatus.date": new Date(),
-    //           },
-    //         }
-    //       )
-    //       .exec((error, order) => {
-    //         if (error) return res.status(400).json({ message: error.message });
-    //         if (order) {
-    //           res.status(201).json({ order });
-    //         }
-    //       });
-    //   }
-    // } else {
-
-    // }
   },
   // user can cancel order before completed
   updateStatusPaymentOrder: async (req, res) => {
@@ -402,3 +389,30 @@ module.exports.orderCtrl = {
     });
   },
 };
+
+async function updateProduct(arr) {
+  // Promise.all(arr).then((res) => {
+  arr.forEach(async (item) => {
+    let product = await Product.findOne({ _id: item.productId.toString() });
+    if (product) {
+      product.sold += Number(item.purchaseQty);
+      product.stock < 1 ? 0 : (product.stock -= Number(item.purchaseQty));
+      await product.save({ validateBeforSave: false });
+    }
+  });
+  // });
+
+  // function chechDuplicateProductId(obj, item) {
+  //   obj[item.productId.toString()]
+  //     ? (obj[item.productId.toString()].purchaseQty += item.purchaseQty)
+  //     : (obj[item.productId.toString()] = { ...item });
+  //   return obj;
+  // }
+  // const arrayHashmap = arr.reduce(chechDuplicateProductId, {});
+  // const mergedArray = Object.values(arrayHashmap);
+  // console.log(mergedArray);
+  // let product = await Product.findById(id);
+  // product.sold += Number(quantity);
+  // product.stock < 1 ? 0 : (product.stock -= Number(quantity));
+  // await product.save({ validateBeforSave: false });
+}

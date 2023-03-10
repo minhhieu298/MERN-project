@@ -30,12 +30,28 @@ const ProductWrap = styled.div`
             display: flex;
             align-items: center;
             color: rgb(189,200,240);
-            /* border-bottom: 1px solid #bdc8f070; */
             margin-bottom: 20px;
+            justify-content: space-between;
             h1{
                 font-size: 18px;
                 font-weight: 500;
                 margin-bottom: 5px;
+            }
+            >div{
+                button{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    border-radius: 8px;
+                    width: 34px;
+                    height: 34px;
+                    font-size: 1.2rem;
+                    overflow: hidden;
+                    transition: all 0.2s ease-in-out 0s;
+                    background: rgb(41,49,79);
+                    color: rgb(124,77,255);
+                }
             }
         }
         &_tool{
@@ -126,6 +142,7 @@ const ProductWrap = styled.div`
                 width: 100%;
                 border: 1px solid #3a4570;
                 border-collapse: collapse;
+                margin-bottom: 25px;
                 th,td{ 
                     padding: 15px 30px;
                     text-align: center;
@@ -281,19 +298,21 @@ export const CreateWrap = styled.div`
         }
         .content-create{
             width: 100%;
-            height: calc(100% - 185px);
-            overflow-y: scroll;
-            /* background: green; */
             background: rgb(33,41,70);
+            height: calc(100% - 88px);
+            overflow: auto;
             form{
                 display: block;
+                position: relative;
+                
                >div{
                     &:first-child{
                         padding-top: 2rem;
                         padding-left: 1.5rem;
                         padding-right: 1.5rem;
                         width: 100%;
-                        height: 100%;
+                        /* height: 100%; */
+                        
                         &::-webkit-scrollbar{
                             width: 1px;
                         }
@@ -336,6 +355,7 @@ export const CreateWrap = styled.div`
                                 border: 1px solid #4c4f52;
                                 padding: 0.25rem 0.75rem;
                                 border-radius: 4px;
+                                transition: all 0.5s ease 0s;
                                 &:focus-within{
                                     border-color: #707275;
                                 }
@@ -350,184 +370,43 @@ export const CreateWrap = styled.div`
                                     outline: none;
                                     color: rgb(189, 200, 240);
                                     font-size: 16px;
+                                    padding-left: 10px;
+                                    &::placeholder{
+                                        color: rgba(189, 200, 240, 0.418);
+                                    }
+                                }
+                                textarea{
+                                    padding-left: 10px;
+                                    width: 100%;
+                                    background: transparent;
+                                    border: none;
+                                    outline: none;
+                                    color: rgb(189, 200, 240);
+                                    font-size: 16px;
+                                    padding-top: 5px;
                                     &::placeholder{
                                         color: rgba(189, 200, 240, 0.418);
                                     }
                                 }
                             }
-                            &:nth-child(2){
+                            &:nth-child(4),&:nth-child(9),&:nth-child(10){
                                 >div{
-                                    textarea{
-                                        width: 100%;
-                                        background: transparent;
-                                        border: none;
-                                        outline: none;
-                                        color: rgb(189, 200, 240);
-                                        font-size: 16px;
-                                        &::placeholder{
-                                            color: rgba(189, 200, 240, 0.418);
-                                        }
-                                    }
-                                }
-                            }
-                            &:nth-child(4),&:nth-child(5){
-                                >div{
-                                    /* padding: 0; */
                                     cursor: pointer;
-                                    position: relative;
+                                    padding: 0;
+                                    border: 0;
+                                    border-radius: 0;
                                     .dropdown{
-                                        height: 3rem;
-                                        display: flex;
-                                        align-items: center;
-                                        /* height: 100%; */
-                                        overflow: hidden;
-                                        .item{
-                                            flex: 1;
-                                            >div{
-                                                &.label{
-                                                }
-                                                &:nth-child(2){
-                                                    position: absolute;
-                                                    width: 100%;
-                                                    background: white;
-                                                    color: #000;
-                                                    left: 0;
-                                                    top: 110%;
-                                                    border-radius: 2px;
-                                                    opacity: 0;
-                                                    visibility: hidden;
-                                                    transform: rotateX(90deg);
-                                                    transform-origin: center top 0;
-                                                    transition: all 0.5s ease 0s;
-                                                    z-index: 999;
-                                                    height: 0;
-                                                    overflow: hidden;
-                                                    &.active{
-                                                        visibility: visible;
-                                                        opacity: 1;
-                                                        transform: rotateX(0deg);
-                                                        height: 7rem;
-                                                    }
-                                                    &.overflow{
-                                                        height: 12rem;
-                                                        overflow-x: hidden;
-                                                        overflow-y: scroll;
-                                                        >div{
-                                                            height: calc(100% / 4);
-                                                        }
-                                                    }
-                                                    >div{
-                                                        height: calc(100% / 2);
-                                                        width: 100%;
-                                                        display: flex;
-                                                        align-items: center;
-                                                        &:hover{
-                                                            background: rgba(0,0,0,0.14);
-                                                        }
-                                                        >span{
-                                                            padding: 0.25rem 0.75rem;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        .arrow{
-                                            display: inline-block;
-                                            top: 2px;
-                                            width: 14px;
-                                            height: 14px;
-                                            position: relative;
-                                            transform: rotate(0);
-                                            transition: all 0.4s ease;
-                                            &.active{
-                                                transform: rotate(180deg);
-                                            }
-                                            &::after,&::before{
-                                                content: "";
-                                                width: 9px;
-                                                height: 2px;
-                                                background: rgb(189, 200, 240);
-                                                display: block;
-                                                position: absolute;
-                                                top: 50%;
-                                            }
-                                            &::before{
-                                                border-top-left-radius: 1px;
-                                                border-bottom-left-radius: 1px;
-                                                left: 0px;
-                                                transform: translateY(-50%) rotate(46deg);
-                                            }
-                                            &::after{
-                                                border-top-left-radius: 1px;
-                                                border-bottom-left-radius: 1px;
-                                                left: 5px;
-                                                top: 5px;
-                                                transform: translateY(50%) rotate(-46deg);
-                                            }
-                                        }   
-                                    }
-                                }
-                            }
-                            &:nth-child(6),&:nth-child(7){
-                                >div{
-                                    &:nth-child(2){
                                         position: relative;
-                                        cursor: pointer;
-                                        .dropdown{
-                                            height: 3rem;
+                                        border: 1px solid #4c4f52;
+                                        border-radius: 4px;
+                                        height: 3.5rem;
+                                        .item{
+                                            padding: .25rem .75rem;
                                             display: flex;
                                             align-items: center;
-                                            /* height: 100%; */
-                                            overflow: hidden;
-                                            .item{
+                                            height: 100%;
+                                            .label{
                                                 flex: 1;
-                                                >div{
-                                                    &.label{
-                                                    }
-                                                    &:nth-child(2){
-                                                        position: absolute;
-                                                        width: 100%;
-                                                        background: white;
-                                                        color: #000;
-                                                        left: 0;
-                                                        top: 110%;
-                                                        border-radius: 2px;
-                                                        opacity: 0;
-                                                        visibility: hidden;
-                                                        transform: rotateX(90deg);
-                                                        transform-origin: center top 0;
-                                                        transition: all 0.5s ease 0s;
-                                                        z-index: 999;
-                                                        height: 0;
-                                                        overflow: hidden;
-                                                        &.active{
-                                                            visibility: visible;
-                                                            opacity: 1;
-                                                            transform: rotateX(0deg);
-                                                            height: 7rem;
-                                                        }
-                                                        &.overflow{
-                                                            height: 12rem;
-                                                            overflow-x: hidden;
-                                                            overflow-y: scroll;
-                                                            >div{
-                                                                height: calc(100% / 4);
-                                                            }
-                                                        }
-                                                        >div{
-                                                            height: calc(100% / 2);
-                                                            width: 100%;
-                                                            display: flex;
-                                                            align-items: center;
-                                                            &:hover{
-                                                                background: rgba(0,0,0,0.14);
-                                                            }
-                                                            >span{
-                                                                padding: 0.25rem 0.75rem;
-                                                            }
-                                                        }
-                                                    }
-                                                }
                                             }
                                             .arrow{
                                                 display: inline-block;
@@ -562,18 +441,92 @@ export const CreateWrap = styled.div`
                                                     top: 5px;
                                                     transform: translateY(50%) rotate(-46deg);
                                                 }
-                                            }   
+                                            }  
                                         }
-                                    }
-                                    &:nth-child(3){
-                                        border: none;
-                                        @media (min-width: 640px){
-                                            grid-column-start: 3;
+                                        .drop-select{
+                                            position: absolute;
+                                            width: 100%;
+                                            background: white;
+                                            color: #000;
+                                            left: 0;
+                                            top: 110%;
+                                            border-radius: 2px;
+                                            opacity: 0;
+                                            visibility: hidden;
+                                            transform: rotateX(90deg);
+                                            transform-origin: center top 0;
+                                            transition: all 0.5s ease 0s;
+                                            overflow: auto;
+                                            max-height: 120px;
+                                            z-index: 9999999;
+                                            &.active{
+                                                visibility: visible;
+                                                opacity: 1;
+                                                transform: rotateX(0deg);
+                                            }
+                                            >div{
+                                                height: 40px;
+                                                display: flex;
+                                                align-items: center;
+                                                padding: .25rem .75rem;
+                                                &:hover{
+                                                    background: rgba(0,0,0,0.14);
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                            &:last-child{
+                            &:nth-child(5),&:nth-child(6){
+                                >div{
+                                    border: none;
+                                    border-radius: 0;
+                                    padding: 0;
+                                    .item{
+                                        margin-bottom: 15px;
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 0 10px;
+                                        .btn{
+                                            width: 46px;
+                                            height: 46px;
+                                            button{
+                                                width: 100%;
+                                                height: 100%;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                border: 1px solid #4c4f52;
+                                                color: rgb(189, 200, 240);
+                                                border-radius: 4px;
+                                            }
+                                        }
+                                        .input{
+                                            flex: 1;
+                                            border: 1px solid #4c4f52;
+                                            padding: 0.25rem 0.75rem;
+                                            border-radius: 4px;
+                                            transition: all 0.5s ease 0s;
+                                            &:focus-within{
+                                                border: 1px solid gray;
+                                            }
+                                            >input{
+                                                width: 100%;
+                                                background: transparent;
+                                                padding-left: 10px;
+                                                outline: none;
+                                                border: none;
+                                                height: 38px;
+                                                color: rgb(189, 200, 240);
+                                                &::placeholder{
+                                                    color: rgba(189, 200, 240, 0.418);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-child(8){
                                 >div{
                                     padding: 0;
                                     border: none;
@@ -632,14 +585,12 @@ export const CreateWrap = styled.div`
                                 }
                             }
                         }
-                    
                     }
                     &:nth-child(2){
-                        position: fixed;
-                        bottom: 0;
+                        /* position: fixed;
+                        bottom: 0; */
                         width: 100%;
                         background: #111936;
-                        z-index: 99999;
                         padding: 1rem 1.5rem;
                         display: grid;
                         grid-template-columns: repeat(2,1fr);
@@ -700,10 +651,6 @@ export const DetailWrap = styled.div`
         margin-right: 100px;
         padding: 24px;
     }
-    /* @media (min-width: 1024px){
-        margin-left: 120px;
-        margin-right: 120px;
-    } */
     .row{
         display: grid;
         grid-template-columns: repeat(12,1fr);

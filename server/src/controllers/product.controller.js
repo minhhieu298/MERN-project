@@ -60,9 +60,10 @@ module.exports.productCtrl = {
       const imagesLinks = [];
 
       for (let i = 0; i < images.length; i++) {
-        const result = await cloudinary.v2.uploader.upload(images[i], {
+        const result = await cloudinary.v2.uploader.upload(images[i].url, {
           folder: "thumbnails",
         });
+        // console.log(result);
         imagesLinks.push({
           public_id: result.public_id,
           url: result.secure_url,

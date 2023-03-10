@@ -27,6 +27,12 @@ const orderSchema = new Schema(
           type: Number,
           required: true,
         },
+        size: {
+          type: String,
+        },
+        color: {
+          type: String,
+        },
         purchaseQty: {
           type: Number,
           required: true,
@@ -66,7 +72,7 @@ const orderSchema = new Schema(
     ],
   },
   {
-    collection: 'orders',
+    collection: "orders",
     timestamps: true,
   }
 );

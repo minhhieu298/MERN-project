@@ -1,4 +1,5 @@
 const Category = require("../models/category.model");
+const slug = require("slug");
 
 function createCategories(categories, parent_id = null) {
   const categoryList = [];
@@ -25,7 +26,6 @@ module.exports.cateCtrl = {
   createCate: async (req, res) => {
     const cateObj = {
       name: req.body.name,
-      slug: req.body.slug,
     };
     if (req.body.parent_id) {
       cateObj.parent_id = req.body.parent_id;
@@ -62,7 +62,10 @@ module.exports.cateCtrl = {
     await Category.updateOne(
       { _id: payload._id },
       {
-        $set: payload,
+        $set: {
+          name: payload.name,
+          slug: slug(payload.name),
+        },
       }
     ).exec((error, data) => {
       if (error) return res.status(400).json({ message: error.message });
@@ -77,7 +80,12 @@ module.exports.cateCtrl = {
     }
     await Category.deleteOne({ _id: payload._id }).exec((error, data) => {
       if (error) return res.status(400).json({ message: error.message });
-      if (data) return res.status(200).json({ message: "success" });
+      if (data) {
+        Category.deleteMany({ parent_id: payload._id }).exec((err, c) => {
+          if (err) return res.status(400).json({ message: err.message });
+          if (c) return res.status(200).json({ message: "success" });
+        });
+      }
     });
   },
 };

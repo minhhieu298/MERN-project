@@ -70,7 +70,7 @@ const Item = (props) => {
           </div>
           <div className="col-2">
             <div className="cart-btn">
-              <button onClick={decreaseQty}>-</button>
+              <button onClick={decreaseQty} disabled={qty === 1 ? true : false}>-</button>
               <input type="text" readOnly value={qty} />
               <button onClick={increaseQty}>+</button>
             </div>

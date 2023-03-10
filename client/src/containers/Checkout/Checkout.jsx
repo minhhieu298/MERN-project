@@ -27,10 +27,11 @@ const Checkout = () => {
             orderItems: cartItems?.map(item => ({
                 productId: item?.product?._id,
                 payablePrice: Number(item?.price * item?.quantity),
-                purchaseQty: Number(item?.quantity)
+                purchaseQty: Number(item?.quantity),
+                size: item?.size,
+                color: item?.color
             }))
         }
-        console.log(payload);
         dispatch(createOrder(payload, token))
         navigate(`${PROFILE_PAGE}/${ORDER_PAGE}`)
     }

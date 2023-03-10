@@ -55,7 +55,10 @@ const productSchema = new Schema(
     price_after_discount: {
       type: Number,
     },
-    sold: Number,
+    sold: {
+      type: Number,
+      default: 0,
+    },
     stock: {
       type: Number,
       required: true,

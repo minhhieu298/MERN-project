@@ -119,7 +119,7 @@ export const getOrderAdmin = ({ url, token }) => async (dispatch) => {
   }
 }
 
-export const updateOrderAdmin = (orderId, type, token) => async (dispatch) => {
+export const updateOrderAdmin = (orderId, type, token, url) => async (dispatch) => {
   const res = await callAPI.post('/v1/update-order', {
     orderId, type
   }, {
@@ -131,6 +131,6 @@ export const updateOrderAdmin = (orderId, type, token) => async (dispatch) => {
     dispatch({
       type: UPDATE_ORDER_ADMIN
     })
-    // dispatch(getOrderAdmin(token))
+    dispatch(getOrderAdmin({ url, token }))
   }
 }

@@ -132,9 +132,9 @@ const ProductDetail = () => {
   }
   const handleSubmit = async e => {
     e.preventDefault()
-    let data = {
+    const data = {
       name, price, description, stock,
-      image,
+      image: image ? image : product?.image,
       thumbnails: thumbnail.length > 0 ? thumbnail : product?.thumbnails,
       sizes: size,
       colors: color,
@@ -156,8 +156,8 @@ const ProductDetail = () => {
     setPrice(product?.price || 0)
     setDesciption(product?.description || '')
     setStock(product?.stock || 0)
-    // setImage(product?.image)
-    // setThumbnail(product?.thumbnails || [])
+    setImage(product?.image)
+    setThumbnail(product?.thumbnails || [])
     setSize(product?.sizes?.map(item => ({ size: item.size, sold: item.sold })) || [{ size: '', sold: false }])
     setColor(product?.colors?.map(item => ({ color: item.color, sold: item.sold })) || [{ color: '', sold: false }])
     setCateParent({ id: product?.category_parent, name: '' } || { id: '', name: ' ' })
@@ -249,14 +249,12 @@ const ProductDetail = () => {
                       <div key={i} className='item'>
                         <div>
                           <div className='btn'>
-                            {
-                              color.length <= 1 ? null : <button type='button' onClick={() => {
-                                const list = [...color]
-                                console.log(i)
-                                list.splice(i, 1)
-                                setColor(list)
-                              }} disabled={color.length !== 1 ? false : true}>-</button>
-                            }
+                            <button type='button' onClick={() => {
+                              const list = [...color]
+                              console.log(i)
+                              list.splice(i, 1)
+                              setColor(list)
+                            }} disabled={color.length !== 1 ? false : true}>-</button>
                           </div>
                           <div className='input'>
                             <input type="text" name='color' value={x.color} placeholder='Color' onChange={(e) => handleColor(e, i)} />
@@ -289,6 +287,7 @@ const ProductDetail = () => {
                 <button>Update</button>
               </div>
             </form>
+            <span>{product?.sold}</span>
           </div>
         </div>
       </Container>

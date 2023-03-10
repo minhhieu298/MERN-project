@@ -125,7 +125,7 @@ const AgentOrder = () => {
                             <div className='infor'>
                               <img src={item?.productId?.image} alt="" />
                               <div>
-                                <span>{item?.productId?.name}</span>
+                                <span>{item?.productId?.name} - {item.size} - {item.color}</span>
                                 <span>da</span>
                                 <span>{`x${item?.purchaseQty}`}</span>
                               </div>

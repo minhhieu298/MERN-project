@@ -6,7 +6,6 @@ import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 import { createProduct } from '../../../redux/actions/product.action'
 
 const DropItem = ({ label, data, setData, cate, array, dataId }) => {
-    // const { label, categories, cateParent, setCateParent, cate, cateChild, setCateChild } = props
     const [drop, setDrop] = useState(false)
     const refDrop = useRef(null)
     useOnClickOutside(refDrop, () => setDrop(false))
@@ -21,17 +20,17 @@ const DropItem = ({ label, data, setData, cate, array, dataId }) => {
                                 <div className='label'>
                                     <span>{data.name ? data.name : `Select category`}</span>
                                 </div>
-                                <div className={`${drop ? 'active' : 'hidden'}`}>
-                                    {
-                                        array?.map(item => (
-                                            <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
-                                                <span>{item?.name}</span>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                                <div className="arrow"></div>
                             </div>
-                            <div className="arrow"></div>
+                            <div className={`drop-select ${drop ? 'active' : ''}`}>
+                                {
+                                    array?.map(item => (
+                                        <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
+                                            <span>{item?.name}</span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </> : cate === 'child' ? <div className="form-group">
@@ -42,40 +41,20 @@ const DropItem = ({ label, data, setData, cate, array, dataId }) => {
                                 <div className='label'>
                                     <span>{data?.name ? data?.name : `Select category`}</span>
                                 </div>
-                                <div className={`${drop ? 'active overflow' : 'hidden'}`}>
-                                    {
-                                        array?.filter(item => item?._id === dataId)[0]?.children?.map(item => (
-                                            <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
-                                                <span>{item?.name}</span>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                                <div className="arrow"></div>
                             </div>
-                            <div className="arrow"></div>
+                            <div className={`drop-select ${drop ? 'active' : ''}`}>
+                                {
+                                    array?.filter(item => item?._id === dataId)[0]?.children?.map(item => (
+                                        <div key={item?._id} onClick={() => setData({ id: item?._id, name: item?.name })}>
+                                            <span>{item?.name}</span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
-                </div> : <>
-                    <label htmlFor="">{label}</label>
-                    <div onClick={() => setDrop(!drop)} >
-                        <div className="dropdown" ref={refDrop}>
-                            <div className="item">
-                                <div className='label'>
-                                    <span>{data ? data : `Select type size`}</span>
-                                </div>
-                                <div className={`${drop ? 'active' : 'hidden'}`}>
-                                    <div onClick={() => setData('Clothings')}>
-                                        <span>Clothing</span>
-                                    </div>
-                                    <div onClick={() => setData('Shoes')}>
-                                        <span>Shoes</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="arrow"></div>
-                        </div>
-                    </div>
-                </>
+                </div> : <></>
             }
         </React.Fragment>
     )
@@ -114,7 +93,6 @@ const CreateProduct = ({ show, setShow, categories }) => {
         setColor(list)
     }
 
-    // console.log(color);
     const handleImage = async (e) => {
         const file = e.target.files[0]
         const reader = new FileReader()
@@ -145,14 +123,23 @@ const CreateProduct = ({ show, setShow, categories }) => {
             thumbnails: thumbnail,
             gender, name, description, price, stock, image
         }
-        console.log(payload);
         dispatch(createProduct(payload, token))
-
+        setName('')
+        setPrice('')
+        setDesciption('')
+        setStock('')
+        setCateParent('')
+        setCateChild('')
+        setGender('')
+        setImage('')
+        setThumbnail([])
+        setColor([...color, { color: '' }])
+        setSize([...size, { size: '' }])
+        setShow(false)
     }
 
     return (
         <CreateWrap className={`${show ? 'active' : ''}`}>
-            {/* <CreateWrap className={`active`}> */}
             <div ref={ref} className={`form-create ${show ? 'active' : ''}`}>
                 <div className="title-create">
                     <h1>Tao san pham</h1>
@@ -164,19 +151,19 @@ const CreateProduct = ({ show, setShow, categories }) => {
                             <div className="form-group">
                                 <label htmlFor="">Tên sản phẩm</label>
                                 <div>
-                                    <input type="text" name='name' placeholder='Tên sản phẩm' value={name} onChange={e => setName(e.target.value)} />
+                                    <input type="text" name='name' placeholder='Tên sản phẩm' value={name} onChange={e => setName(e.target.value)} required />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Mô tả</label>
                                 <div>
-                                    <textarea type="text" name='description' placeholder='Mô tả sản phẩm' value={description} onChange={e => setDesciption(e.target.value)} rows={5} />
+                                    <textarea type="text" name='description' placeholder='Mô tả sản phẩm' value={description} onChange={e => setDesciption(e.target.value)} rows={5} required />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="">Giá</label>
                                 <div>
-                                    <input type="number" name='price' placeholder='Giá tiền' value={price} onChange={e => setPrice(e.target.value)} />
+                                    <input type="number" name='price' placeholder='Giá tiền' value={price} onChange={e => setPrice(e.target.value)} required />
                                 </div>
                             </div>
                             <div className='form-group'>
@@ -187,43 +174,37 @@ const CreateProduct = ({ show, setShow, categories }) => {
                                             <div className='label'>
                                                 <span>{gender ? gender : `Select gender`}</span>
                                             </div>
-                                            <div className={`${drop ? 'active' : 'hidden'}`}>
-                                                <div onClick={() => setGender('Men')}>
-                                                    <span>Men</span>
-                                                </div>
-                                                <div onClick={() => setGender('Women')}>
-                                                    <span>Women</span>
-                                                </div>
+                                            <div className="arrow"></div>
+                                        </div>
+                                        <div className={`drop-select ${drop ? 'active' : ''}`}>
+                                            <div onClick={() => setGender('Men')}>
+                                                <span>Men</span>
+                                            </div>
+                                            <div onClick={() => setGender('Women')}>
+                                                <span>Women</span>
                                             </div>
                                         </div>
-                                        <div className="arrow"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <DropItem label={'Category Parent'} cate='parent' data={cateParent} setData={setCateParent} array={categories} />
-                            </div>
-                            {
-                                cateParent.id && <DropItem cate='child' label={'Child Category'} array={categories} data={cateChild} setData={setCateChild} dataId={cateParent?.id} />
-                            }
                             <div className="form-group">
                                 <label htmlFor="">Size</label>
                                 <div>
                                     {
                                         size.map((x, i) => (
-                                            <div key={i}>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" name='size' placeholder='Size' onChange={(e) => handleSize(e, i)} />
-                                                    </div>
-                                                </div>
-                                                <div>
+                                            <div key={i} className='item'>
+                                                <div className="btn">
                                                     <button type='button' onClick={() => {
                                                         const list = [...size]
                                                         console.log(i)
                                                         list.splice(i, 1)
                                                         setSize(list)
                                                     }} disabled={size.length !== 1 ? false : true}>-</button>
+                                                </div>
+                                                <div className='input'>
+                                                    <input type="text" name='size' placeholder='Size' onChange={(e) => handleSize(e, i)} required />
+                                                </div>
+                                                <div className='btn'>
                                                     <button type='button' onClick={() => setSize([...size, { size: '' }])}>+</button>
                                                 </div>
                                             </div>
@@ -236,18 +217,18 @@ const CreateProduct = ({ show, setShow, categories }) => {
                                 <div>
                                     {
                                         color.map((x, i) => (
-                                            <div key={i}>
-                                                <div>
-                                                    <div>
-                                                        <input type="text" name='color' placeholder='Color' onChange={(e) => handleColor(e, i)} />
-                                                    </div>
-                                                </div>
-                                                <div>
+                                            <div key={i} className='item'>
+                                                <div className="btn">
                                                     <button type='button' onClick={() => {
                                                         const list = [...color]
                                                         list.splice(i, 1)
                                                         setColor(list)
                                                     }} disabled={color.length !== 1 ? false : true}>-</button>
+                                                </div>
+                                                <div className='input'>
+                                                    <input type="text" name='color' placeholder='Color' onChange={(e) => handleColor(e, i)} />
+                                                </div>
+                                                <div className='btn'>
                                                     <button type='button' onClick={() => setColor([...color, { color: '' }])}>+</button>
                                                 </div>
                                             </div>
@@ -295,6 +276,12 @@ const CreateProduct = ({ show, setShow, categories }) => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="form-group">
+                                <DropItem label={'Category Parent'} cate='parent' data={cateParent} setData={setCateParent} array={categories} />
+                            </div>
+                            {
+                                cateParent.id && <DropItem cate='child' label={'Child Category'} array={categories} data={cateChild} setData={setCateChild} dataId={cateParent?.id} />
+                            }
                         </div>
                         <div>
                             <button type='button' onClick={() => setShow(false)}>Huỷ</button>

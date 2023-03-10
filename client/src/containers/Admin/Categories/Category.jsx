@@ -5,7 +5,6 @@ import useStore from '../../../library/hooks/useStore'
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 import * as Icon from '../../../library/icons/index'
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
-import slugify from 'react-slugify';
 
 const Children = ({ c, token, dispatch }) => {
     const [form, setForm] = useState(false)
@@ -18,7 +17,6 @@ const Children = ({ c, token, dispatch }) => {
         let payload = {
             _id: data?._id,
             name: value.name,
-            slug: slugify(value.name)
         }
         dispatch(updateCate(payload, token))
         setForm(false)
@@ -62,7 +60,6 @@ const Parent = ({ cate, handleSelect, dispatch, token }) => {
         let payload = {
             _id: data?._id,
             name: value.name,
-            slug: slugify(value.name)
         }
         dispatch(updateCate(payload, token))
         setForm(false)
@@ -119,7 +116,6 @@ const Parent = ({ cate, handleSelect, dispatch, token }) => {
     )
 }
 
-
 const UpdateCate = () => {
     const [data, setData] = useState([])
     const { dispatch, categories, token } = useStore()
@@ -156,7 +152,7 @@ const UpdateCate = () => {
 }
 
 const Category = () => {
-    const { dispatch, categories, error } = useStore()
+    const { dispatch, categories, token, error } = useStore()
     const [cate, setCate] = useState('')
     const [parentCateId, setParentCateId] = useState('')
     const [label, setLabel] = useState('')
@@ -166,19 +162,15 @@ const Category = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        try {
-            const slug = Object.fromEntries(new FormData(e.target))
-            let data = {
-                name: cate,
-                slug: slug.slug.toLowerCase(),
-                parent_id: parentCateId
-            }
-            dispatch(createCate(data))
-            setCate('')
-            setParentCateId('')
-            setLabel('')
-        } catch (error) {
+        let data = {
+            name: cate,
+            parent_id: parentCateId
         }
+        console.log(data);
+        dispatch(createCate(data, token))
+        setCate('')
+        setParentCateId('')
+        setLabel('')
     }
     useEffect(() => {
         dispatch(getCates())
@@ -215,10 +207,12 @@ const Category = () => {
                                 </div>
                             }
                             <div className="form-group">
-                                <input type="text" name='cate' value={cate} onChange={e => setCate(e.target.value)} placeholder='Category' required />
-                            </div>
-                            <div className="form-group">
-                                <input type="" name='slug' placeholder='slug' value={slugify(cate)} readOnly />
+                                <div>
+                                    <input type="text" name='cate' value={cate} onChange={e => setCate(e.target.value)} placeholder='Category' required />
+                                </div>
+                                {
+                                    error && <span style={{ color: 'tomato' }}>{error}</span>
+                                }
                             </div>
                             <div className="form-group">
                                 <button>Create</button>

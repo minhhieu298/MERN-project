@@ -26,8 +26,8 @@ const useStore = () => {
         totalOrder,
         users,
         total,
-        user
-        // error
+        user,
+        error
     }
 }
 

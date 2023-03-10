@@ -9,7 +9,7 @@ import { createSearchParams, Link, useLocation, useNavigate, useSearchParams } f
 import { ADMIN_PAGE } from '../../../setting/constants'
 import { numberWithCommas } from '../../../library/helper/numberComas'
 import CreateProduct from './CreateProduct'
-import { getDataAdmin } from '../../../redux/actions/initData.action'
+import { getCates } from '../../../redux/actions/category.action'
 import FilterPage from './FilterPage'
 import { setStateToUrl } from './Seach/url_handler'
 
@@ -59,7 +59,7 @@ const ListProduct = () => {
   let pageSize = 10;
   let navigate = useNavigate()
   let location = useLocation()
-  const [searchParam, setSearchParam] = useSearchParams()
+  const [searchParam] = useSearchParams()
   const { dispatch, products, meta, categories } = useStore()
   const [show, setShow] = useState(false)
   const [filter, setFilter] = useState(false)
@@ -119,7 +119,7 @@ const ListProduct = () => {
   }, [dispatch, page, pageSize, searchParam])
 
   useEffect(() => {
-    dispatch(getDataAdmin())
+    dispatch(getCates())
   }, [dispatch])
 
   return (
@@ -128,6 +128,9 @@ const ListProduct = () => {
         <div className="container">
           <div className="container_header">
             <h1>Danh sách sản phẩm</h1>
+            <div>
+              <button onClick={() => setShow(true)}><span><Icon.AddIcon /></span></button>
+            </div>
           </div>
           <div className="container_tool">
             <div className='search'>

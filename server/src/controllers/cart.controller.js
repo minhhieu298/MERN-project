@@ -23,7 +23,6 @@ module.exports.cartCrtl = {
               e.color === item.color &&
               e.size === item.size)
         );
-        console.log(item);
         let condition, update;
         if (isCart) {
           condition = {
@@ -69,29 +68,6 @@ module.exports.cartCrtl = {
       if (!cart) {
         return res.status(200).json({ cartItems: [] });
       }
-
-      // console.log(cartItems);
-      // let cartItems = cart.cartItems.reduce((acc, cur) => {
-      //   const exist = acc.find(
-      //     (e) =>
-      //       e.product._id.toString() === cur.product._id.toString() &&
-      //       e.color === cur.color &&
-      //       e.size === cur.size
-      //   );
-      //   if (exist) {
-      //     exist.quantity = cur.quantity;
-      //   } else {
-      //     acc.push(cur);
-      //   }
-      //   return acc;
-      // }, []);
-      // let cartItems = {};
-      // cart.cartItems.forEach((item, index) => {
-      //   // cartItems[item.product._id.toString()] = {
-
-      //   // };
-      //   console.log(item);
-      // });
       return res.status(200).json({ cartItems: cart.cartItems });
     } catch (error) {
       res.status(400).json({ message: error.message });

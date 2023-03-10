@@ -11,14 +11,13 @@ import { convertUTCDateToLocalDate, } from '../../../library/helper/getTime'
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import { getStateFromUrl, setStateToUrl } from './url_handler'
 
-const Item = ({ order, ind }) => {
+const Item = ({ order, ind, url }) => {
     const [drop, setDrop] = useState(false)
     const ref = useRef(null)
     const { dispatch, token } = useStore()
     useOnClickOutside(ref, () => setDrop(false))
-
     const handleUpdateStatus = (orderId, type) => {
-        dispatch(updateOrderAdmin(orderId, type, token))
+        dispatch(updateOrderAdmin(orderId, type, token, url))
         setDrop(false)
     }
 
@@ -117,6 +116,13 @@ const Order = () => {
         page: 1
     }
 
+    let data = {
+        pageSize,
+        page: Number(searchParam.get('page')) || 1,
+        keyword: searchParam.get('q') || '',
+        status: searchParam.get('status') || '',
+        sort: searchParam.get('sort') || ''
+    }
     const onChange = (e, type) => {
         if (e.target.checked) {
             let query = {}
@@ -269,7 +275,7 @@ const Order = () => {
                         <tbody>
                             {
                                 orders?.map((order, ind) => (
-                                    <Item key={order?._id} order={order} ind={ind} />
+                                    <Item key={order?._id} order={order} ind={ind} url={data} />
                                 ))
                             }
                         </tbody>

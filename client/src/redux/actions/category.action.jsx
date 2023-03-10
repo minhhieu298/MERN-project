@@ -3,7 +3,6 @@ import { ALL_CATEGORIES, CREATE_CATEGORY, DELETE_CATEGORY, ERROR_MESSAGE, UPDATE
 
 export const getCates = () => async (dispatch) => {
     const res = await callAPI.get('/v2/list-categories')
-    console.log(res.data);
     if (res.status === 200) {
         dispatch({
             type: ALL_CATEGORIES,
@@ -14,9 +13,13 @@ export const getCates = () => async (dispatch) => {
     }
 }
 
-export const createCate = (data) => async (dispatch) => {
+export const createCate = (data, token) => async (dispatch) => {
     try {
-        const res = await callAPI.post('/v1/create-new-category', data)
+        const res = await callAPI.post('/v1/create-new-category', data, {
+            headers: {
+                Authorization: token,
+            },
+        })
         if (res.status === 201) {
             dispatch({
                 type: CREATE_CATEGORY,
