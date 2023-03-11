@@ -332,18 +332,12 @@ module.exports.orderCtrl = {
           if (error) return res.status(400).json({ message: error.message });
           if (order) {
             const order = await Order.findOne({ _id: req.body.orderId });
-
-            // console.log({ mergedArray });
-            await updateProduct(order.orderItems);
-            // Promise.all(order.orderItems).then((res) => {
-            //   res.forEach((item) => {
-            //     updateProduct(item.productId, item.purchaseQty);
-            //   });
-            // });
-            // order.orderItems.forEach(async (item) => {
-            //   await
-            // });
-            // return res.status(200).json({ message: "success" });
+            for (let i = 0; i < order.orderItems.length; i++) {
+              await updateProduct(
+                order.orderItems[i].productId,
+                order.orderItems[i].purchaseQty
+              );
+            }
           }
         });
       } else {
@@ -390,29 +384,9 @@ module.exports.orderCtrl = {
   },
 };
 
-async function updateProduct(arr) {
-  // Promise.all(arr).then((res) => {
-  arr.forEach(async (item) => {
-    let product = await Product.findOne({ _id: item.productId.toString() });
-    if (product) {
-      product.sold += Number(item.purchaseQty);
-      product.stock < 1 ? 0 : (product.stock -= Number(item.purchaseQty));
-      await product.save({ validateBeforSave: false });
-    }
-  });
-  // });
-
-  // function chechDuplicateProductId(obj, item) {
-  //   obj[item.productId.toString()]
-  //     ? (obj[item.productId.toString()].purchaseQty += item.purchaseQty)
-  //     : (obj[item.productId.toString()] = { ...item });
-  //   return obj;
-  // }
-  // const arrayHashmap = arr.reduce(chechDuplicateProductId, {});
-  // const mergedArray = Object.values(arrayHashmap);
-  // console.log(mergedArray);
-  // let product = await Product.findById(id);
-  // product.sold += Number(quantity);
-  // product.stock < 1 ? 0 : (product.stock -= Number(quantity));
-  // await product.save({ validateBeforSave: false });
+async function updateProduct(id, qty) {
+  let product = await Product.findById(id);
+  product.stock < 1 ? 0 : (product.stock -= Number(qty));
+  product.sold += Number(qty);
+  await product.save({ validateBeforSave: false });
 }
