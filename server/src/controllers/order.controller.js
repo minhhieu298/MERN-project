@@ -332,11 +332,11 @@ module.exports.orderCtrl = {
           if (error) return res.status(400).json({ message: error.message });
           if (order) {
             const order = await Order.findOne({ _id: req.body.orderId });
-            for (let i = 0; i < order.orderItems.length; i++) {
-              await updateProduct(
-                order.orderItems[i].productId,
-                order.orderItems[i].purchaseQty
-              );
+            // order.orderItems.forEach((item) => {
+            //   updateProduct(item.productId, item.purchaseQty);
+            // });
+            for (let item of order.orderItems) {
+              await updateProduct(item.productId, item.purchaseQty);
             }
           }
         });
