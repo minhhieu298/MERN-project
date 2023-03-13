@@ -3,12 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import useOnClickOutside from '../../../../library/hooks/useOnClickOutside'
 import { getStepContent } from './getStepContent'
-import { Container } from './index'
+import { Container, DropDown } from './index'
 import * as Icon from '../../../../library/icons/index'
 import useStore from '../../../../library/hooks/useStore'
 import { createAdr } from '../../../../redux/actions/address.action'
 import { useNavigate } from 'react-router-dom'
 import { CART_PAGE } from '../../../../setting/constants'
+import { validateAdr } from './validateAdr'
 
 const CreateAddress = (props) => {
     const { open, setOpen, newOrder } = props
@@ -27,22 +28,30 @@ const CreateAddress = (props) => {
     const [cityArr, setCityArr] = useState([])
     const [districtArr, setDistrictArr] = useState([])
     const [stateArr, setStateArr] = useState([])
+    const [error, setError] = useState({ err: '' })
     const ref = useRef(null)
     useOnClickOutside(ref, () => setDrop(false));
+
+
 
     const handleSubmit = e => {
         e.preventDefault()
         // setStep(0)
         const payload = {
             name, phone, address,
-            district: district?.target?.value,
-            city: city?.target?.value,
-            state: state?.target?.value,
+            district: district?.target?.alt,
+            city: city?.target?.alt,
+            state: state?.target?.alt,
             isSelected: isCheck
         }
-        dispatch(createAdr(payload, token))
-        if (newOrder) {
-            setOpen(false)
+        if (!name || !phone || !address || !city || !district || !state) {
+            setError({ ...error, err: validateAdr(payload) })
+
+        } else {
+            dispatch(createAdr(payload, token))
+            if (newOrder) {
+                setOpen(false)
+            }
         }
     }
 
@@ -51,16 +60,16 @@ const CreateAddress = (props) => {
             const { data } = await axios.get('https://provinces.open-api.vn/api/')
             setStateArr(data)
             if (state) {
-                const res = await axios.get(`https://provinces.open-api.vn/api/p/${state?.target?.alt}?depth=2`)
+                const res = await axios.get(`https://provinces.open-api.vn/api/p/${state?.target?.value}?depth=2`)
                 setDistrictArr(res.data)
                 if (district) {
-                    const res = await axios.get(`https://provinces.open-api.vn/api/d/${district?.target?.alt}?depth=2`)
+                    const res = await axios.get(`https://provinces.open-api.vn/api/d/${district?.target?.value}?depth=2`)
                     setCityArr(res.data)
                 }
             }
         }
         fetchAPI()
-    }, [state?.target?.alt, district?.target?.alt])
+    }, [state?.target?.value, district?.target?.value])
 
     useEffect(() => {
         if (!addresses?.length) {
@@ -79,61 +88,77 @@ const CreateAddress = (props) => {
                         <div>
                             <div className="form-group">
                                 <div>
-                                    <input type="text" placeholder='Họ tên' value={name} onChange={e => setName(e.target.value)} />
+                                    <div>
+                                        <input type="text" placeholder='Họ tên' value={name} onChange={e => setName(e.target.value)} />
+                                    </div>
+                                    {
+                                        error.err.name && <span>{error.err.name}</span>
+                                    }
                                 </div>
                                 <div>
-                                    <input type="number" placeholder='Số điện thoại' value={phone} onChange={e => setPhone(e.target.value)} />
+                                    <div>
+                                        <input type="number" placeholder='Số điện thoại' value={phone} onChange={e => setPhone(e.target.value)} />
+                                    </div>
+                                    {
+                                        error.err.phone && <span>{error.err.phone}</span>
+                                    }
                                 </div>
                             </div>
                             <div className="form-group" ref={ref}>
-                                <div onClick={() => setDrop(true)}>
-                                    <input type="text" placeholder='Tỉnh/Thành phố, Quận/Huyện, Phường/Xã' readOnly />
-                                    <div data-placeholder='Tỉnh/Thành phố, Quận/Huyện, Phường/Xã'>
-                                        {state?.target?.value ? `${state?.target?.value},` : ``}
-                                        {district?.target?.value ? `${district?.target?.value},` : ``}
-                                        {city?.target?.value ? `${city?.target?.value}` : ``}
+                                <div>
+                                    <DropDown ref={ref}>
+                                        <div className="label" onClick={() => setDrop(!drop)} data-placeholder='Tỉnh/Thành phố, Quận/Huyện, Phường/Xã'>
+                                            {state?.target?.alt ? `${state?.target?.alt},` : ``}
+                                            {district?.target?.alt ? `${district?.target?.alt},` : ``}
+                                            {city?.target?.alt ? `${city?.target?.alt}` : ``}
+
+                                            {
+                                                (state?.target?.alt || district?.target?.alt || city?.target?.alt) ? <span onClick={() => {
+                                                    setState('')
+                                                    setDistrict('')
+                                                    setCity('')
+                                                }}><Icon.CancelIcon fontSize='small' /></span> : <></>
+                                            }
+                                        </div>
                                         {
-                                            (state?.target?.alt || district?.target?.alt || city?.target?.alt) ? <span onClick={() => {
-                                                setState('')
-                                                setDistrict('')
-                                                setCity('')
-                                                setStep(0)
-                                                setBorder(0)
-                                            }}><Icon.CancelIcon fontSize='small' /></span> : <></>
+                                            drop && <div className="dropdown">
+                                                <div className="dropdown-title">
+                                                    <div onClick={() => setStepDrop(0)}>Tỉnh/Thành phố</div>
+                                                    <div onClick={() => {
+                                                        if (state) {
+                                                            setStep(1)
+                                                        }
+                                                    }}>Quận/Huyện</div>
+                                                    <div onClick={() => {
+                                                        if (state && district) {
+                                                            setStep(2)
+                                                        }
+                                                    }}>Phường/Xã</div>
+                                                </div>
+                                                <div className="dropdown-content">
+                                                    {getStepContent(step, setStep, stateArr, districtArr, cityArr, setState, setDistrict, setCity, setDrop)}
+                                                </div>
+                                            </div>
                                         }
-                                    </div>
-                                </div>
-                                <div className={`${drop ? 'visible' : 'hidden'}`}>
-                                    <div className="dropdown">
-                                        <div className="title">
-                                            <div onClick={() => { setStep(0), setBorder(0) }} style={{ borderBottom: border === 0 ? '2px solid orange' : 'none' }}>Tỉnh/Thành phố</div>
-                                            <div onClick={() => {
-                                                if (state) {
-                                                    setBorder(1)
-                                                    setStep(1)
-                                                }
-                                            }} style={{ borderBottom: border === 1 ? '2px solid orange' : 'none' }}>Quận/Huyện</div>
-                                            <div onClick={() => {
-                                                if (state && district) {
-                                                    setBorder(2)
-                                                    setStep(2)
-                                                }
-                                            }} style={{ borderBottom: border === 2 ? '2px solid orange' : 'none' }}>Phường/Xã</div>
-                                        </div>
-                                        <div className="content">
-                                            {getStepContent(step, setStep, stateArr, districtArr, cityArr, setState, setDistrict, setCity, setDrop, setBorder)}
-                                        </div>
-                                    </div>
+                                    </DropDown>
+                                    {
+                                        error.err.adrs && <span>{error.err.adrs}</span>
+                                    }
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div>
-                                    <textarea type='text'
-                                        placeholder='Địa chỉ cụ thể'
-                                        value={address}
-                                        onChange={e => setAddres(e.target.value)}
-                                        disabled={(!state?.target?.value && !district?.target?.value && !city?.target?.value) ? true : false}
-                                    ></textarea>
+                                    <div>
+                                        <textarea type='text'
+                                            placeholder='Địa chỉ cụ thể'
+                                            value={address}
+                                            onChange={e => setAddres(e.target.value)}
+                                            disabled={(!state?.target?.value && !district?.target?.value && !city?.target?.value) ? true : false}
+                                        ></textarea>
+                                    </div>
+                                    {
+                                        error.err.address && <span>{error.err.address}</span>
+                                    }
                                 </div>
                             </div>
                             <div className="form-group">
@@ -161,7 +186,7 @@ const CreateAddress = (props) => {
                                     navigate(`${CART_PAGE}`, { replace: true })
                                 }
                             }}> Trở lại</button>
-                            <button type='submit'>Hoàn Thành</button>
+                            <button type='submit' >Hoàn Thành</button>
                         </div>
                     </div>
                 </form>

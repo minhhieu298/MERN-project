@@ -30,7 +30,151 @@ const AddressWrap = styled.div`
                         flex: 1;
                         padding-bottom: 66px;
                         .form-group{
-                            position: relative;
+                            margin-bottom: 20px;
+                            &:first-child{
+                                >div{
+                                    display: flex;
+                                    gap: 0 15px;
+                                    >div{
+                                        width: 100%;
+                                        >span{
+                                            font-size: 14px;
+                                            text-transform: none;
+                                            color: tomato;
+                                        }
+                                        >div{
+                                            width: 100%;
+                                            box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                            border-radius: 2px;
+                                            height: 40px;
+                                            box-sizing: border-box;
+                                            border: 1px solid rgba(0,0,0,.14);
+                                            margin-bottom: 5px;
+                                            transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                            &:hover {
+                                                box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                            }
+                                            &:focus-within {
+                                                border: 1px solid rgba(0, 0, 0, 0.54);
+                                            }
+                                            input{
+                                                width: 100%;
+                                                height: 38px;
+                                                padding: 10px;
+                                                background-color: transparent;
+                                                font-size: 14px;
+                                                color: #222;
+                                                border: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-child(2){
+                                >div{
+                                    >span{
+                                        font-size: 14px;
+                                        text-transform: none;
+                                        color: tomato;
+                                    }
+                                    >div{
+                                        position: relative;
+                                        grid-template-columns: repeat(1,minmax(0,1fr));
+                                        border: 1px solid rgba(0,0,0,.14);  
+                                        box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                        border-radius: 2px;
+                                        height: 40px;
+                                        box-sizing: border-box;
+                                        margin-bottom: 5px;
+                                        transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                        }
+                                        &:focus-within {
+                                            border: 1px solid rgba(0, 0, 0, 0.54);
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-child(3){
+                                >div{
+                                    >span{
+                                        text-transform: none;
+                                        color: tomato;
+                                        font-size: 14px;
+                                    }
+                                    >div{
+                                        width: 100%;
+                                        box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                        border-radius: 2px;
+                                        height: 40px;
+                                        box-sizing: border-box;
+                                        border: 1px solid rgba(0,0,0,.14);
+                                        transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                        height: 60px;
+                                        margin-bottom: 5px;
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                        }
+                                        &:focus-within {
+                                            border: 1px solid rgba(0, 0, 0, 0.54);
+                                        }
+                                        >textarea{
+                                            width: 100%;
+                                            padding: 10px;
+                                            background-color: transparent;
+                                            font-size: 14px;
+                                            color: #222;
+                                            border: 0;
+                                            height: 100%;
+                                            &:disabled {
+                                                cursor: not-allowed;
+                                                opacity: 0.7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-child(4){
+                                >div{
+                                    >div{
+                                        &:first-child{
+                                            margin-right: 10px;
+                                            margin-bottom: 8px;
+                                            color: #555;
+                                        }
+                                        &:last-child{
+                                            display: flex;
+                                            gap: 10px;
+                                            flex-direction: column;
+                                            align-items: flex-start;
+                                            @media (min-width: 480px){
+                                                align-items: center;
+                                                flex-direction: row;
+                                            }
+                                            span{
+                                                padding: 10px 15px;
+                                                border-radius: 2px;
+                                                cursor: pointer;
+                                                border: 1px solid rgba(0,0,0,0.1);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-child(5){
+                                >div{
+                                    label{
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                        font-size: 16px;
+                                        input{
+                                            margin-right: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                            /* position: relative;
                             >div{
                                 display: grid;
                                 grid-template-columns: repeat(4,minmax(0,1fr));
@@ -63,28 +207,35 @@ const AddressWrap = styled.div`
                             }
                             &:nth-child(2){
                                 >div{
-                                    grid-template-columns: repeat(1,minmax(0,1fr));
-                                    border: 1px solid rgba(0,0,0,.14);  
-                                    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
-                                    border-radius: 2px;
-                                    height: 40px;
-                                    box-sizing: border-box;
-                                    transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
-                                    &:hover {
-                                        box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
-                                    }
-                                    &:focus-within {
-                                        border: 1px solid rgba(0, 0, 0, 0.54);
-                                    }
-                                    >input{
-                                        width: 100%;
-                                        height: 38px;
-                                        padding: 10px;
-                                        background-color: transparent;
+                                    >span{
                                         font-size: 14px;
-                                        color: #222;
-                                        border: 0;
-                                        cursor: auto;
+                                        color: tomato;
+                                        text-transform: none;
+                                    }
+                                    >div{
+                                        grid-template-columns: repeat(1,minmax(0,1fr));
+                                        border: 1px solid rgba(0,0,0,.14);  
+                                        box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                        border-radius: 2px;
+                                        height: 40px;
+                                        box-sizing: border-box;
+                                        transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                        }
+                                        &:focus-within {
+                                            border: 1px solid rgba(0, 0, 0, 0.54);
+                                        }
+                                        >input{
+                                            width: 100%;
+                                            height: 38px;
+                                            padding: 10px;
+                                            background-color: transparent;
+                                            font-size: 14px;
+                                            color: #222;
+                                            border: 0;
+                                            cursor: auto;
+                                        }
                                     }
                                 }
                             }
@@ -162,7 +313,7 @@ const AddressWrap = styled.div`
                                         margin-right: 5px;
                                     }
                                 }
-                            }
+                            } */
                         }
                     }
                     &:last-child{
@@ -207,6 +358,7 @@ export const DropDown = styled.div`
         display: flex;
         align-items: center;
         padding: 10px;
+        height: 100%;
         &:empty::before {
           content: attr(data-placeholder);
           color: #939393;
@@ -389,99 +541,6 @@ export const ListWrap = styled.div`
                             }
                         }
                     }
-                    /* >div{
-                        &:first-child{
-                            grid-column: 1 / span 1;
-                        }
-                        &:last-child{
-                            grid-column: 2 / span 13;
-                            .heading{
-                                display: grid;
-                                align-items: center;
-                                margin-bottom: 4px;
-                                color: rgba(0,0,0,.54);
-                                grid-template-columns: repeat(2,minmax(0,1fr));
-                                >div{
-                                    &:first-child{
-                                        grid-column: 1 / span 2;
-                                        display: grid;
-                                        align-items: center;
-                                        grid-template-columns: repeat(4,minmax(0,1fr));
-                                        @media (max-width: 576px){
-                                            grid-template-columns: repeat(2,minmax(0,1fr));
-                                        }
-                                        >div{
-                                            &:first-child{
-                                                color: rgba(0,0,0,.87);
-                                                font-size: 1rem;
-                                                line-height: 1.5rem;
-                                                grid-column: 1 / span 1;
-                                                text-transform: capitalize;
-                                                font-size: 16px;
-                                                position: relative;
-                                                &:after{
-                                                    position: absolute;
-                                                    content: '';
-                                                    height: 100%;
-                                                    border-left: 1px solid rgba(0, 0, 0, 0.54);
-                                                    right: 8px;
-                                                }
-                                            }
-                                            &:last-child{
-                                                grid-column: 2 / span 2;    
-                                                border: 0;
-                                            }
-                                        }
-                                    }
-                                    &:last-child{
-                                        grid-column: 3 / span 1;
-                                        background: none;
-                                        outline: none;
-                                        padding: 4px;
-                                        color: #08f;
-                                        white-space: nowrap;
-                                        cursor: pointer;
-                                    }
-                                }
-                                &:nth-child(2){
-                                    >div{
-                                        &:first-child{
-                                            grid-column: 1 / span 2;
-                                            display: grid;
-                                            grid-template-columns: repeat(1,minmax(0,1fr));
-                                            >div{
-                                                &:first-child{
-                                                    grid-column: 1 / span 2;
-                                                    color: rgba(0,0,0,.54);
-                                                    font-size: 14px;
-                                                    &::after{
-                                                        display: none;
-                                                    }
-                                                }
-                                                &:last-child{
-                                                    grid-column: 1 / span 1;
-                                                }
-                                            }
-                                        }
-                                        &:last-child{
-                                            grid-column: 3 / span 1;
-                                        }
-                                    }
-                                }
-                            }
-                            .row{
-                                margin-top: 4px;
-                                span{
-                                    color: #ee4d2d;
-                                    border: 1px solid #ee4d2d;
-                                    margin: 0 4px 4px 0;
-                                    border-radius: 1px;
-                                    padding: 2px 4px;
-                                    border: 0.5px solid;
-                                }
-                            }
-                        }
-                    } */
                 &:last-child{
                     border-bottom: 0;
                 }

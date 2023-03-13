@@ -15,8 +15,9 @@ const AgentAddress = () => {
   const { width } = useWindowSize()
 
   const handleUpdate = (adr) => {
-    setUpdate(true)
+    // console.log(adr);
     setUpdateAdr(adr)
+    setUpdate(true)
   }
 
   const handleSetDefaultAdr = (addressId) => {
@@ -35,7 +36,9 @@ const AgentAddress = () => {
     <React.Fragment>
       <AgentAddressWrap>
         <div className="title-address">
-          <h4>Địa chỉ của tôi</h4>
+          {
+            width > 640 && <h4>Địa chỉ của tôi</h4>
+          }
           <div>
             <button type='button' onClick={() => setOpen(true)}><span>Thêm địa chỉ mới</span></button>
           </div>
@@ -100,7 +103,7 @@ const AgentAddress = () => {
         open && <CreateAddress open={open} setOpen={setOpen} newOrder={true} />
       }
       {
-        update && <UpdateAddress update={update} setUpdate={setUpdate} data={updateAd} />
+        update && <UpdateAddress update={update} setUpdate={setUpdate} updateAdrs={updateAd} />
       }
     </React.Fragment>
   )

@@ -3,18 +3,21 @@ import HomeWrap from './style'
 import { Link } from 'react-router-dom'
 import useWindowSize from '../../library/hooks/useWindowSize'
 import useStore from '../../library/hooks/useStore'
-import { getData } from '../../redux/actions/initData.action'
 import { numberWithCommas } from '../../library/helper/numberComas'
 import shoes from '../../assets/shoes.jpg';
 import short from '../../assets/short.webp'
 import Slider from './Slider'
+import { getAllProducts } from '../../redux/actions/product.action'
 
 const Home = () => {
   const { width } = useWindowSize()
   const { dispatch, products } = useStore()
 
   useEffect(() => {
-    // dispatch(getData())
+    dispatch(getAllProducts({
+      pageSize: 7,
+      page: 1,
+    }))
   }, [])
   return (
     <HomeWrap>
@@ -43,81 +46,29 @@ const Home = () => {
       <section className="products">
         <h1>This Week's Picks</h1>
         <div className='slider'>
-          <div className="slide-item">
-            <Link to='/'>
-              <div className="image">
-                <img src={shoes} alt="" />
+          {
+            products?.map(product => (
+              <div key={product?._id} className="slide-item">
+                <Link to={`/product/${product?._id}`}>
+                  <div className="image">
+                    <img src={product?.image} alt="" />
+                  </div>
+                  <div className="content">
+                    <div className="title">
+                      <h4>{product?.name}</h4>
+                    </div>
+                    <p className="price">
+                      {
+                        product?.discount > 0 && <span className="discount"><span>{product?.discount}%</span></span>
+
+                      }
+                      <span>₫{numberWithCommas(Number(product?.price))}</span>
+                    </p>
+                  </div>
+                </Link>
               </div>
-              <div className="content">
-                <div className="title">
-                  <h4>dada</h4>
-                </div>
-                <p className="price">
-                  <span>200000</span>
-                </p>
-              </div>
-            </Link>
-          </div>
-          <div className="slide-item">
-            <Link to='/'>
-              <div className="image">
-                <img src={shoes} alt="" />
-              </div>
-              <div className="content">
-                <div className="title">
-                  <h4>dada</h4>
-                </div>
-                <p className="price">
-                  <span>200000</span>
-                </p>
-              </div>
-            </Link>
-          </div>
-          <div className="slide-item">
-            <Link to='/'>
-              <div className="image">
-                <img src={shoes} alt="" />
-              </div>
-              <div className="content">
-                <div className="title">
-                  <h4>dada</h4>
-                </div>
-                <p className="price">
-                  <span>200000</span>
-                </p>
-              </div>
-            </Link>
-          </div>
-          <div className="slide-item">
-            <Link to='/'>
-              <div className="image">
-                <img src={shoes} alt="" />
-              </div>
-              <div className="content">
-                <div className="title">
-                  <h4>dada</h4>
-                </div>
-                <p className="price">
-                  <span>200000</span>
-                </p>
-              </div>
-            </Link>
-          </div>
-          <div className="slide-item">
-            <Link to='/'>
-              <div className="image">
-                <img src={shoes} alt="" />
-              </div>
-              <div className="content">
-                <div className="title">
-                  <h4>dada</h4>
-                </div>
-                <p className="price">
-                  <span>200000</span>
-                </p>
-              </div>
-            </Link>
-          </div>
+            ))
+          }
         </div>
       </section>
     </HomeWrap>

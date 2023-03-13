@@ -33,6 +33,9 @@ import { TbDiscount } from 'react-icons/tb'
 import { GrUserAdmin } from 'react-icons/gr'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { IoLocationOutline } from 'react-icons/io5'
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DoneIcon from '@mui/icons-material/Done';
 
 export {
     MenuOutlinedIcon,
@@ -73,5 +76,8 @@ export {
     GrUserAdmin,
     AdminPanelSettingsIcon,
     IoLocationOutline,
-    BsArrowLeft
+    BsArrowLeft,
+    AutorenewIcon,
+    LocalShippingIcon,
+    DoneIcon
 }

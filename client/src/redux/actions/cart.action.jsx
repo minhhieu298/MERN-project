@@ -39,7 +39,6 @@ export const addToCart =
                     product: product.product,
                     price: product.price,
                     quantity: exist ? exist.quantity + newQty : newQty,
-                    _id: product._id
                 }
             }
             console.log(payload);

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 import * as Icon from '../../../library/icons/index'
-import { ADMIN_PAGE, HOME_PAGE, LOGIN_PAGE, MEN_CATEGORY_PRODUCT_PAGE, PROFILE_PAGE, REGISTER_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE } from '../../../setting/constants'
+import { ADMIN_PAGE, CART_PAGE, HOME_PAGE, LOGIN_PAGE, MEN_CATEGORY_PRODUCT_PAGE, PROFILE_PAGE, REGISTER_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE } from '../../../setting/constants'
 import { Link } from 'react-router-dom'
 import { logOut } from '../../../redux/actions/auth.action'
 
@@ -49,6 +49,9 @@ const MobileMenu = ({ isAdmin, setOpen, isUser, auth, handleLogout }) => {
                 </li>
                 <li onClick={() => setOpen(false)}>
                     <Link to={WOMEN_CATEGORY_PRODUCT_PAGE}>Sản phẩm cho Nữ</Link>
+                </li>
+                <li onClick={() => setOpen(false)}>
+                    <Link to={CART_PAGE}>Giỏ hàng</Link>
                 </li>
                 {
                     isUser && <li onClick={() => {

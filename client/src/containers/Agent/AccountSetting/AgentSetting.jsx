@@ -43,7 +43,7 @@ const ItemLink = () => {
           <Item key={item.label}>
             <Link to={item.path} onClick={() => setOpen(!open)}>{item.icon}<span>{item.label}</span></Link>
             {
-              item?.children && <div className={`drop-link ${open ? 'active' : ''}`}>
+              item?.children && <div className={`drop-link ${open ? 'active' : 'active'}`}>
                 <ul>
                   {
                     item?.children?.map(c => (

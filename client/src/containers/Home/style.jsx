@@ -107,6 +107,7 @@ const HomeWrap = styled.div`
                     }
                 }
                 .slide-item{
+                    position: relative;
                     a{
                         display: block;
                         .image{
@@ -118,18 +119,55 @@ const HomeWrap = styled.div`
                         .content{
                             margin: 12px 16px 0 0;
                             display: flex;
-                            align-items: center;
-                            justify-content: space-between;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 10px 0;
+                            @media (min-width: 992px){
+                                align-items: center;
+                                justify-content: space-between;
+                                flex-direction: row;
+                            }
                             .title{
                                 h4{
                                     color: #111;
                                     font-weight: 500;
                                     font-size: 18px;
                                     line-height: 24px;
+                                    /* text-overflow: ellipsis; */
+                                    /* white-space: nowrap; */
                                 }
                             }
                             .price{
                                 line-height: 24px;
+                                >span.discount{
+                                    width: 30px;
+                                    height: 30px;
+                                    position: absolute;
+                                    top: 7px;
+                                    right: 7px;
+                                    background: red;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    transform: rotate(0deg);
+                                    &::before,&::after{
+                                        width: 100%;
+                                        height: 100%;
+                                        position: absolute;
+                                        top: 0;
+                                        right: 0;
+                                        background: red;
+                                        content: '';
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        transform: rotate(135deg);
+                                    }
+                                    >span{
+                                        color: #fff;
+                                        z-index: 5;
+                                    }
+                                }
                                 span{
                                     display: inline-block;
                                     font-size: 18px;

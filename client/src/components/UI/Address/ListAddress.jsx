@@ -2,39 +2,41 @@ import React, { useEffect, useState } from 'react'
 import { ListWrap } from './style'
 import * as Icon from '../../../library/icons/index'
 import useStore from '../../../library/hooks/useStore'
-import { getDeliveryAdr } from '../../../redux/actions/address.action'
+import { getAdr, getDeliveryAdr } from '../../../redux/actions/address.action'
+
 
 const ListAddress = (props) => {
-    const { setOpen, setStep, setUpdateAdr } = props
-    const [data, setData] = useState([])
-    const { addresses, dispatch, token } = useStore()
-    const [obj, setObj] = useState({})
-
-    const handleUpdate = () => {
-        setStep(2)
-    }
-
-    const choseAdr = (addr) => {
-        const adrs = addresses.map(item => item?._id === addr?._id ? { ...item, isCheck: true } : { ...item, isCheck: false })
-        const adr = adrs.filter(item => item.isCheck === true)[0]
-        setData(adrs)
-        setObj(adr)
-    }
+    const { addresses, setOpen, setUpdateAdr, setStep } = props
+    const { dispatch, token } = useStore()
+    const [adrs, setAdrs] = useState([])
+    const [adrSelect, setAdrSelect] = useState({})
 
     const handleDelivery = () => {
-        dispatch(getDeliveryAdr(obj?._id, token))
+        dispatch(getDeliveryAdr(adrSelect?._id, token))
         setOpen(false)
     }
 
-    const selectAdr = (addr) => {
-        const adrs = addresses.map(item => item?._id === addr?._id ? { ...item, isCheck: true } : { ...item, isCheck: false })
-        setData(adrs)
+    // const handleChangeAdr = (adr) => {
+    //     const item = addresses?.map(add => add?._id === adr?._id ? { ...add, isCheck: true } : { ...add, isCheck: false })
+    //     setAdrs(item)
+    // }
+
+    const handleSelectAdr = (adr) => {
+        const item = addresses?.map(add => add?._id === adr?._id ? { ...add, isCheck: true } : { ...add, isCheck: false })
+        const add = item?.filter(add => add.isCheck == true)[0]
+        setAdrs(item)
+        setAdrSelect(add)
+    }
+
+    const handleUpdateSingleAdr = (adr) => {
+        setUpdateAdr(adr)
+        setStep(2)
     }
     useEffect(() => {
-        const adr = addresses.map(item => ({ ...item, isCheck: item?.is_delivery === true ? true : false }))
-        const upAdr = adr.filter(item => item.isCheck === true)[0]
-        setUpdateAdr(upAdr)
-        setData(adr)
+        const adrs = addresses?.map(item => ({ ...item, isCheck: item?.is_delivery ? true : false }))
+        const adr = adrs?.filter(adr => adr.isCheck == true)[0]
+        setAdrs(adrs)
+        setAdrSelect(adr)
     }, [addresses])
     return (
         <ListWrap>
@@ -44,30 +46,30 @@ const ListAddress = (props) => {
                 </div>
                 <div className="body-form">
                     {
-                        data?.map(item => (
-                            <div key={item?._id} className="list-address">
+                        adrs?.map(adr => (
+                            <div key={adr?._id} className="list-address">
                                 <div className="list-address-item">
                                     <div>
-                                        <input type="radio" checked={item?.isCheck} onClick={() => choseAdr(item)} onChange={() => selectAdr(item)} />
+                                        <input type="radio" checked={adr?.isCheck} onClick={() => handleSelectAdr(adr)} onChange={() => { }} />
                                     </div>
                                     <div>
                                         <div className='heading'>
                                             <div>
-                                                <div>{item?.name}</div>
+                                                <div>{adr?.name}</div>
                                                 <div></div>
-                                                <div>{item?.phone}</div>
+                                                <div>{adr?.phone}</div>
                                             </div>
-                                            <div onClick={() => handleUpdate()}>cập nhật</div>
+                                            <div onClick={() => handleUpdateSingleAdr(adr)}>cập nhật</div>
                                         </div>
                                         <div className='heading'>
                                             <div>
-                                                <div>{item?.address}</div>
-                                                <div>{`${item?.city},${item?.district},${item?.state}`}</div>
+                                                <div>{adr?.address}</div>
+                                                <div>{`${adr?.city},${adr?.district},${adr?.state}`}</div>
                                             </div>
                                             <div></div>
                                         </div>
                                         {
-                                            item?.isSelected && <div className="row"><span>Mặc định</span></div>
+                                            adr?.isSelected && <div className="row"><span>Mặc định</span></div>
                                         }
                                     </div>
                                 </div>

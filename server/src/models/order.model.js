@@ -27,6 +27,10 @@ const orderSchema = new Schema(
           type: Number,
           required: true,
         },
+        name: {
+          type: String,
+          required: true,
+        },
         size: {
           type: String,
         },

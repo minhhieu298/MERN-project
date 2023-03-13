@@ -20,7 +20,7 @@ const ProductDetail = () => {
       size,
       color,
       price: item?.discount > 0 ? item.price_after_discount : item.price,
-      token
+      token,
     }
     dispatch(addToCart(payload))
   }

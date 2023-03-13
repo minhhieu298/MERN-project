@@ -12,23 +12,22 @@ const AgentWrap = styled.div`
 export const Box = styled.div`
     display: grid;
     grid-template-columns: repeat(12,minmax(0,1fr));
-    min-height: 60vh;
 `
 
 export const Grid = styled.div`
     ${props => props.left && css`
             grid-column: span 12 / span 12;
             @media (min-width: 992px){
-                grid-column: span 2 /span 2;
+                grid-column: span 3 /span 3;
             }
         `
     }
     ${props => props.right && css`
             grid-column: span 12 / span 12;
-            background-color: #fff;
+            /* background-color: #fff; */
             border-radius: 4px;
             @media (min-width:992px){
-                grid-column: span 10/span 10;
+                grid-column: span 9 /span 9;
             }
         `
     }
@@ -127,6 +126,7 @@ export const Item = styled.div`
 `
 
 export const AgentProfileWrap = styled.div`
+    background: #fff;
     .title-profile{
         padding: 22px 30px;
         height: 80px;
@@ -275,6 +275,7 @@ export const AgentProfileWrap = styled.div`
 
 export const AgentAddressWrap = styled.div`
     height: 100%;
+    background: #fff;
     .empty_address{
         height: 100%;
         display: flex;
@@ -480,6 +481,7 @@ export const AgentAddressWrap = styled.div`
 `
 
 export const AgentPasswordWrap = styled.div`
+    background: #fff;
     .title-password{
         padding: 22px 30px;
         height: 80px;

@@ -3,6 +3,7 @@ const Cart = require("../models/cart.model");
 const Address = require("../models/address.model");
 const { pageService } = require("../services/page.service");
 const Product = require("../models/product.model");
+const { orderService } = require("../services/order.service");
 
 async function queryParams(query, req) {
   let orders = [];
@@ -48,8 +49,8 @@ async function queryParams(query, req) {
           },
         ],
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
     case "2":
@@ -82,8 +83,8 @@ async function queryParams(query, req) {
           },
         ],
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
     case "3":
@@ -108,8 +109,8 @@ async function queryParams(query, req) {
           },
         ],
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
 
@@ -123,8 +124,8 @@ async function queryParams(query, req) {
           },
         },
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
 
@@ -133,16 +134,16 @@ async function queryParams(query, req) {
         user: req.user._id,
         "paymentStatus.status": "cancel",
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
     default:
       orders = await Order.find({
         user: req.user._id,
       })
-        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .populate("orderItems.productId", "_id name image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
         .sort("-createdAt");
       break;
   }
@@ -185,23 +186,30 @@ module.exports.orderCtrl = {
   //user
   getOrdersUser: async (req, res) => {
     const { type, keyword } = req.query;
+    // const orders = await orderService.list();
     let orders = await queryParams(type, req);
     if (type) {
       orders = await queryParams(type, req);
     }
     if (keyword) {
-      if (keyword.match(/^[0-9a-fA-F]{24}$/)) {
-        orders = await Order.find({
-          user: req.user.id,
-          _id: keyword,
-        })
-          .select("_id user paymentStatus orderItems totalAmount orderStatus")
-          .populate("orderItems.productId", "_id name image")
-          .sort("-createdAt");
-      } else {
-        orders = [];
-      }
+      orders = await Order.find({
+        user: req.user.id,
+        orderItems: {
+          $elemMatch: {
+            name: {
+              $regex: keyword,
+              $options: "i",
+            },
+          },
+        },
+      })
+        .populate("orderItems.productId", "_id image")
+        .select("_id user paymentStatus orderItems totalAmount orderStatus")
+        .sort("-createdAt");
     }
+    // else {
+    //   orders = [];
+    // }
 
     return res.status(200).json({ orders });
   },

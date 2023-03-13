@@ -100,8 +100,32 @@ module.exports.addressCtrl = {
       if (!adr) {
         return res.status(400).json({ message: "not found" });
       }
-      await Address.deleteOne({ _id: addressId });
-      res.status(200).json({});
+      // if (adrs.length === 1) {
+      Address.deleteOne({ _id: addressId }).exec(async (err, data) => {
+        if (err) return res.status(400).json({ message: err.message });
+        if (data) {
+          const adrs = await Address.find({ user: req.user.id });
+          if (adrs.length === 1) {
+            await Address.updateOne(
+              { _id: adrs[0]._id },
+              {
+                $set: {
+                  isSelected: true,
+                  is_delivery: true,
+                },
+              }
+            ).exec((err, adr) => {
+              if (err) return res.status(400).json({ message: err.message });
+              if (adr) return res.status(200).json({});
+            });
+          } else {
+            res.status(200).json({});
+          }
+        }
+      });
+      // } else {
+      //   await Address.deleteOne({ _id: addressId });
+      // }
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }

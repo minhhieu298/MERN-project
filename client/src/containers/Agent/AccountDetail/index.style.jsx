@@ -2,24 +2,57 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     .order{
-        /* width: 100%;
-        margin-bottom: 12px;
-        display: flex;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px; */
         &-top{
-            /* padding: 16px 0; */
             font-size: 16px;
             line-height: 19px;
-            text-align: center;
             color: rgba(0,0,0,.8);
             background: #fff;
             border-bottom: 2px solid rgba(0,0,0,.09);
-            display: grid;
-            grid-template-columns: repeat(6,minmax(0,1fr));
-            grid-template-rows: 50px;
-            align-items: center;
-            margin-bottom: 12px;
+            text-align: center;
+            
+            display: flex;
+            padding-inline-start: 0;
+            scroll-padding: 0;
+            scroll-snap-type: x mandatory;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            position: relative;
+            gap: 10px;
+            @media (min-width: 992px){
+                display: grid;
+                grid-template-columns: repeat(6,minmax(0,1fr));
+                >div{
+                    grid-column: span 1 / span 1;
+                }
+            }
+            &::-webkit-scrollbar{
+                height: 0px;
+            }
+            &::-webkit-scrollbar-track {
+                background: none;
+                border-radius: 10px;
+                transition: all 0.5s ease 0s;
+
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: none;
+                border-radius: 10px;
+                transition: all 0.5s ease 0s;
+
+            }
+            > *{
+                --column-offset: 0px;
+                --column-gap: 12px;
+                flex: 0 0 calc(40% - var(--column-offset));
+
+                @media (min-width: 640px){
+                    flex: 0 0 calc(25% - var(--column-offset));
+                }
+                @media (min-width: 768px){
+                    flex: 0 0 calc(20% - var(--column-offset));
+                }
+            }
             >div{
                 height: 100%;
                 padding: 16px 0;
@@ -68,15 +101,23 @@ export const Container = styled.div`
                         >div{
                             &:first-child{
                                 display: flex;
-                                align-items: center;
                                 padding: 0 0 12px;
-                                justify-content: space-between;
+                                flex-direction: column;
+                                align-items: flex-start;
+                                gap: 5px;
+                                @media (min-width: 768px){
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    flex-direction: row;
+                                }
                                 >div{
                                     &:first-child{
                                         font-weight: 600;
-                                        text-transform: uppercase;
                                         >span{
-                                            margin-left: 5px;
+                                            font-size: 0.875rem;
+                                            @media (min-width: 640px){
+                                                font-size: 15px;
+                                            }                  
                                         }
                                     }
                                     &:nth-child(2){
@@ -91,6 +132,10 @@ export const Container = styled.div`
                                                 white-space: nowrap;
                                                 text-overflow: ellipsis;
                                                 overflow: hidden;
+                                                font-size: 0.875rem;
+                                                @media (min-width: 640px){
+                                                    font-size: 15px;
+                                                }
                                             }
                                             &.delivered {
                                                 display: flex;
@@ -150,6 +195,9 @@ export const Container = styled.div`
                                                 display: block;
                                                 margin-bottom: 3px;
                                             }
+                                            p{
+                                                color: #ee4d2d;
+                                            }
                                         }
                                     }
                                     .price{
@@ -201,8 +249,11 @@ export const Container = styled.div`
                                 }
                                 &:last-child{
                                     color: #ee4d2d;
-                                    font-size: 24px;
                                     line-height: 30px;
+                                    font-size: 18px;
+                                    @media (min-width: 640px){
+                                        font-size: 24px;
+                                    }
                                 }
                             }
                         }
@@ -210,8 +261,14 @@ export const Container = styled.div`
                     &-btn{
                         padding: 12px 24px 24px;
                         display: flex;
-                        justify-content: space-between;
                         background: #fffefb;
+                        flex-direction: column;
+                        gap: 10px;
+                        @media (min-width: 768px){
+                            gap: 0;
+                            justify-content: space-between;
+                            flex-direction: row;
+                        }
                         >div{
                             display: flex;
                             justify-content: flex-end;
@@ -223,7 +280,11 @@ export const Container = styled.div`
                             >div{
                                 display: flex;
                                 gap: 10px;
-                                /* flex-direction: row-reverse; */
+                                flex-direction: column;
+                                width: 100%;
+                                @media (min-width: 640px){
+                                    flex-direction: row;
+                                }
                                 .repurchase{
                                     background-color: #ee4d2d;
                                     border: 1px solid #ba2b0f;
@@ -243,8 +304,8 @@ export const Container = styled.div`
                                     }
                                 }
                                 button{
-                                    min-width: 150px;
                                     min-height: 40px;
+                                    width: 100%;
                                     padding: 8px 10px;
                                     outline: none;
                                     overflow: hidden;
@@ -254,6 +315,9 @@ export const Container = styled.div`
                                     font-weight: 400;
                                     font-size: 14px;
                                     border-radius: 4px;
+                                    @media (min-width: 480px){
+                                        width: 150px;
+                                    }
                                 }
                             }
                         }

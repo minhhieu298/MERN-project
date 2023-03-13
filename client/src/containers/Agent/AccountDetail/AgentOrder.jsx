@@ -1,31 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { numberWithCommas } from '../../../library/helper/numberComas'
 import useStore from '../../../library/hooks/useStore'
 import { getOrderUser, updateStatusPayment } from '../../../redux/actions/order.action'
 import { Container } from './index.style'
 import * as Icon from '../../../library/icons/index'
 import { createSearchParams, Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { ORDER_PAGE, PROFILE_PAGE } from '../../../setting/constants'
 import { getStateFromUrl, setStateToUrl } from '../../Products/Search/url_handler'
+import useWindowSize from '../../../library/hooks/useWindowSize'
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
+import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 
 const AgentOrder = () => {
   const { dispatch, orders, token, auth } = useStore()
   const [searchParams] = useSearchParams()
   let location = useLocation()
   let navigate = useNavigate()
+  const { width } = useWindowSize()
+  const [drop, setDrop] = useState(false)
+  const ref = useRef(null)
+  useOnClickOutside(ref, () => setDrop(false))
 
+  const params = getStateFromUrl(location)
+  const state = {
+    type: params.type || ''
+  }
   const handleUpdateStatus = async (orderId) => {
     dispatch(updateStatusPayment(orderId, token))
   }
 
-  // const params = getStateFromUrl(location)
-  // const state = {
-  //   type: params.type || ''
-  // }
   const onChange = (e, type) => {
-    console.log(e, type);
     let query = {}
-    // let data = {}
     if (type) {
       query = {
         type: e
@@ -38,6 +42,38 @@ const AgentOrder = () => {
     });
   }
 
+  const onChangeMoble = (e, type) => {
+    if (e.target.checked) {
+      let query = {}
+      if (type === 'type') {
+        query = {
+          type: e.target.value
+        }
+      } else {
+        query = {
+          ...state,
+          [type]: e.target.value
+        }
+      }
+      const search = setStateToUrl(query);
+      navigate({
+        pathname: location.pathname,
+        search: `?${createSearchParams(search)}`,
+      });
+    } else {
+      let query = {}
+      if (type === 'type') {
+        query = {
+          type: ''
+        }
+      }
+      const search = setStateToUrl(query);
+      navigate({
+        pathname: location.pathname,
+        search: `?${createSearchParams(search)}`,
+      });
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
     let data = Object.fromEntries(new FormData(e.target))
@@ -81,12 +117,57 @@ const AgentOrder = () => {
             style={{ borderBottom: searchParams.get('type') === '5' ? '2px solid #ee4d2d' : 'none', color: searchParams.get('type') === '5' ? '#ee4d2d' : '#000' }}
           >Đã hủy</div>
         </div>
+        {/* <div className="order-mobile" ref={ref}>
+            <div className="label" onClick={() => setDrop(!drop)}>
+              <div className="text">heh</div>
+              <div className="arrow"></div>
+            </div>
+            <div className={`content ${drop ? 'active' : ''}`}>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox />}
+                  value='1'
+                  label='Đang xử lí'
+                  checked={searchParams.get('type') === '1' ? true : false}
+                  onChange={(e) => onChangeMoble(e, 'type')}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  value='2'
+                  label='Vận chuyển'
+                  checked={searchParams.get('type') === '2' ? true : false}
+                  onChange={(e) => onChangeMoble(e, 'type')}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  value='3'
+                  label='Đang giao'
+                  checked={searchParams.get('type') === '3' ? true : false}
+                  onChange={(e) => onChangeMoble(e, 'type')}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  value='4'
+                  label='Hoàn Thành'
+                  checked={searchParams.get('type') === '4' ? true : false}
+                  onChange={(e) => onChangeMoble(e, 'type')}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  value='5'
+                  label='Đã hủy'
+                  checked={searchParams.get('type') === '5' ? true : false}
+                  onChange={(e) => onChangeMoble(e, 'type')}
+                />
+              </FormGroup>
+            </div>
+          </div> */}
         {
           searchParams.get('type') === null && <div className="order-search">
             <div>
               <form onSubmit={handleSubmit}>
                 <button><span><Icon.SearchOutlinedIcon /></span></button>
-                <input type="text" placeholder='Tìm kiếm sản phẩm theo ID' name='keyword' />
+                <input type="text" placeholder='Tìm kiếm theo tên sản phẩm' name='keyword' />
               </form>
             </div>
           </div>
@@ -98,7 +179,7 @@ const AgentOrder = () => {
                 <div key={order?._id} className="list-order-item">
                   <div className="list-order-item-top">
                     <div>
-                      <div>ID:<span>{order?._id}</span></div>
+                      <div><span>ID:{order?._id}</span></div>
                       <div>
                         {
                           order?.paymentStatus?.status === 'cancel' ? <div className='cancel'>Đã hủy</div> :
@@ -125,14 +206,17 @@ const AgentOrder = () => {
                             <div className='infor'>
                               <img src={item?.productId?.image} alt="" />
                               <div>
-                                <span>{item?.productId?.name} - {item.size} - {item.color}</span>
+                                <span>{item?.name} - {item.size} - {item.color}</span>
                                 <span>da</span>
                                 <span>{`x${item?.purchaseQty}`}</span>
+                                {width < 576 && <p className="price">{`₫${numberWithCommas(Number(item?.payablePrice))}`}</p>}
                               </div>
                             </div>
-                            <div className="price">
-                              <span>{`₫${numberWithCommas(Number(item?.payablePrice))}`}</span>
-                            </div>
+                            {
+                              width > 576 && <div className="price">
+                                <span>{`₫${numberWithCommas(Number(item?.payablePrice))}`}</span>
+                              </div>
+                            }
                           </div>
                         ))
                       }

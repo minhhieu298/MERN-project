@@ -5,15 +5,16 @@ export const getStepContent = (step, setStep, stateArr, districtArr, cityArr, se
         case 0:
             return <>
                 {
-                    stateArr?.map(item => (
-                        <div key={item.name}>
-                            <input type="text" value={item.name} alt={item.code} readOnly onClick={(e) => {
+                    stateArr.map(item => (
+                        <div key={item.name} className='list-item'>
+                            <input type="text" value={item.code} alt={item.name} onClick={e => {
                                 setState(e)
                                 setDistrict('')
                                 setCity('')
                                 setStep(1)
-                                setBorder(1)
-                            }} />
+                            }}
+                                readOnly />
+                            <div>{item.name}</div>
                         </div>
                     ))
                 }
@@ -22,13 +23,15 @@ export const getStepContent = (step, setStep, stateArr, districtArr, cityArr, se
             return <>
                 {
                     districtArr?.districts?.map(item => (
-                        <div key={item.name}>
-                            <input type="text" value={item.name} alt={item.code} readOnly onClick={(e) => {
+                        <div key={item.name} className='list-item'>
+                            <input type="text" value={item.code} alt={item.name} onClick={e => {
                                 setDistrict(e)
                                 setCity('')
                                 setStep(2)
-                                setBorder(2)
-                            }} />
+                            }}
+                                readOnly
+                            />
+                            <div>{item.name}</div>
                         </div>
                     ))
                 }
@@ -37,13 +40,15 @@ export const getStepContent = (step, setStep, stateArr, districtArr, cityArr, se
             return <>
                 {
                     cityArr?.wards?.map(item => (
-                        <div key={item.name}>
-                            <input type="text" value={item.name} alt={item.code} readOnly onClick={(e) => {
+                        <div key={item.name} className='list-item'>
+                            <input type="text" value={item.code} alt={item.name} onClick={e => {
                                 setCity(e)
                                 setStep(0)
                                 setDrop(false)
-                                setBorder(0)
-                            }} />
+                            }}
+                                readOnly
+                            />
+                            <div>{item.name}</div>
                         </div>
                     ))
                 }

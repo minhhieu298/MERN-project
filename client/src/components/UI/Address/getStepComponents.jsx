@@ -3,14 +3,14 @@ import NewAddress from "./NewAddress";
 import UpdateAddress from "./UpdateAddress";
 
 //step components
-export function getSteps(step, setStep, setOpen, updateAdr, setUpdateAdr) {
+export function getSteps(step, setStep, setOpen, addresses, setUpdateAdr, updateAdrs) {
     switch (step) {
         case 0:
-            return <ListAddress setOpen={setOpen} setStep={setStep} setUpdateAdr={setUpdateAdr} />
+            return <ListAddress setOpen={setOpen} setStep={setStep} addresses={addresses} setUpdateAdr={setUpdateAdr} updateAdrs={updateAdrs} />
         case 1:
             return <NewAddress setStep={setStep} />
         case 2:
-            return <UpdateAddress setStep={setStep} step={step} updateAdrs={updateAdr} />
+            return <UpdateAddress setStep={setStep} step={step} updateAdrs={updateAdrs} />
 
         default:
             throw new Error("Unknown step");

@@ -11,11 +11,12 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     .container{
         width: 500px;
         box-sizing: border-box;
         padding: 30px 30px;
+        margin: 0 20px;
         background-color: #fff;
         box-shadow: 0 2px 4px rgb(0 0 0 / 54%);
         border-radius: 3px;
@@ -46,51 +47,31 @@ export const Container = styled.div`
                             margin-bottom: 20px;
                             &:first-child{
                                 display: flex;
-                                align-items: center;
+                                /* align-items: center; */
                                 gap: 0 15px;
                                 >div{
                                     width: 100%;
-                                    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
-                                    border-radius: 2px;
-                                    height: 40px;
-                                    box-sizing: border-box;
-                                    border: 1px solid rgba(0,0,0,.14);
-                                    transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
-                                    &:hover {
-                                        box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
-                                    }
-                                    &:focus-within {
-                                        border: 1px solid rgba(0, 0, 0, 0.54);
-                                    }
-                                    input{
-                                        width: 100%;
-                                        height: 38px;
-                                        padding: 10px;
-                                        background-color: transparent;
+                                    >span{
                                         font-size: 14px;
-                                        color: #222;
-                                        border: 0;
+                                        text-transform: none;
+                                        color: tomato;
                                     }
-                                }
-                            }
-                            &:nth-child(2){
-                                position: relative;
-                                >div{
-                                    &:first-child{
-                                        position: relative;
+                                    >div{
                                         width: 100%;
                                         box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
                                         border-radius: 2px;
                                         height: 40px;
                                         box-sizing: border-box;
                                         border: 1px solid rgba(0,0,0,.14);
+                                        margin-bottom: 5px;
                                         transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
-                                        
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                        }
                                         &:focus-within {
                                             border: 1px solid rgba(0, 0, 0, 0.54);
                                         }
                                         input{
-                                            /* text-align: left; */
                                             width: 100%;
                                             height: 38px;
                                             padding: 10px;
@@ -98,126 +79,71 @@ export const Container = styled.div`
                                             font-size: 14px;
                                             color: #222;
                                             border: 0;
-                                            position: absolute;
-                                            opacity: 0;
-                                        }
-                                        >div{
-                                            position: relative;
-                                            display: flex;
-                                            padding: 10px;
-                                            align-items: center;
-                                            background: #fff;
-                                            width: 100%;
-                                            height: 100%;
-                                            &:empty::before {
-                                                content: attr(data-placeholder);
-                                                color: #939393;
-                                            }
-                                            span{
-                                                position: absolute;
-                                                top: 50%;
-                                                right: 0;
-                                                transform: translateY(-50%);
-                                                padding-right: 10px;
-                                                color: #b5b5b5;
-                                            }
                                         }
                                     }
-                                    &:nth-child(2){
-                                        position: absolute;
-                                        transition: all 0.5s ease 0s;
-                                        top: 120%;
-                                        left: 0;
-                                        width: 100%;
-                                        background: #fff;
-                                        transform: rotateX(90deg);
-                                        transform-origin: center top 0;
-                                        visibility: hidden;
-                                        opacity: 0;
-                                        z-index: 5;
-                                        transition: all 0.5 ease-in-out 0s;
-                                        &.visible{
-                                            transform: rotateX(0);
-                                            opacity: 1;
-                                            visibility: visible;
+                                }
+                            }
+                            &:nth-child(2){
+                                >div{
+                                    >span{
+                                        font-size: 14px;
+                                        text-transform: none;
+                                        color: tomato;
+                                    }
+                                    >div{
+                                        position: relative;
+                                        grid-template-columns: repeat(1,minmax(0,1fr));
+                                        border: 1px solid rgba(0,0,0,.14);  
+                                        box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                        border-radius: 2px;
+                                        height: 40px;
+                                        box-sizing: border-box;
+                                        margin-bottom: 5px;
+                                        transition: border-color .3s ease-in-out,box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
                                         }
-                                        .dropdown{
-                                            border: 1px solid rgba(0,0,0,0.14);
-                                            height: 270px !important;
-                                            overflow: hidden;
-                                            .title{
-                                                display: grid;
-                                                grid-template-columns: repeat(3,1fr);
-                                                grid-template-rows: repeat(1,40px);
-                                                border-bottom: 1px solid rgba(0,0,0,0.14);
-                                                >div{
-                                                    text-align: center;
-                                                    height: 100%;
-                                                    display: flex;
-                                                    align-items: center;
-                                                    justify-content: center;
-                                                    /* &:first-child{
-                                                        border-bottom: 2px solid orange;
-                                                    } */
-                                                }
-                                            }
-                                            .content{
-                                                width: 100%;
-                                                overflow: hidden;
-                                                height: calc(270px - 40px);
-                                                overflow-y: scroll;
-                                                >div{
-                                                    height: calc(100% / 6);
-                                                    input{
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        border: none;
-                                                        outline: none;
-                                                        border-radius: 0;
-                                                        padding: 0 10px;
-                                                        line-height: 40px;
-                                                        cursor: pointer;
-                                                        background: transparent;
-
-                                                        &:hover{
-                                                            background: rgba(0,0,0,0.05);
-                                                        }
-                                                    }
-                                                    /* line-height: 40px;
-                                                     */
-                                                }
-                                            }
+                                        &:focus-within {
+                                            border: 1px solid rgba(0, 0, 0, 0.54);
                                         }
                                     }
                                 }
                             }
                             &:nth-child(3){
                                 >div{
-                                    width: 100%;
-                                    box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
-                                    border-radius: 2px;
-                                    height: 40px;
-                                    box-sizing: border-box;
-                                    border: 1px solid rgba(0,0,0,.14);
-                                    transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
-                                    height: 60px;
-                                    &:hover {
-                                        box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
-                                    }
-                                    &:focus-within {
-                                        border: 1px solid rgba(0, 0, 0, 0.54);
-                                    }
-                                    >textarea{
-                                        width: 100%;
-                                        padding: 10px;
-                                        background-color: transparent;
+                                    >span{
+                                        text-transform: none;
+                                        color: tomato;
                                         font-size: 14px;
-                                        color: #222;
-                                        border: 0;
-                                        height: 100%;
-                                        &:disabled {
-                                            cursor: not-allowed;
-                                            opacity: 0.7;
+                                    }
+                                    >div{
+                                        width: 100%;
+                                        box-shadow: inset 0 2px 0 0 rgb(0 0 0 / 2%);
+                                        border-radius: 2px;
+                                        height: 40px;
+                                        box-sizing: border-box;
+                                        border: 1px solid rgba(0,0,0,.14);
+                                        transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out,background-color .3s ease-in-out;
+                                        height: 60px;
+                                        margin-bottom: 5px;
+                                        &:hover {
+                                            box-shadow: inset 0 2px 3px 0 rgb(0 0 0 / 5%);
+                                        }
+                                        &:focus-within {
+                                            border: 1px solid rgba(0, 0, 0, 0.54);
+                                        }
+                                        >textarea{
+                                            width: 100%;
+                                            padding: 10px;
+                                            background-color: transparent;
+                                            font-size: 14px;
+                                            color: #222;
+                                            border: 0;
+                                            height: 100%;
+                                            &:disabled {
+                                                cursor: not-allowed;
+                                                opacity: 0.7;
+                                            }
                                         }
                                     }
                                 }
@@ -229,15 +155,17 @@ export const Container = styled.div`
                                             margin-right: 10px;
                                             margin-bottom: 8px;
                                             color: #555;
-                                            /* height: 0; */
                                         }
                                         &:last-child{
                                             display: flex;
-                                            align-items: center;
                                             gap: 10px;
+                                            flex-direction: column;
+                                            align-items: flex-start;
+                                            @media (min-width: 480px){
+                                                align-items: center;
+                                                flex-direction: row;
+                                            }
                                             span{
-                                                /* width: 88px;
-                                                height: 40px; */
                                                 padding: 10px 15px;
                                                 border-radius: 2px;
                                                 cursor: pointer;
@@ -271,26 +199,133 @@ export const Container = styled.div`
                         display: flex;
                         align-items: flex-end;
                         justify-content: flex-end;
+                        gap: 5px;
+                        /* flex-wrap: wrap; */
+                        flex-direction: column;
+                        @media (min-width: 480px){
+                            flex-direction: row;
+                        }
                         >button{
                             align-items: center;
                             display: flex;
                             justify-content: center;
                             outline: none;
-                            padding: 10px;
+                            padding: 15px 10px;
                             border: 0;
                             background: none;
                             border-radius: 2px;
-                            min-width: 140px;
+                            width: 100%;
                             font-size: 14px;
                             cursor: pointer;
                             color: #555;
-                            
+                            @media (min-width: 480px){
+                                width: 140px;
+                            }
+                            &:first-child{
+                                border: 1px solid rgba(0,0,0,0.14);
+                            }
                             &:last-child{
                                 color: #fff;
+                                border: 1px solid rgba(0,0,0,0.14);
                                 background-color: #ee4d2d;
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+`
+
+export const DropDown = styled.div`
+    .label{
+        position: relative;
+        border: none !important;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        height: 100%;
+        &:empty::before {
+          content: attr(data-placeholder);
+          color: #939393;
+          top: 50%;
+          left: 3%;
+          transform: translateY(-50%);
+          position: absolute;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          @media (max-width: 768px) {
+            width: 95%;
+          }
+        }
+        span{
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            color: #939393;
+        }
+    }
+    .dropdown{
+        position: absolute !important;
+        width: 100%;
+        height: 270px !important;
+        background-color: #fff;
+        top: 120%;
+        left: 0;
+        z-index: 9999;
+        border: 1px solid rgba(0,0,0,0.15) !important;
+        display: block !important;
+        padding: 0 !important;
+        &:hover{
+            box-shadow: none !important;
+        }
+        &-title{
+            display: grid;
+            grid-template-columns: repeat(3,minmax(0,1fr));
+            border-bottom: 1px solid rgba(0,0,0,0.14) ;
+            >div{
+                text-align: center;
+                height: 40px;
+                display: grid;
+                align-items: center;
+            }
+        }
+        &-content{
+            width: 100%;
+            overflow: hidden;
+            height: calc(270px - 43px);
+            overflow-y:scroll;
+            .list-item{
+                position: relative;
+                height: 40px;
+                transition: background 0.15s ease-in-out;
+                &:hover{
+                    background-color: rgba(0,0,0,0.14);
+                }
+                input{
+                    width: 100%;
+                    border: none;
+                    padding: 10px;
+                    cursor: auto;
+                    height: inherit;
+                    background-color: transparent;
+                    opacity: 0;
+                    &:hover{
+                       
+                    }
+                }
+                div{
+                    position: absolute;
+                    width: 100%;
+                    height: inherit;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 10px;
+                    pointer-events: none;
+                    cursor: auto;
                 }
             }
         }

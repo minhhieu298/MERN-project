@@ -29,9 +29,11 @@ const Checkout = () => {
                 payablePrice: Number(item?.price * item?.quantity),
                 purchaseQty: Number(item?.quantity),
                 size: item?.size,
-                color: item?.color
+                color: item?.color,
+                name: item?.product?.name
             }))
         }
+        // console.log(payload);
         dispatch(createOrder(payload, token))
         navigate(`${PROFILE_PAGE}/${ORDER_PAGE}`)
     }
@@ -143,7 +145,7 @@ const Checkout = () => {
                                 </div>
                                 <div>
                                     <Link to={CART_PAGE}>Quay lại</Link>
-                                    <button onClick={handleOrder}>Đặt hàng</button>
+                                    <button onClick={handleOrder} disabled={address === undefined ? true : false}>Đặt hàng</button>
                                 </div>
                             </div>
 
@@ -153,7 +155,7 @@ const Checkout = () => {
             </CheckoutWrap>
             {
                 open && <Modal className='modal'>
-                    {getSteps(step, setStep, setOpen, updateAdrs, setUpdateAdr)}
+                    {getSteps(step, setStep, setOpen, addresses, setUpdateAdr, updateAdrs)}
                 </Modal>
             }
         </React.Fragment>
