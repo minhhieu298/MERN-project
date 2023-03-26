@@ -12,7 +12,8 @@
     "mongoose-slug-generator": "^1.0.4",
     "nodemailer": "^6.9.0",
     "otp-generator": "^4.0.0",
-    "slug": "^8.2.2"
+    "slug": "^8.2.2",
+    "stripe": "^11.14.0"
   },
   "name": "server",
   "version": "1.0.0",

@@ -11,7 +11,7 @@ import { convertUTCDateToLocalDate } from '../../../library/helper/getTime'
 const ListUser = () => {
     let navigate = useNavigate()
     let pageSize = 10;
-    const { dispatch, token, users } = useStore()
+    const { dispatch, token, users, auth } = useStore()
     const [searchParam] = useSearchParams()
     let location = useLocation()
     const [page, setPage] = useState(1)
@@ -82,6 +82,7 @@ const ListUser = () => {
             pageSize
         }, token))
     }, [dispatch, token, searchParam])
+    console.log(auth);
     return (
         <UserWrap>
             <div className="container">

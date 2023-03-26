@@ -12,6 +12,8 @@ route.use("/v2", require("./v2/address.route"));
 route.use("/v2", require("./v2/cart.route"));
 route.use("/v2", require("./v2/category.route"));
 route.use("/v2", require("./v2/order.route"));
+route.use("/v2", require("./v2/payment.route"));
+route.use("/v2", require("./v2/comment.route"));
 
 route.use("/v3", require("./v3/initData.route"));
 

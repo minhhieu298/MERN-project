@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const useStore = () => {
     const dispatch = useDispatch()
-    const { products, meta, product } = useSelector(state => state.products)
+    const { products, meta, product, error_server } = useSelector(state => state.products)
     const { auth, token, isUser, isAdmin, users, total, user } = useSelector(state => state.auth)
     const { addresses } = useSelector(state => state.addresses)
     const { categories, error } = useSelector(state => state.categories)
@@ -27,7 +27,8 @@ const useStore = () => {
         users,
         total,
         user,
-        error
+        error,
+        error_server
     }
 }
 

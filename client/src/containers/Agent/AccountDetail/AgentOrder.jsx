@@ -7,8 +7,8 @@ import * as Icon from '../../../library/icons/index'
 import { createSearchParams, Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { getStateFromUrl, setStateToUrl } from '../../Products/Search/url_handler'
 import useWindowSize from '../../../library/hooks/useWindowSize'
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
+import emptyOrder from '../../../assets/emty_order.png'
 
 const AgentOrder = () => {
   const { dispatch, orders, token, auth } = useStore()
@@ -175,91 +175,95 @@ const AgentOrder = () => {
         <div className="order-middle">
           <div className="list-order">
             {
-              orders?.map(order => (
-                <div key={order?._id} className="list-order-item">
-                  <div className="list-order-item-top">
-                    <div>
-                      <div><span>ID:{order?._id}</span></div>
-                      <div>
-                        {
-                          order?.paymentStatus?.status === 'cancel' ? <div className='cancel'>Đã hủy</div> :
-                            order?.paymentStatus?.status === 'refund' ? <div className="refund">Trả lại</div> :
-                              (order?.paymentStatus?.status === 'completed' && order?.orderStatus[3].isCompleted) ? <div className='delivered'>
-                                <Link to={`/profile/order/${order?._id}`}>
-                                  {/* <span><Icon.MdOutlineLocalShipping /></span> */}
-                                  <span>Đơn giao hàng thành công</span>
-                                </Link>
-                                <div>Hoàn thành</div>
-                              </div> : (order?.orderStatus[1].isCompleted || order?.orderStatus[2].isCompleted) && <div className="pending">Đơn hàng đang được vận chuyển</div>
-
-                        }
-                        {
-                          order?.paymentStatus?.status === 'pending' && <div className="pending">Đăng chờ xác thực đơn hàng</div>
-                        }
-                      </div>
-                    </div>
-                    <div></div>
-                    <div>
-                      {
-                        order?.orderItems?.map(item => (
-                          <div key={item?._id}>
-                            <div className='infor'>
-                              <img src={item?.productId?.image} alt="" />
-                              <div>
-                                <span>{item?.name} - {item.size} - {item.color}</span>
-                                <span>da</span>
-                                <span>{`x${item?.purchaseQty}`}</span>
-                                {width < 576 && <p className="price">{`₫${numberWithCommas(Number(item?.payablePrice))}`}</p>}
-                              </div>
-                            </div>
+              orders.length === 0 ? <div className="container-empty">
+                <div className="list-order-empty" style={{ backgroundImage: `url(${emptyOrder})` }}></div>
+                <div className="text">Chưa có đơn hàng</div>
+              </div> : <>
+                {
+                  orders?.map(order => (
+                    <div key={order?._id} className="list-order-item">
+                      <div className="list-order-item-top">
+                        <div>
+                          <div><span>ID:{order?._id}</span></div>
+                          <div>
                             {
-                              width > 576 && <div className="price">
-                                <span>{`₫${numberWithCommas(Number(item?.payablePrice))}`}</span>
-                              </div>
+                              order?.paymentStatus?.status === 'cancel' ? <div className='cancel'>Đã hủy</div> :
+                                order?.paymentStatus?.status === 'refund' ? <div className="refund">Trả lại</div> :
+                                  (order?.paymentStatus?.status === 'completed' && order?.orderStatus[3].isCompleted) ? <div className='delivered'>
+                                    <Link to={`/profile/order/${order?._id}`}>
+                                      <span>Đơn giao hàng thành công</span>
+                                    </Link>
+                                    <div>Hoàn thành</div>
+                                  </div> : (order?.orderStatus[1].isCompleted || order?.orderStatus[2].isCompleted) && <div className="pending">Đơn hàng đang được vận chuyển</div>
+
+                            }
+                            {
+                              order?.paymentStatus?.status === 'pending' && <div className="pending">Đăng chờ xác thực đơn hàng</div>
                             }
                           </div>
-                        ))
-                      }
+                        </div>
+                        <div></div>
+                        <div>
+                          {
+                            order?.orderItems?.map(item => (
+                              <div key={item?._id}>
+                                <div className='infor'>
+                                  <img src={item?.productId?.image} alt="" />
+                                  <div>
+                                    <span>{item?.name} - {item.size} - {item.color}</span>
+                                    <span>da</span>
+                                    <span>{`x${item?.purchaseQty}`}</span>
+                                    {width < 576 && <p className="price">{`₫${numberWithCommas(Number(item?.payablePrice))}`}</p>}
+                                  </div>
+                                </div>
+                                {
+                                  width > 576 && <div className="price">
+                                    <span>{`₫${numberWithCommas(Number(item?.payablePrice))}`}</span>
+                                  </div>
+                                }
+                              </div>
+                            ))
+                          }
+                        </div>
+                      </div>
+                      <div className="list-order-item-middle">
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div className="list-order-item-bottom">
+                        <div>
+                          <div>Thành tiền:</div>
+                          <div>{`₫${numberWithCommas(order?.totalAmount)}`}</div>
+                        </div>
+                      </div>
+                      <div className="list-order-item-btn">
+                        <div>
+                          {
+                            order?.paymentStatus?.status === 'cancel' && <span>{order?.paymentStatus?.user === auth?._id ? 'Đã hủy bởi bạn' : 'Đã hủy bởi của hàng'}</span>
+                          }
+                        </div>
+                        <div>
+                          {
+                            order?.paymentStatus?.status === 'pending' ? <div>
+                              <button className='cancel' onClick={() => handleUpdateStatus(order?._id)}>Hủy đơn hàng</button>
+                            </div> :
+                              order?.paymentStatus?.status === 'refund' ? <div>
+                                <button className='repurchase'>Mua lại</button>
+                                <button className='infor-repurchase' onClick={() => navigate(`/profile/order/${order?._id}`, { replace: true })}>Chi Tiết Đơn Hủy</button>
+                              </div>
+                                : order?.paymentStatus?.status === 'cancel' ? <div>
+                                  <button className='infor-repurchase' onClick={() => navigate(`/profile/order/${order?._id}`, { replace: true })}>Chi Tiết Đơn Hủy</button>
+                                </div> : order?.paymentStatus?.status === 'completed' && order?.orderStatus[3]?.isCompleted ? <div>
+                                  <button className='repurchase'>Mua lại</button>
+                                </div>
+                                  : ''
+                          }
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="list-order-item-middle">
-                    <div></div>
-                    <div></div>
-                  </div>
-                  <div className="list-order-item-bottom">
-                    <div>
-                      <div>Thành tiền:</div>
-                      <div>{`₫${numberWithCommas(order?.totalAmount)}`}</div>
-                    </div>
-                  </div>
-                  <div className="list-order-item-btn">
-                    <div>
-                      {
-                        order?.paymentStatus?.status === 'cancel' && <span>{order?.paymentStatus?.user === auth?._id ? 'Đã hủy bởi bạn' : 'Đã hủy bởi của hàng'}</span>
-                      }
-                    </div>
-                    <div>
-                      {
-                        order?.paymentStatus?.status === 'pending' ? <div>
-                          <button className='cancel' onClick={() => handleUpdateStatus(order?._id)}>Hủy đơn hàng</button>
-                        </div> :
-                          order?.paymentStatus?.status === 'refund' ? <div>
-                            <button className='repurchase'>Mua lại</button>
-                            <button className='infor-repurchase' onClick={() => navigate(`/profile/order/${order?._id}`, { replace: true })}>Chi Tiết Đơn Hủy</button>
-                          </div>
-                            : order?.paymentStatus?.status === 'cancel' ? <div>
-                              <button className='repurchase'>Mua lại</button>
-                              <button className='infor-repurchase' onClick={() => navigate(`/profile/order/${order?._id}`, { replace: true })}>Chi Tiết Đơn Hủy</button>
-                            </div> : order?.paymentStatus?.status === 'completed' && order?.orderStatus[3]?.isCompleted ? <div>
-                              <button className='repurchase'>Mua lại</button>
-                            </div>
-                              : ''
-                      }
-                      {/* <button>Mua lại</button> */}
-                    </div>
-                  </div>
-                </div>
-              ))
+                  ))
+                }
+              </>
             }
           </div>
         </div>

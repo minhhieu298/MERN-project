@@ -7,7 +7,7 @@ import { getStateFromUrl, setStateToUrl } from '../Search/url_handler';
 import * as Icon from '../../../library/icons/index'
 import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside';
-import ProductWrap, { Box, Grid } from '../index.style';
+import ProductWrap, { BoxWrap, Grid } from '../index.style';
 import Container from '../../../components/UI/container/Container';
 import Category from '../Search/Category/Category';
 import CategoryMobile from '../Search/Category/CategoryMobile';
@@ -152,7 +152,7 @@ const WomenProduct = () => {
   }, [dispatch])
   return <ProductWrap>
     <Container fluid={true}>
-      <Box>
+      <BoxWrap>
         <Grid left={true}>
           {
             width > 991 ? <Category page={page} categories={categories} /> : <CategoryMobile categories={categories} />
@@ -214,7 +214,7 @@ const WomenProduct = () => {
             </div>
           }
         </Grid>
-      </Box>
+      </BoxWrap>
     </Container>
   </ProductWrap>
 }

@@ -4,7 +4,7 @@ const ProductWrap = styled.div`
     padding-bottom: 100px;
     padding-top: 120px;
 `
-export const Box = styled.div`
+export const BoxWrap = styled.div`
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     margin-left: calc(var(--bs-gutter-x)*-.5);
@@ -588,8 +588,8 @@ export const DetailWrap = styled.div`
     .row{
         --bs-gutter-x: 1.5rem;
         --bs-gutter-y: 0;
-        display: flex;
-        flex-wrap: wrap;
+        /* display: flex; */
+        /* flex-wrap: wrap; */
         margin-left: calc(var(--bs-gutter-x)*-.5);
         margin-right: calc(var(--bs-gutter-x)*-.5);
         margin-top: calc(var(--bs-gutter-y)*-1);
@@ -661,23 +661,28 @@ export const DetailWrap = styled.div`
                     margin: 0 0 17px;
                 }
                 .size-color{
-                    display: flex;
-                    @media (max-width: 767px){
-                        display: block;
-                    }
-                    @media screen and (min-width: 576px) and (max-width: 767px){
+                    display: block;
+                    @media (min-width: 992px){
                         display: flex;
                     }
+                    /* @media screen and (min-width: 576px) and (max-width: 767px){
+                        display: flex;
+                    } */
                     .color-wrap{
                         margin-right: 20px;
-                        @media (max-width: 767px){
+                        margin-bottom: 20px;
+                        @media (min-width: 992){
+                            margin-right: 0;
+                            margin-bottom: 10px;
+                        }
+                        /* @media (max-width: 767px){
                             margin-bottom: 20px;
                             margin-right: 0;
                         }
                         @media screen and (min-width: 576px) and (max-width: 767px){
                             margin-bottom: 0;
                             margin-right: 20px;
-                        }
+                        } */
                         span{
                             display: block;
                             font-size: 15px;
@@ -697,6 +702,7 @@ export const DetailWrap = styled.div`
                         }
                     }
                     .size-wrap{
+                        flex: 1;
                         span{
                             display: block;
                             font-size: 15px;
@@ -704,21 +710,24 @@ export const DetailWrap = styled.div`
                             margin: 0 0 15px;
                         }
                         .size-content{
-                            display: flex;
-                            align-items: center;
+                            display: grid;
+                            grid-template-columns: repeat(4,1fr);
                             gap: 10px;
+                            @media (min-width: 768px){
+                                display: grid;
+                                grid-template-columns: repeat(6,1fr);
+                                /* display: flex;
+                                align-items: center;
+                                gap: 10px; */
+                            }
                             >button{
                                 font-size: 14px;
                                 margin: 0 5px 0 0;
                                 position: relative;
                                 text-transform: uppercase;
-                                /* background-color: ; */
                                 color: #000;
-                                width: 24px;
-                                height: 28px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
+                                width: 100%;
+                                padding: 10px 15px;
                             }
                         }
                     }
@@ -848,6 +857,146 @@ export const DetailWrap = styled.div`
                         }
                     }
                 }
+            }
+        }
+    }
+    .comments{
+        margin-top: 40px;
+        max-width: 900px;
+        .container{
+            width: 100%;
+            h3{
+                font-size: 1.5rem;
+                margin: 20px 0 10px;
+            }
+            .wrap {
+                form{
+                    margin: 10px 0;
+                    >div{
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 0 10px;
+                        margin-bottom: 10px;
+                        >div{
+                            width: 100%;
+                            border: 1px solid rgba(0,0,0,0.14);
+                            border-radius: 4px;
+                            padding: 1em .75em;
+                            input{
+                                width: 100%;
+                                border: 0;
+                                outline: 0;
+                                font-size: 16px;
+                                padding-left: 10px;
+                                padding-right: 15px;
+                            }
+                        }
+                        button{
+                            padding: 15px;
+                            border-radius: 4px;
+                            font-weight: 600;
+                            background: #2e84fd;
+                            color: #fff;
+                            text-transform: uppercase;
+                            &:disabled{
+                                cursor: not-allowed;
+                                background: gray;
+                            }
+                        }
+                    }
+                }
+            }
+            .list-comment{
+                display: flex;
+                flex-direction: column;
+                &-item{
+                    display: flex;
+                    align-items: flex-start;
+                    margin: 20px 0 10px;
+                    &-left{
+                        .avatar-user{
+                            width: 40px;
+                            height: 40px;
+                            overflow: hidden;
+                            border-radius: 100rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+                    &-right{
+                        flex: 1;
+                        padding-left: 15px;
+                        .user-name{
+                            margin-bottom: 5px;
+                        }
+                        .comment{
+                            margin-top: 8px;
+                        }
+                        .edit-comment{
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                            margin: 10px 0;
+                            >div{
+                                color: gray;
+                                text-transform: capitalize;
+                                cursor: pointer;
+                            }
+                        }
+                        form{
+                            position: relative;
+                            margin: 10px 0;
+                            >div{
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                gap: 0 10px;
+                                margin-bottom: 10px;
+                                >div{
+                                    width: 100%;
+                                    border: 1px solid rgba(0,0,0,0.14);
+                                    border-radius: 4px;
+                                    padding: 1em .75em;
+                                    input{
+                                        width: 100%;
+                                        border: 0;
+                                        outline: 0;
+                                        font-size: 16px;
+                                        padding-left: 10px;
+                                        padding-right: 15px;
+                                    }
+                                }
+                                button{
+                                    padding: 15px;
+                                    border-radius: 4px;
+                                    font-weight: 600;
+                                    background: #2e84fd;
+                                    color: #fff;
+                                    text-transform: uppercase;
+                                    &:disabled{
+                                        cursor: not-allowed;
+                                        background: gray;
+                                    }
+                                }
+                                &:nth-child(2){
+                                    .cancel{
+                                        border: 0;
+                                        border-radius: 0;
+                                        padding: 0;
+                                        color: gray;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .empty-comment{
+                margin-top: 20px;
             }
         }
     }

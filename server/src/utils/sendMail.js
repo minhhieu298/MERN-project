@@ -13,6 +13,7 @@ const oauth2Client = new OAuth2(
 const sendOTP = ({ text, email, otp }) => {
   oauth2Client.setCredentials({
     refresh_token: process.env.OAUTH_REFRESH_TOKEN,
+    accessToken: process.env.OAUTH_ACCESS_TOKEN,
   });
   const accessToken = oauth2Client.getAccessToken();
   let transporter = nodemailer.createTransport({
@@ -23,17 +24,15 @@ const sendOTP = ({ text, email, otp }) => {
       clientId: process.env.OAUTH_CLIENT_ID,
       clientSecret: process.env.OAUTH_CLIENT_SECRET,
       refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-      accessToken,
+      accessToken: process.env.OAUTH_ACCESS_TOKEN,
       // expires: 1484314697598,
     },
   });
   // let transporter = nodemailer.createTransport({
-  //   host: "smtp.ethereal.email",
-  //   port: 587,
-  //   secure: false,
+  //   service: "gmail",
   //   auth: {
   //     user: process.env.AUTH_EMAIL,
-  //     pass: process.env.AUTH_PASSWORD,
+  //     // pass: process.env.AUTH_PASSWORD,
   //   },
   // });
   let mailOptions = {

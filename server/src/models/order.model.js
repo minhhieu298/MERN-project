@@ -74,6 +74,10 @@ const orderSchema = new Schema(
         },
       },
     ],
+    payment_method: {
+      type: String,
+      default: 'Thanh toán khi nhận hàng'
+    },
   },
   {
     collection: "orders",

@@ -189,115 +189,6 @@ const CheckoutWrap = styled.div`
                     }
                 }
             }
-            /* @media (max-width:576px){
-                overflow:hidden;
-                overflow-x: scroll;
-            }
-            &-heading{
-                padding: 24px 30px 0;
-                display: grid;
-                grid-template-columns: repeat(10,minmax(0,1fr));
-                >div{
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
-                    color: #bbb;
-                    &:first-child{
-                        font-size: 18px;
-                        color: #222;
-                        grid-column: span 6 / span 6;
-                        @media (max-width:576px){
-                            grid-column: span 3 / span 6;
-                        }
-                    }
-                    &:nth-child(2),&:nth-child(4){
-                        grid-column: span 1 / span 2;
-                        width: 100%;
-                        justify-content: center;
-                        @media (max-width:576px){
-                            grid-column: span 2 / span 6;
-                            text-align: center;
-                        }
-                    }
-                    &:nth-child(3){
-                        grid-column: span 2 / span 6;
-                        width: 100%;
-                        justify-content: center;
-                        @media (max-width:576px){
-                            grid-column: span 3 / span 6;
-                        }
-                    }
-                }
-            }
-            &-content{
-                padding-bottom: 20px;
-                border-bottom: 1px dashed rgba(0,0,0,.09);
-                >div{
-                    margin: 0 30px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    font-size: 14px;
-                    color: #222;
-                    min-height: 55px;
-                    display: grid;
-                    grid-template-columns: repeat(10,minmax(0,1fr));
-                    >div{
-                        display: flex;
-                        align-items: center;
-                        &:first-child{
-                            grid-column: span 6 / span 6;
-                            @media (max-width:576px){
-                                grid-column: span 3 / span 6;
-                            }
-                            img{
-                                width: 40px;
-                                height: 40px;
-                                object-fit: cover;
-                            }
-                            div{
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                margin-left: 10px;
-                            }
-                        }
-                        &:nth-child(2), &:nth-child(4){
-                            grid-column: span 1 / span 2;
-                            width: 100%;
-                            justify-content: center;
-                            @media (max-width:576px){
-                                grid-column: span 2 / span 6;
-                            }
-                        }
-                        &:nth-child(3){
-                            grid-column: span 2 / span 6;
-                            width: 100%;
-                            justify-content: center;
-                            @media (max-width:576px){
-                                grid-column: span 3 / span 6;
-                            }
-                        }
-                    }
-                }
-            }
-            &-footer{
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                padding: 16px 30px 20px;
-                background-color: #fafdff;
-                gap: .5rem;
-                >div{
-                    &:first-child{
-                        font-size: 14px;
-                        color: #929292;
-                    }
-                    &:last-child{
-                        font-size: 20px;
-                        color: #ee4d2d;
-                    }
-                }
-            } */
         }
         .total{
             border-radius: 3px;
@@ -332,17 +223,84 @@ const CheckoutWrap = styled.div`
                 display: flex;
                 align-items: center;
                 min-height: 90px;
+                gap: 10px;
                 >div{
                     &:first-child{
                         font-size: 18px;
                         color: #222;
-                        flex: 1;
+                        @media (max-width: 767px){
+                            flex: 1;
+                            font-size: 16px;
+                        }
                     }
                     &:last-child{
-                        color: #05a;
-                        text-transform: uppercase;
-                        font-weight: 500;
-                        cursor: pointer;
+                        >div{
+                            span{
+                                .product-variation{
+                                    padding: 0.25rem 0.75rem;
+                                    border: 1px solid rgba(0,0,0,.09);
+                                    font-weight: 500;
+                                    border-radius: 2px;
+                                    height: 3rem;
+                                    margin: 0 8px 8px 0;
+                                    margin-bottom: 0;
+                                    margin-top: 0.625rem;
+                                    background: #fff;
+                                }
+                                .product-variation-selected{
+                                    border-color: #ee4d2d;
+                                    color: #ee4d2d;
+                                }
+                            }
+                            .mobile{
+
+                            }
+                        }
+                        &.mobile{
+                            >div{
+                                color: #05a;
+                                text-transform: uppercase;
+                                font-weight: 500;
+                                cursor: pointer;
+                                &:nth-child(2){
+                                    position: fixed;
+                                    width: 100%;
+                                    height: 100%;
+                                    background: rgba(0,0,0,0.5);
+                                    top: 0;
+                                    left: 0;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    z-index: 99999;
+                                    >div{
+                                        width: 100%;
+                                        background: #fff;
+                                        padding: 10px;
+                                        margin: 0 10px;
+                                        border-radius: 2px;
+                                        >div{
+                                            &:nth-child(2){
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                margin: 20px 0 10px;
+                                                button{
+                                                    border: 1px solid rgba(0,0,0,0.14);
+                                                    min-width: 80px;
+                                                    height: 3rem;
+                                                    padding: .25rem .75rem;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    text-transform: uppercase;
+                                                    border-radius: 2px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -397,7 +355,7 @@ const CheckoutWrap = styled.div`
                     }
                     &:last-child{
                         min-height: 95px;
-                        padding: 10px 30px;
+                        padding: 10px 20px;
                         margin: 10px 0 0;
                         justify-content: flex-end;
                         align-items: center;

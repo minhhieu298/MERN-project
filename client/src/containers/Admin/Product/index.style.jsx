@@ -923,6 +923,99 @@ export const DetailWrap = styled.div`
             }
         }
     }
+    .modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 500ms ease 0s;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.active{
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        >div{
+            min-width: 600px;
+            max-width: 650px;
+            background: #fff;
+            border-radius: 4px;
+            >div{
+                >div{
+                    &:first-child{
+                        padding: 10px;
+                        >div{
+                            &:first-child{
+                                color: #000;
+                                margin-bottom: 15px;
+                            }
+                            &:nth-child(2){
+                                width: 100%;
+                                height: 80px;
+                                border: 1px dotted green;
+                                margin-bottom: 10px;
+                                input{
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                            &:nth-child(3){
+                                width: 70px;
+                                height: 70px;
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+                            }
+                        }
+                    }
+                    &:nth-child(2){
+                        padding: 10px;
+                        >div{
+                            &:first-child{
+                                color: #000;
+                                margin-bottom: 15px;
+                            }
+                            &:nth-child(2){
+                                width: 100%;
+                                height: 80px;
+                                border: 1px dotted green;
+                                margin-bottom: 10px;
+                                input{
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                            &:nth-child(3){
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                >div{
+                                    width: 70px;
+                                    height: 70px;
+                                    img{
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 `
 
 export const FilterWrap = styled.div`

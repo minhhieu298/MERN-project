@@ -14,7 +14,6 @@ const AgentProfile = () => {
   const handleUpload = async (e) => {
     const file = e.target.files[0]
     const base64 = await convertToBase64(file)
-    console.log(base64);
     setImage(base64)
   }
   const handleSubmit = async e => {

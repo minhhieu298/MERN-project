@@ -91,6 +91,32 @@ export const Container = styled.div`
         }
         &-middle{
             .list-order{
+                /* min-height: 100vh; */
+                .container-empty{
+                    box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+                    border-radius: 0.125rem;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 60vh;
+                    background: #fff;
+                    .list-order-empty{
+                        background-position: 50%;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        width: 100px;
+                        height: 100px;
+                    }
+                    .text{
+                        margin: 20px 0 0;
+                        font-size: 18px;
+                        line-height: 1.4;
+                        color: rgba(0,0,0,.8);
+                    }
+                }
                 &-item{
                     margin: 12px 0;
                     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);

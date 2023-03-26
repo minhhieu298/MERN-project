@@ -7,7 +7,7 @@ import { getAllProducts } from '../../../redux/actions/product.action'
 import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack } from '@mui/material';
 import useOnClickOutside from '../../../library/hooks/useOnClickOutside';
 import useWindowSize from '../../../library/hooks/useWindowSize'
-import ProductWrap, { Box, Grid } from '../index.style'
+import ProductWrap, { BoxWrap, Grid } from '../index.style'
 import { getStateFromUrl, setStateToUrl } from '../Search/url_handler'
 import Category from '../Search/Category/Category'
 import CategoryMobile from '../Search/Category/CategoryMobile'
@@ -152,7 +152,7 @@ const MenCategoryPage = () => {
     }, [dispatch])
     return <ProductWrap>
         <Container fluid={true}>
-            <Box>
+            <BoxWrap>
                 <Grid left={true}>
                     {
                         width > 991 ? <Category page={page} categories={categories} /> : <CategoryMobile categories={categories} />
@@ -222,7 +222,7 @@ const MenCategoryPage = () => {
                         </div>
                     }
                 </Grid>
-            </Box>
+            </BoxWrap>
         </Container>
     </ProductWrap>
 }

@@ -7,8 +7,8 @@ import AdminWrap, { Box, Grid } from './index.style'
 
 const ProfileAdmin = () => {
   const { auth, dispatch, token } = useStore()
-  const [image, setImage] = useState('')
-  const [name, setName] = useState('')
+  const [image, setImage] = useState(auth?.avatar)
+  const [name, setName] = useState(auth?.username)
   const [email, setEmail] = useState('')
   const [data, setData] = useState({ password: '', confirmPassword: '' })
   const [errMsg, setErrMsg] = useState({ password: '', confirmPassword: '' });

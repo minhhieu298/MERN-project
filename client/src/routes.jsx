@@ -5,7 +5,7 @@ import LayoutAdmin from "./containers/Admin/LayoutAdmin";
 import Layout from "./containers/Layout/Layout";
 import PersitLogin from "./library/PersitLogin";
 import PrivivateRoute from "./library/PrivivateRoute";
-import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ACCESSORIES_PAGE, PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE, OTP_PAGE, FORGOT_PASSWORD } from "./setting/constants";
+import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE, OTP_PAGE, FORGOT_PASSWORD, CHECKOUT_SUCCESS } from "./setting/constants";
 
 const HomePage = lazy(() => import('./containers/Home/Home'))
 // const MenProductPage = lazy(() => import('./containers/Products/Men/MenProducts'))
@@ -26,18 +26,17 @@ const RegisterPage = lazy(() => import('./containers/Auth/Signup/SignUp'))
 const ResetPasswordPage = lazy(() => import('./containers/Auth/ResetPassword'))
 const VerifyOTPPage = lazy(() => import('./containers/Auth/VerifyOTP'))
 const ForgotPassPage = lazy(() => import('./containers/Auth/ForgotPassword'))
+const ChechoutSuccesPage = lazy(() => import('./containers/Checkout/CheckoutSuccess'))
 // admin
 const DashboardPage = lazy(() => import('./containers/Admin/Dashboard/Dashboard'))
 const ProductAdminPage = lazy(() => import('./containers/Admin/Product/ListProduct'))
 const ProductDetailAdminPage = lazy(() => import('./containers/Admin/Product/ProductDetail'))
 const DiscountPage = lazy(() => import('./containers/Admin/Discount/Discount'))
 const CategoryPage = lazy(() => import('./containers/Admin/Categories/Category'))
-// const AccessoriesPage = lazy(() => import('./containers/Admin/Accessories/Accessories'))
 const OrderPageAdmin = lazy(() => import('./containers/Admin/Order/Order'))
 const NotFound = lazy(() => import('./containers/404/404'))
 const ProfileAdminPage = lazy(() => import('./containers/Admin/ProflieAdmin/ProfileAdmin'))
 const UserAdminPage = lazy(() => import('./containers/Admin/Users/ListUser'))
-// const LayoutProductPage = lazy(() => import('./containers/Products/LayoutProduct'))
 
 export default function AppRoutes() {
     return (
@@ -99,6 +98,11 @@ export default function AppRoutes() {
                         <Route path={CHECKOUT_PAGE} element={
                             <React.Suspense fallback={<Loader />}>
                                 <CheckOutPage />
+                            </React.Suspense>
+                        } />
+                        <Route path={CHECKOUT_SUCCESS} element={
+                            <React.Suspense fallback={<Loader />}>
+                                <ChechoutSuccesPage />
                             </React.Suspense>
                         } />
                     </Route>

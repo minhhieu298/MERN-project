@@ -81,6 +81,25 @@ const productSchema = new Schema(
       ref: "User",
       required: true,
     },
+    // numOfReviews: {
+    //   type: Number,
+    //   default: 0,
+    // },
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+    product_comments: [
+      {
+        comment: String,
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        rating: Number,
+      },
+    ],
   },
   {
     collection: "products",

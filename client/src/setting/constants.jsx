@@ -19,6 +19,7 @@ export const PASSWORD_PAGE = 'password'
 export const ORDER_PAGE = 'purchase'
 
 export const CHECKOUT_PAGE = '/checkout'
+export const CHECKOUT_SUCCESS = 'checkout-success'
 
 // admin
 export const ADMIN_PAGE = '/admin'

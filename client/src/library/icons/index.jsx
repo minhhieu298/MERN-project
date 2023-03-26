@@ -36,6 +36,7 @@ import { IoLocationOutline } from 'react-icons/io5'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DoneIcon from '@mui/icons-material/Done';
+import StarIcon from '@mui/icons-material/Star'
 
 export {
     MenuOutlinedIcon,
@@ -79,5 +80,6 @@ export {
     BsArrowLeft,
     AutorenewIcon,
     LocalShippingIcon,
-    DoneIcon
+    DoneIcon,
+    StarIcon
 }

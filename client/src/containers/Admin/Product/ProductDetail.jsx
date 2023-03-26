@@ -106,6 +106,13 @@ const ProductDetail = () => {
       setOpen(false)
     }
   }
+  const handleUpdateImage = e => {
+    const payload = {
+      image: image ? image : product?.image,
+      thumbnails: thumbnail.length > 0 ? thumbnail : product?.thumbnails,
+    }
+    dispatch(updateProduct(id, payload, token))
+  }
   const handleCheckSize = (e, index) => {
     const { name, checked } = e.target
     const list = [...size]
@@ -134,8 +141,6 @@ const ProductDetail = () => {
     e.preventDefault()
     const data = {
       name, price, description, stock,
-      image: image ? image : product?.image,
-      thumbnails: thumbnail.length > 0 ? thumbnail : product?.thumbnails,
       sizes: size,
       colors: color,
       category_id: cateChild.id,
@@ -297,7 +302,7 @@ const ProductDetail = () => {
             <span onClick={() => setOpen(false)}><Icon.CloseOutlinedIcon fontSize='large' /></span>
             <div>
               <div>
-                <div>Ảnh</div>
+                <div>Ảnh chính</div>
                 <div>
                   <input type="file" onChange={handleImage} accept='.jpeg, .png, .jpg' />
                 </div>
@@ -314,28 +319,28 @@ const ProductDetail = () => {
                 <div>
                   <input type="file" accept='.jpeg, .png, .jpg' multiple onChange={handleMultipleImage} />
                 </div>
-                {/* <div>
-                  {
-                    thumbnail?.map((item, index) => (
-                      <img key={index} src={item?.url} alt="" />
-                    ))
-                  }
-                </div> */}
                 {
-                  thumbnail?.length > 0 ? <div>
-                    {
-                      thumbnail?.map((item, index) => (
-                        <img key={index} src={item} alt="" />
-                      ))
-                    }
-                  </div> : product?.thumbnails && <div>
+                  product?.thumbnails && <div>
                     {
                       product?.thumbnails?.map(item => (
-                        <img key={item?.public_id} src={item?.url} alt="" />
+                        <div key={item?.public_id}>
+                          <img src={item?.url} alt="" />
+                        </div>
                       ))
                     }
                   </div>
                 }
+                {/* {
+                  thumbnail?.length > 0 ? <div>
+                    {
+                      thumbnail?.map((item, index) => (
+                        <div key={index}>
+                          <img src={item} alt="" />
+                        </div>
+                      ))
+                    }
+                  </div> : 
+                } */}
               </div>
             </div>
             {/* <button onClick={() => updateImg()}>Submit</button> */}

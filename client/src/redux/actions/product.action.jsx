@@ -1,5 +1,5 @@
 import { callAPI } from "../../api/callApi";
-import { ALL_PRODUCT, CREATE_PRODUCT, SINGLE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, DISCOUNT } from "../constants";
+import { ALL_PRODUCT, CREATE_PRODUCT, SINGLE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, DISCOUNT, CREATE_COMMENT, DELETE_COMMENT, ERROR_MESSAGE, UPDATE_COMMENT } from "../constants";
 
 export function createUrl(urlData) {
     const keys = Object.keys(urlData);
@@ -73,13 +73,20 @@ export const getAllProducts =
         };
 
 export const getSingleProduct = (id) => async (dispatch) => {
-    const { data } = await callAPI.get(`/v2/product/${id}`);
-    dispatch({
-        type: SINGLE_PRODUCT,
-        payload: {
-            product: data.product
-        }
-    })
+    try {
+        const { data } = await callAPI.get(`/v2/product/${id}`);
+        dispatch({
+            type: SINGLE_PRODUCT,
+            payload: {
+                product: data.product
+            }
+        })
+    } catch (error) {
+        dispatch({
+            type: ERROR_MESSAGE,
+            payload: error.response.data.message
+        })
+    }
 }
 
 export const createProduct = (data, token) => async (dispatch) => {
@@ -135,5 +142,48 @@ export const createDiscount = (data, url, token) => async (dispatch) => {
             type: DISCOUNT,
         })
         dispatch(getAllProducts(url))
+    }
+}
+
+export const createComment = (payload, token) => async (dispatch) => {
+    const res = await callAPI.post('/v2/create-new-comment', payload, {
+        headers: {
+            Authorization: token
+        }
+    })
+    if (res.status === 201) {
+        dispatch({
+            type: CREATE_COMMENT,
+        })
+        dispatch(getSingleProduct(payload.product))
+    }
+}
+
+export const updateComment = (payload, token) => async (dispatch) => {
+    const res = await callAPI.post('/v2/update-comment', payload, {
+        headers: {
+            Authorization: token
+        }
+    })
+    if (res.status === 200) {
+        dispatch({
+            type: UPDATE_COMMENT,
+        })
+        dispatch(getSingleProduct(payload.product))
+    }
+}
+
+
+export const deleteComment = (payload, token) => async (dispatch) => {
+    const res = await callAPI.post('/v2/delete-comment', payload, {
+        headers: {
+            Authorization: token
+        }
+    })
+    if (res.status === 200) {
+        dispatch({
+            type: DELETE_COMMENT,
+        })
+        dispatch(getSingleProduct(payload.product))
     }
 }

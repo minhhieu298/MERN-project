@@ -108,7 +108,13 @@ module.exports.productCtrl = {
   },
   getSingleProduct: async (req, res) => {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-      let product = await Product.findOne({ _id: req.params.id });
+      let product = await Product.findOne({ _id: req.params.id }).populate(
+        "product_comments.user",
+        "username avatar"
+      );
+      if (!product) {
+        return res.status(400).json({ message: "Không tìm thấy sản phẩm" });
+      }
       return res.status(200).json({ product });
     } else {
       return res.status(400).json({ message: "Không tìm thấy sản phẩm" });
@@ -117,7 +123,6 @@ module.exports.productCtrl = {
   getDiscount: async (req, res) => {
     if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
       let product = await Product.findById(req.params.id);
-
       if (!product) {
         return res.status(400).json({ message: "Không tìm thấy sản phẩm" });
       } else {
