@@ -32,7 +32,7 @@ const DashboardWrap = styled.div`
                 display: grid;
                 grid-template-columns: repeat(3,minmax(0,1fr));
                 gap: 20px;
-                margin-bottom: 40px;
+                margin-top: 40px;
                 .col-3{
                     grid-column: span 3 / span 3;
                     border-radius: 0.5rem;
@@ -122,6 +122,59 @@ const DashboardWrap = styled.div`
                                 .left{
                                     background: #0e9f6e;
                                 }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(3){
+                    grid-template-columns: repeat(12,minmax(0,1fr));
+                    .col-4{
+                        grid-column: span 12 / span 12;
+                        @media (min-width: 1280px){
+                            grid-column: span 4 / span 4;
+                        }
+                    }
+                    .col-8{
+                        grid-column: span 12 / span 12;
+                        @media (min-width: 1280px){
+                            grid-column: span 8 / span 8;
+                        }
+                        .table{
+                            overflow-x: auto;
+                            overflow-y: hidden;
+                            &::-webkit-scrollbar{
+                                height: 5px;
+                            }
+                            &::-webkit-scrollbar-thumb{
+                                border-radius: 10px;
+                            }
+                            &::-webkit-scrollbar-track{
+                                border-radius: 10px;
+                            }
+                            table{
+                                width: 100%;
+                                border: 1px solid #3a4570;
+                                border-collapse: collapse;
+                                margin-bottom: 20px;
+                                th,td{ 
+                                    padding: 15px 30px;
+                                    text-align: center;
+                                    vertical-align: middle;
+                                    white-space: nowrap;
+                                }
+                                tbody{
+                                    tr{
+                                        border-top: 1px solid #3a4570;
+                                    }
+                                }
+                            }
+                        }
+                        .pagination{
+                            margin-top: 20px;
+                            display: flex;
+                            justify-content: flex-end;
+                            button{
+                                color: #fff;
                             }
                         }
                     }

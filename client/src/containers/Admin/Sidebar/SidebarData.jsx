@@ -28,7 +28,7 @@ export const SideData = [
         ]
     },
     {
-        title: <div>Discount</div>,
+        title: <div>Giảm giá</div>,
         icon: <span><Icon.PeopleRoundedIcon /></span>,
         path: DISCOUNT_PAGE
     },

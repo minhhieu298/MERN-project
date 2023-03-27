@@ -6,6 +6,7 @@ import useOnClickOutside from '../../../library/hooks/useOnClickOutside'
 import { SideData } from './SidebarData'
 import useStore from '../../../library/hooks/useStore'
 import { logOut } from '../../../redux/actions/auth.action'
+import { ADMIN_PAGE } from '../../../setting/constants'
 
 const Item = ({ item }) => {
   const [drop, setDrop] = useState(false)
@@ -59,6 +60,18 @@ const Sidebar = ({ open, setOpen }) => {
         <div className="nav-header">
           <div className="title">
             Dashboard
+          </div>
+          <div className="content">
+            <div className="feature">
+              <Link to={ADMIN_PAGE}>
+                <div className='feature-title'>
+                  <div>
+                    <span><Icon.MdOutlineDashboard /></span>
+                    <div>Dashboard</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="nav-header">

@@ -150,6 +150,16 @@ async function queryParams(query, req) {
   return orders;
 }
 
+async function getDataforChart(query) {
+  let data = [
+    query,
+    {
+      $count: "total",
+    },
+  ];
+  return await Order.aggregate(data);
+}
+
 module.exports.orderCtrl = {
   createOrder: async (req, res) => {
     Cart.deleteOne({ user: req.user._id }).exec(async (error, result) => {
@@ -332,7 +342,7 @@ module.exports.orderCtrl = {
           {
             $set: {
               "orderStatus.$": [
-                { type: req.body.type, date: new Date(), isCompleted: false },
+                { type: req.body.type, date: new Date(), isCompleted: true },
               ],
             },
           }
@@ -340,12 +350,10 @@ module.exports.orderCtrl = {
           if (error) return res.status(400).json({ message: error.message });
           if (order) {
             const order = await Order.findOne({ _id: req.body.orderId });
-            // order.orderItems.forEach((item) => {
-            //   updateProduct(item.productId, item.purchaseQty);
-            // });
             for (let item of order.orderItems) {
               await updateProduct(item.productId, item.purchaseQty);
             }
+            return res.status(200).json({ message: "success" });
           }
         });
       } else {
@@ -388,6 +396,66 @@ module.exports.orderCtrl = {
       if (order) {
         res.status(201).json({ order });
       }
+    });
+  },
+
+  getChart: async (req, res) => {
+    let orderPending = await getDataforChart({
+      $match: {
+        $and: [
+          {
+            "paymentStatus.status": "pending",
+          },
+          {
+            orderStatus: {
+              $elemMatch: {
+                type: "ordered",
+                isCompleted: true,
+              },
+            },
+          },
+        ],
+      },
+    });
+    let orderShipped = await getDataforChart({
+      $match: {
+        $and: [
+          {
+            orderStatus: {
+              $elemMatch: {
+                type: "shipped",
+                isCompleted: true,
+              },
+            },
+          },
+          {
+            orderStatus: {
+              $elemMatch: {
+                type: "delivered",
+                isCompleted: false,
+              },
+            },
+          },
+        ],
+      },
+    });
+    let orderDelivered = await getDataforChart({
+      $match: {
+        orderStatus: {
+          $elemMatch: {
+            type: "delivered",
+            isCompleted: true,
+          },
+        },
+      },
+    });
+    
+    return res.status(200).json({
+      chart: {
+        pending: orderPending[0]?.total ? orderPending[0]?.total : 0,
+        shipped: orderShipped[0]?.total ? orderShipped[0]?.total : 0,
+        delivered: orderDelivered[0]?.total ? orderDelivered[0]?.total : 0,
+      },
     });
   },
 };

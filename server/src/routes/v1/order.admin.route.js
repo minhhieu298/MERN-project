@@ -23,4 +23,6 @@ route.post(
   orderCtrl.getSingleOrderAdmin
 );
 
+route.get("/get-chart", auth.authUser, auth.authAdmin, orderCtrl.getChart);
+
 module.exports = route;

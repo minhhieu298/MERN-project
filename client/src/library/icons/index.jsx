@@ -36,7 +36,8 @@ import { IoLocationOutline } from 'react-icons/io5'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DoneIcon from '@mui/icons-material/Done';
-import StarIcon from '@mui/icons-material/Star'
+import StarIcon from '@mui/icons-material/Star';
+import { MdOutlineDashboard } from 'react-icons/md'
 
 export {
     MenuOutlinedIcon,
@@ -81,5 +82,6 @@ export {
     AutorenewIcon,
     LocalShippingIcon,
     DoneIcon,
-    StarIcon
+    StarIcon,
+    MdOutlineDashboard
 }

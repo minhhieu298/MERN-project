@@ -1,4 +1,4 @@
-import { CREATE_NEW_ORDER, GET_ORDER_USER, GET_ORDER_USER_ADMIN, UPDATE_ORDER_ADMIN, UPDATE_STATUS_PAYMENT } from "../constants";
+import { CREATE_NEW_ORDER, GET_CHART, GET_ORDER_USER, GET_ORDER_USER_ADMIN, UPDATE_ORDER_ADMIN, UPDATE_STATUS_PAYMENT } from "../constants";
 
 export const orderReducer = (state = { orders: [], order: {} }, action) => {
     switch (action.type) {
@@ -23,6 +23,12 @@ export const orderReducer = (state = { orders: [], order: {} }, action) => {
         case UPDATE_ORDER_ADMIN:
             return {
                 ...state
+            }
+
+        case GET_CHART:
+            return {
+                ...state,
+                chart: action.payload
             }
 
         case GET_ORDER_USER_ADMIN:

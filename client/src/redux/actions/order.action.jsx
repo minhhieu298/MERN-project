@@ -1,5 +1,5 @@
 import { callAPI } from "../../api/callApi";
-import { CREATE_NEW_ORDER, GET_ORDER_USER, GET_ORDER_USER_ADMIN, UPDATE_ORDER_ADMIN, UPDATE_STATUS_PAYMENT } from "../constants";
+import { CREATE_NEW_ORDER, GET_CHART, GET_ORDER_USER, GET_ORDER_USER_ADMIN, UPDATE_ORDER_ADMIN, UPDATE_STATUS_PAYMENT } from "../constants";
 
 export function createUrl(urlData) {
   const keys = Object.keys(urlData);
@@ -132,5 +132,20 @@ export const updateOrderAdmin = (orderId, type, token, url) => async (dispatch) 
       type: UPDATE_ORDER_ADMIN
     })
     dispatch(getOrderAdmin({ url, token }))
+  }
+}
+
+export const getChartData = (token) => async (dispatch) => {
+  const res = await callAPI.get('/v1/get-chart', {
+    headers: {
+      Authorization: token,
+    },
+  })
+  if (res.status === 200) {
+    const { chart } = res.data
+    dispatch({
+      type: GET_CHART,
+      payload: chart
+    })
   }
 }

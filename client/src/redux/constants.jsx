@@ -44,6 +44,7 @@ export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_CART = 'REMOVE_CART'
 
 export const CREATE_NEW_ORDER = 'CREATE_NEW_ORDER'
+export const GET_CHART = 'GET_CHART'
 export const GET_ORDER_USER = 'GET_ORDER_USER'
 export const GET_ORDER_DETAIL = ' GET_ORDER_DETAIL'
 export const UPDATE_STATUS_PAYMENT = 'UPDATE_STATUS_PAYMENT'

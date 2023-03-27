@@ -169,7 +169,6 @@ const OrderWrap = styled.div`
                     }
                     td{
                         .update_order{
-                            /* position: relative; */
                             .drop-down{
                                 border: 1px solid #bdc8f070;
                                 width: 135px;

@@ -38,9 +38,10 @@ const SidebarWrap = styled.nav`
         overflow: hidden;
         &-header{
             border-bottom: 1px solid #bdc8f070;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
             .title{
                 margin: 10px 0px 0.35em;
-                /* font-family: 'Roboto'; */
                 line-height: 1.66;
                 display: block;
                 color: rgb(215, 220, 236);
@@ -50,9 +51,6 @@ const SidebarWrap = styled.nav`
                 text-transform: capitalize;
             }
             .content{
-                /* display: flex;
-                flex-direction: column;
-                height: 100%; */
                 .feature{
                     &-title{
                         display: flex;
@@ -98,16 +96,26 @@ const SidebarWrap = styled.nav`
                             }
                         }
                     }
-                    /* &:last-child{
-                        position: fixed;
-                        bottom: 0;
-                        left: 0;
-                        width: 300px;
-                    } */
+                }
+            }
+            &:first-child{
+                .content{
+                    .feature{
+                        &-title{
+                            >div{
+                                span{
+                                    svg{
+                                        font-size: 1.5rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             &:last-child{
                 border-bottom: 0;
+                padding-bottom: 0;
             }
         }
     }

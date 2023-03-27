@@ -8,7 +8,7 @@ const useStore = () => {
     const { categories, error } = useSelector(state => state.categories)
     const { accessories } = useSelector(state => state.initData)
     const { cartItems } = useSelector(state => state.cart)
-    const { orders, totalOrder } = useSelector(state => state.order)
+    const { orders, totalOrder, chart } = useSelector(state => state.order)
     return {
         dispatch,
         meta,
@@ -28,7 +28,8 @@ const useStore = () => {
         total,
         user,
         error,
-        error_server
+        error_server,
+        chart
     }
 }
 
