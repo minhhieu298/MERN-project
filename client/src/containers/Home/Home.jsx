@@ -50,6 +50,12 @@ const Home = () => {
             products?.map(product => (
               <div key={product?._id} className="slide-item">
                 <Link to={`/product/${product?._id}`}>
+                  <div className="discount">
+                    {
+                      product?.discount > 0 && <span><span>{product?.discount}%</span></span>
+
+                    }
+                  </div>
                   <div className="image">
                     <img src={product?.image} alt="" />
                   </div>
@@ -58,11 +64,10 @@ const Home = () => {
                       <h4>{product?.name}</h4>
                     </div>
                     <p className="price">
+                      <span className={`${product?.discount > 0 ? 'price_after' : 'price_before'}`}>{numberWithCommas(Number(product?.price))}</span>
                       {
-                        product?.discount > 0 && <span className="discount"><span>{product?.discount}%</span></span>
-
+                        product?.discount > 0 && <span className='discount'>{numberWithCommas(Math.round(product?.price * ((100 - Number(product?.discount)) / 100)))}</span>
                       }
-                      <span>₫{numberWithCommas(Number(product?.price))}</span>
                     </p>
                   </div>
                 </Link>

@@ -1,5 +1,5 @@
 import * as Icon from '../../../library/icons/index'
-import {  CATEGORY_PAGE, DISCOUNT_PAGE, ORDER_PAGE_ADMIN, PASSWORD_ADMIN, PRODUCT_ADMIN_PAGE, PROFILTE_ADMIN, USER_ADMIN_PAGE } from '../../../setting/constants'
+import { CATEGORY_PAGE, CHAT_USER, DISCOUNT_PAGE, ORDER_PAGE_ADMIN, PASSWORD_ADMIN, PRODUCT_ADMIN_PAGE, PROFILTE_ADMIN, USER_ADMIN_PAGE } from '../../../setting/constants'
 
 export const SideData = [
     {
@@ -26,6 +26,11 @@ export const SideData = [
                 path: ORDER_PAGE_ADMIN
             }
         ]
+    },
+    {
+        title: <div>Nhắn tin</div>,
+        icon: <span><Icon.BsFillChatFill /></span>,
+        path: CHAT_USER
     },
     {
         title: <div>Giảm giá</div>,

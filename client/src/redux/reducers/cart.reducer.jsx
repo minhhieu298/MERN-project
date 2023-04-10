@@ -6,7 +6,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             // console.log(action.payload);
             return {
                 ...state,
-                // cartItems: action.payload.cartItems,
+                cartItems: action.payload.cartItems,
             };
         case ALL_CART:
             return {

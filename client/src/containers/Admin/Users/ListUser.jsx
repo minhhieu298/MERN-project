@@ -15,7 +15,6 @@ const ListUser = () => {
     const [searchParam] = useSearchParams()
     let location = useLocation()
     const [page, setPage] = useState(1)
-    console.log(users);
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -82,7 +81,6 @@ const ListUser = () => {
             pageSize
         }, token))
     }, [dispatch, token, searchParam])
-    console.log(auth);
     return (
         <UserWrap>
             <div className="container">
@@ -179,6 +177,7 @@ const ListUser = () => {
                     </table>
                 </div>
             </div>
+            
         </UserWrap>
     )
 }

@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const { OAuth2 } = google.auth;
-const OAUTH_PLAYGROUND = "https://developers.google.com/oauthplayground";
+const OAUTH_PLAYGROUND = "https://developers.google.com/oauthplaygroundhttps://developers.google.com/oauthplayground";
 
 const oauth2Client = new OAuth2(
   process.env.OAUTH_CLIENT_ID,
@@ -24,17 +24,11 @@ const sendOTP = ({ text, email, otp }) => {
       clientId: process.env.OAUTH_CLIENT_ID,
       clientSecret: process.env.OAUTH_CLIENT_SECRET,
       refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-      accessToken: process.env.OAUTH_ACCESS_TOKEN,
+      accessToken,
       // expires: 1484314697598,
     },
   });
-  // let transporter = nodemailer.createTransport({
-  //   service: "gmail",
-  //   auth: {
-  //     user: process.env.AUTH_EMAIL,
-  //     // pass: process.env.AUTH_PASSWORD,
-  //   },
-  // });
+
   let mailOptions = {
     from: process.env.AUTH_EMAIL,
     to: email,

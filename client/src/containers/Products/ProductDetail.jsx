@@ -102,11 +102,13 @@ const ProductDetail = () => {
 
 
   const hanldeAddtoCart = (item) => {
+    let price = item.price * ((100 - item?.discount) / 100)
+    // console.log(price);
     const payload = {
       product: item?._id,
       size,
       color,
-      price: item?.discount > 0 ? item.price_after_discount : item.price,
+      price: item?.discount > 0 ? price : item.price,
       token,
     }
     dispatch(addToCart(payload))
@@ -156,7 +158,7 @@ const ProductDetail = () => {
             <div className="wrap-content">
               <h2>{product?.name}</h2>
               <div className="price">
-                {Number(product?.discount) > 0 && <span>₫{numberWithCommas(Number(product?.price_after_discount))}</span>}
+                {Number(product?.discount) > 0 && <span>₫{numberWithCommas(Number(product?.price * ((100 - Number(product?.discount)) / 100)))}</span>}
                 <span className={`${Number(product?.discount) > 0 ? 'old' : ''}`}>₫{numberWithCommas(Number(product?.price))}</span>
               </div>
               {

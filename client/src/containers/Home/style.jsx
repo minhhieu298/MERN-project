@@ -110,6 +110,40 @@ const HomeWrap = styled.div`
                     position: relative;
                     a{
                         display: block;
+                        >.discount{
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            >span{
+                                width: 30px;
+                                height: 30px;
+                                position: absolute;
+                                top: 7px;
+                                right: 7px;
+                                background: red;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                transform: rotate(0deg);
+                                &::before,&::after{
+                                    width: 100%;
+                                    height: 100%;
+                                    position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    background: red;
+                                    content: '';
+                                    z-index: 1;
+                                }
+                                &::before{
+                                    transform: rotate(135deg);
+                                }
+                                >span{
+                                    color: #fff;
+                                    z-index: 5;
+                                }
+                            }
+                        }
                         .image{
                             img{
                                 width: 100%;
@@ -139,33 +173,13 @@ const HomeWrap = styled.div`
                             }
                             .price{
                                 line-height: 24px;
-                                >span.discount{
-                                    width: 30px;
-                                    height: 30px;
-                                    position: absolute;
-                                    top: 7px;
-                                    right: 7px;
-                                    background: red;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    transform: rotate(0deg);
-                                    &::before,&::after{
-                                        width: 100%;
-                                        height: 100%;
-                                        position: absolute;
-                                        top: 0;
-                                        right: 0;
-                                        background: red;
-                                        content: '';
-                                        z-index: 1;
-                                    }
-                                    &::before{
-                                        transform: rotate(135deg);
-                                    }
-                                    >span{
-                                        color: #fff;
-                                        z-index: 5;
+                                >span.price_after{
+                                    text-decoration: line-through;
+                                    margin-right: 10px;
+                                }
+                                >span{
+                                    &.discount{
+                                        font-size: 17px;
                                     }
                                 }
                                 span{

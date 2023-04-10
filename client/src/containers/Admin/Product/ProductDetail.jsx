@@ -185,31 +185,31 @@ const ProductDetail = () => {
           <div className="col-8">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="">Product name</label>
+                <label htmlFor="">Tên sản phẩm</label>
                 <div>
                   <input type="text" placeholder='Tên sản phẩm' value={name} onChange={e => setName(e.target.value)} />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Description</label>
+                <label htmlFor="">Mô tả</label>
                 <div>
                   <textarea type="text" placeholder='Mô tả sản phẩm' value={description} onChange={e => setDesciption(e.target.value)} rows={5} />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Price</label>
+                <label htmlFor="">Giá</label>
                 <div>
                   <input type="number" placeholder='Giá' value={price} onChange={e => setPrice(e.target.value)} />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Quantity</label>
+                <label htmlFor="">Số lượng</label>
                 <div>
                   <input type="number" placeholder='Số lượng' value={stock} onChange={e => setStock(e.target.value)} />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Size</label>
+                <label htmlFor="">Kích thước</label>
                 <div>
                   {
                     size.map((x, i) => (
@@ -247,7 +247,7 @@ const ProductDetail = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="">Color</label>
+                <label htmlFor="">Màu sắc</label>
                 <div>
                   {
                     color.map((x, i) => (
@@ -283,16 +283,22 @@ const ProductDetail = () => {
                 </div>
               </div>
               <div className="form-group">
-                <DropItem label={'Category Parent'} cate='parent' data={cateParent} setData={setCateParent} array={categories} dataId={product?.category_parent} />
+                <label htmlFor="">Đã bán</label>
+                <div>
+                  <input type="number" placeholder='Giá' value={product?.sold} readOnly />
+                </div>
+              </div>
+              <div className="form-group">
+                <DropItem label={'Danh mục cha'} cate='parent' data={cateParent} setData={setCateParent} array={categories} dataId={product?.category_parent} />
               </div>
               {
-                cateParent.id && <DropItem cate='child' label={'Child Category'} array={categories} data={cateChild} setData={setCateChild} child={product?.category_id} dataId={cateParent.id} />
+                cateParent.id && <DropItem cate='child' label={'Danh mục con'} array={categories} data={cateChild} setData={setCateChild} child={product?.category_id} dataId={cateParent.id} />
               }
               <div className="btn">
                 <button>Update</button>
               </div>
             </form>
-            <span>{product?.sold}</span>
+            {/* <span>{}</span> */}
           </div>
         </div>
       </Container>

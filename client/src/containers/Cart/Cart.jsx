@@ -16,6 +16,10 @@ const Item = (props) => {
   const { dispatch, token } = useStore()
   const { width } = useWindowSize()
   const increaseQty = () => {
+    if (qty >= 5) {
+      alert('Sản phẩm mua quá mức cho phép! Hãy liên hệ cửa hàng để mua với số lượng lớn')
+      return
+    }
     setQty(qty + 1)
     let payload = {
       product: product._id, price, color, size, _id: props.cart._id

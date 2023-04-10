@@ -14,42 +14,47 @@ module.exports.cartCrtl = {
       const cart = await Cart.findOne({ user: req.user._id });
       if (cart) {
         let promiseArray = [];
-        const item = req.body.cartItems;
-        // console.log({ item });
-        const isCart = cart.cartItems.find(
-          (e) =>
-            e._id.toString() === item._id ||
-            (e.product.toString() === item.product &&
-              e.color === item.color &&
-              e.size === item.size)
-        );
-        let condition, update;
-        if (isCart) {
-          condition = {
-            user: req.user._id,
-            "cartItems._id": isCart._id,
-          };
-          update = {
-            $set: {
-              "cartItems.$": item,
-            },
-          };
-        } else {
-          condition = { user: req.user._id };
-          update = {
-            $push: {
-              cartItems: item,
-            },
-          };
-        }
-        promiseArray.push(runUpdate(condition, update));
+        // const item = req.body.cartItems;
+        // console.log(req.body.cartItems);
+        req.body.cartItems.forEach((cartItem) => {
+          const product = cartItem;
+          // console.log(product);
+          const isCart = cart.cartItems.find(
+            (e) =>
+              e._id.toString() === product._id ||
+              (e.product.toString() === product.product &&
+                e.color === product.color &&
+                e.size === product.size)
+          );
+          let condition, update;
+          if (isCart) {
+            condition = {
+              user: req.user._id,
+              "cartItems._id": isCart._id,
+            };
+            update = {
+              $set: {
+                "cartItems.$": product,
+              },
+            };
+          } else {
+            condition = { user: req.user._id };
+            update = {
+              $push: {
+                cartItems: product,
+              },
+            };
+          }
+          promiseArray.push(runUpdate(condition, update));
+        });
+
         Promise.all(promiseArray)
           .then((response) => res.status(201).json({ message: "success" }))
           .catch((error) => res.status(400).json({ message: error.message }));
       } else {
         const cart = new Cart({
           user: req.user._id,
-          cartItems: [req.body.cartItems],
+          cartItems: req.body.cartItems,
         });
         await cart.save();
         res.status(200).json({ cart });

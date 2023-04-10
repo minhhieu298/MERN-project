@@ -25,50 +25,33 @@ export const getCartItems = (token) => async (dispatch) => {
 export const addToCart =
     (product, newQty = 1) =>
         async (dispatch) => {
-            // console.log({ product, newQty });
             const {
                 cart: { cartItems },
             } = store.getState();
-            // console.log(cartItems);
             const exist = cartItems.find(item => item.product._id === product.product && item.color === product.color && item.size === product.size)
-            // console.log(quantity);
             const payload = {
-                cartItems: {
-                    color: product.color,
-                    size: product.size,
-                    product: product.product,
-                    price: product.price,
-                    quantity: exist ? exist.quantity + newQty : newQty,
-                }
+                cartItems: [
+                    {
+                        color: product.color,
+                        size: product.size,
+                        product: product.product,
+                        price: product.price,
+                        quantity: exist ? exist.quantity + newQty : newQty,
+                    }
+                ]
             }
-            console.log(payload);
             const res = await callAPI.post("/v2/add-to-cart", payload, {
                 headers: {
                     Authorization: product.token,
                 },
             });
-            // dispatch({
-            //     type: ADD_TO_CART,
-            //     // payload: {
-            //     //     cartItems: {}
-            //     // }
-            // })
-            // dispatch(getCartItems(product.token))
-            if (res.status === 200) {
-                dispatch({
-                    type: ADD_TO_CART,
-                    // payload: {
-                    //     cartItems
-                    // },
-                });
-                dispatch(getCartItems(product.token))
-            }
+
             if (res.status === 201) {
                 dispatch({
                     type: ADD_TO_CART,
-                    // payload: {
-                    //     cartItems
-                    // },
+                    payload: {
+                        cartItems
+                    },
                 });
                 dispatch(getCartItems(product.token))
             }

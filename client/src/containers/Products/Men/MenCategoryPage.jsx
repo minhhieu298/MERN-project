@@ -202,7 +202,7 @@ const MenCategoryPage = () => {
                             </div>
                         }
                         {
-                            width > 991 ? <div className='result'>{!products?.length ? `Not found` : `Showing ${pageSize} of ${meta?.total} results`}</div> :
+                            width > 991 ? <div className='result'>{!products?.length ? `Not found` : `Showing ${meta?.total} of ${meta?.total} results`}</div> :
                                 <div className='result'>{!products?.length ? `Not found` : `${meta?.total} results`}</div>
                         }
                         <div className='view'>

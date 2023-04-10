@@ -5,7 +5,7 @@ import LayoutAdmin from "./containers/Admin/LayoutAdmin";
 import Layout from "./containers/Layout/Layout";
 import PersitLogin from "./library/PersitLogin";
 import PrivivateRoute from "./library/PrivivateRoute";
-import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE, OTP_PAGE, FORGOT_PASSWORD, CHECKOUT_SUCCESS } from "./setting/constants";
+import { ADDRESS_PAGE, ADMIN_PAGE, CART_PAGE, CATEGORY_PAGE, CHECKOUT_PAGE, DISCOUNT_PAGE, HOME_PAGE, LOGIN_PAGE, ORDER_PAGE, PASSWORD_PAGE, PRODUCT_ADMIN_PAGE, PRODUCT_DETAIL_ADMIN_PAGE, PRODUCT_DETAIL_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE, MEN_CATEGORY_PRODUCT_PAGE, ORDER_PAGE_ADMIN, PROFILTE_ADMIN, USER_ADMIN_PAGE, WOMEN_CATEGORY_PRODUCT_PAGE, OTP_PAGE, FORGOT_PASSWORD, CHECKOUT_SUCCESS, CHAT_USER } from "./setting/constants";
 
 const HomePage = lazy(() => import('./containers/Home/Home'))
 // const MenProductPage = lazy(() => import('./containers/Products/Men/MenProducts'))
@@ -37,6 +37,7 @@ const OrderPageAdmin = lazy(() => import('./containers/Admin/Order/Order'))
 const NotFound = lazy(() => import('./containers/404/404'))
 const ProfileAdminPage = lazy(() => import('./containers/Admin/ProflieAdmin/ProfileAdmin'))
 const UserAdminPage = lazy(() => import('./containers/Admin/Users/ListUser'))
+const ChatPage = lazy(() => import('./containers/Admin/Chat/ChatUser'))
 
 export default function AppRoutes() {
     return (
@@ -183,6 +184,12 @@ export default function AppRoutes() {
                         <Route path={USER_ADMIN_PAGE} element={
                             <React.Suspense fallback={<Loader />}>
                                 <UserAdminPage />
+                            </React.Suspense>
+                        }
+                        />
+                        <Route path={CHAT_USER} element={
+                            <React.Suspense fallback={<Loader />}>
+                                <ChatPage />
                             </React.Suspense>
                         }
                         />

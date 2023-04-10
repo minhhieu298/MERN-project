@@ -33,4 +33,5 @@ export const ORDER_DETAIL_ADMIN_PAGE = 'order/:id'
 export const PROFILTE_ADMIN = 'profile'
 export const PASSWORD_ADMIN = 'password'
 export const USER_ADMIN_PAGE = 'users'
+export const CHAT_USER = 'chat'
 

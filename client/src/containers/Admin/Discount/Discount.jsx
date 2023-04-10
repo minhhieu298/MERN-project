@@ -48,7 +48,7 @@ const Item = ({ product, id, pageSize }) => {
         <div className="price">
           <span className={`${product?.discount > 0 ? 'price_after' : 'price_before'}`}>{numberWithCommas(Number(product?.price))}</span>
           {
-            product?.discount > 0 && <span className='discount'>{numberWithCommas(Number(product?.price_after_discount))}</span>
+            product?.discount > 0 && <span className='discount'>{numberWithCommas(Math.round(product?.price * ((100 - Number(product?.discount)) / 100)))}</span>
           }
         </div>
         {
@@ -243,7 +243,10 @@ const Discount = () => {
             width > 992 ? <div className='desktop'>
               <div className="filter" ref={ref} >
                 <div className="dropdown">
-                  <button onClick={() => setDrop(!drop)}><span><Icon.FilterAltIcon /></span></button>
+                  <div className="btn">
+                    <button onClick={() => setModal(true)}><span><Icon.TbDiscount /></span></button>
+                    <button onClick={() => setDrop(!drop)}><span><Icon.FilterAltIcon /></span></button>
+                  </div>
                   {/* <div className={`arrow ${drop ? 'active' : ''}`}></div> */}
                   <div className={`drop-item ${drop ? 'active' : ''}`}>
                     <div className="categories">
@@ -325,7 +328,10 @@ const Discount = () => {
                 </div>
               </div>
             </div> : <div className='mobile'>
-              <button onClick={() => setDrop(true)}><span><Icon.FilterAltIcon /></span></button>
+              <div className="btn">
+                <button onClick={() => setModal(true)}><span><Icon.TbDiscount /></span></button>
+                <button onClick={() => setDrop(true)}><span><Icon.FilterAltIcon /></span></button>
+              </div>
               <div className={`tab-filter ${drop ? 'show' : ''}`}>
                 <button onClick={() => setDrop(false)}><span><Icon.CloseOutlinedIcon /></span></button>
                 <div className='categories'>
@@ -427,6 +433,24 @@ const Discount = () => {
           </Stack>
         }
       </Box>
+      {
+        modal && <div className="modal">
+          <div className="form">
+            <div>
+              <h1>Giảm giá toàn bộ sản phẩm</h1>
+              <span><Icon.CloseOutlinedIcon /></span>
+            </div>
+            <form>
+              <div>
+                <div>
+                  <input type="number" placeholder='Giảm giá' name='discount' />
+                </div>
+                <button onClick={() => { }}><span><Icon.TbDiscount /></span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
     </DiscountWrap>
   )
 }

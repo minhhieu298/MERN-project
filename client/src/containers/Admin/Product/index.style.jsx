@@ -805,7 +805,7 @@ export const DetailWrap = styled.div`
                             }
                         }
                     }
-                    &:nth-child(7),&:nth-child(8){
+                    &:nth-child(8),&:nth-child(9){
                         >div{
                             padding: 0;
                             .dropdown{

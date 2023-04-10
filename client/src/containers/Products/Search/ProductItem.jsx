@@ -19,7 +19,10 @@ const ProductItem = ({ products }) => {
                         <div className="product-content">
                             <h3>{product?.name}</h3>
                             <div className="price">
-                                <span>{numberWithCommas(Number(product?.price))}</span>
+                                <span className={`${product?.discount > 0 ? 'price_after' : 'price_before'}`}>{numberWithCommas(Number(product?.price))}</span>
+                                {
+                                    product?.discount > 0 && <span className='discount'>{numberWithCommas(Math.round(product?.price * ((100 - Number(product?.discount)) / 100)))}</span>
+                                }
                             </div>
                             <div className="rating"></div>
                             {

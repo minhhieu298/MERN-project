@@ -453,6 +453,22 @@ export const Item = styled.div`
     @media (min-width: 992px){
         grid-column: span 4 / span 4;
     }
+    >.product-content{
+        .price{
+            margin: 13px 0 22px;
+            display: flex;
+            align-items: center;
+            >span.price_after{
+                text-decoration: line-through;
+                margin-right: 10px;
+            }
+            >span{
+                &.discount{
+                    font-size: 17px;
+                }
+            }
+        }
+    }
     &.col-3{
         @media (min-width: 576px){
             grid-column: span 6 / span 6;
@@ -487,14 +503,6 @@ export const Item = styled.div`
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-            }
-            .price{
-                margin: 13px 0 22px;
-                >span{
-                    display: inline-block;
-                    font-size: 24px;
-                    line-height: 1;
-                }
             }
             >p{
                 color: #8f8f8f;

@@ -23,7 +23,56 @@ const DiscountWrap = styled.div`
         margin-left: 120px;
         margin-right: 120px;
     }
-
+    >.modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
+        >.form{
+            background: #fff;
+            width: 100%;
+            padding: 10px;
+            border-radius: 2px;
+            @media (min-width: 992px){
+                width: 450px;
+            }
+            h1{
+                font-size: 20px;
+                color: #000;
+            }
+            form{
+                >div{
+                    >div{
+                        margin: 10px 0 20px;
+                        border: 1px solid rgba(0,0,0,0.14);
+                        border-radius: 4px;
+                        padding: 15px 15px;
+                        input{
+                            border: none;
+                            outline: none;
+                            background: transparent;
+                            width: 100%;
+                            padding-left: 10px;
+                        }
+                    }
+                    button{
+                        width: 100px;
+                        height: 40px;
+                        background: blueviolet;
+                        border-radius: 4px;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
 `
 export const Box = styled.div`
     ${props => props.feature && css`
@@ -94,22 +143,27 @@ export const Box = styled.div`
                 .dropdown{
                     position: relative;
                     max-width: 300px;
-                    >button{
+                    .btn{
                         display: flex;
                         align-items: center;
-                        justify-content: center;
-                        cursor: pointer;
-                        border-radius: 8px;
-                        width: 34px;
-                        height: 34px;
-                        font-size: 1.2rem;
-                        overflow: hidden;
-                        transition: all 0.2s ease-in-out 0s;
-                        background: rgb(41, 49, 79);
-                        color: rgb(124, 77, 255);
-                        &:hover{
-                            background: rgb(124, 77, 255);
-                            color: rgb(209, 196, 233);
+                        gap: 10px;
+                        >button{
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            border-radius: 8px;
+                            width: 34px;
+                            height: 34px;
+                            font-size: 1.2rem;
+                            overflow: hidden;
+                            transition: all 0.2s ease-in-out 0s;
+                            background: rgb(41, 49, 79);
+                            color: rgb(124, 77, 255);
+                            &:hover{
+                                background: rgb(124, 77, 255);
+                                color: rgb(209, 196, 233);
+                            }
                         }
                     }
                     .drop-item{
@@ -169,22 +223,27 @@ export const Box = styled.div`
                 }
             }
             .mobile{
-                >button{
+                .btn{
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    border-radius: 8px;
-                    width: 34px;
-                    height: 34px;
-                    font-size: 1.2rem;
-                    overflow: hidden;
-                    transition: all 0.2s ease-in-out 0s;
-                    background: rgb(41, 49, 79);
-                    color: rgb(124, 77, 255);
-                    &:hover{
-                        background: rgb(124, 77, 255);
-                        color: rgb(209, 196, 233);
+                    gap: 10px;
+                    >button{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        border-radius: 8px;
+                        width: 34px;
+                        height: 34px;
+                        font-size: 1.2rem;
+                        overflow: hidden;
+                        transition: all 0.2s ease-in-out 0s;
+                        background: rgb(41, 49, 79);
+                        color: rgb(124, 77, 255);
+                        &:hover{
+                            background: rgb(124, 77, 255);
+                            color: rgb(209, 196, 233);
+                        }
                     }
                 }
                 .tab-filter{

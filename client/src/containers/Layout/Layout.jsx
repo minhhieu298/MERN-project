@@ -3,13 +3,16 @@ import { Outlet, useLocation } from 'react-router-dom'
 import LayoutProvider from '../../context/LayoutProvider'
 import useStore from '../../library/hooks/useStore'
 import { getCartItems } from '../../redux/actions/cart.action'
-import { ADMIN_PAGE, CART_PAGE, CHECKOUT_PAGE, FORGOT_PASSWORD, LOGIN_PAGE, OTP_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../setting/constants'
+import { ADMIN_PAGE, HOME_PAGE, CHECKOUT_PAGE, FORGOT_PASSWORD, LOGIN_PAGE, OTP_PAGE, REGISTER_PAGE, RESET_PASSWORD_PAGE } from '../../setting/constants'
 import Footer from './Footer/Footer'
 import Header from './Header/Header'
+import ChatMessage from '../Chat/ChatMessage'
+
+
 
 const Layout = () => {
     const location = useLocation()
-    const { token, dispatch } = useStore()
+    const { token, dispatch, isUser, isAdmin } = useStore()
 
     useEffect(() => {
         if (token) {
@@ -33,6 +36,12 @@ const Layout = () => {
                     <React.Fragment>
                         <Header />
                         <Outlet />
+                        <>
+                            {
+                                !isAdmin && isUser &&
+                                <ChatMessage />
+                            }
+                        </>
                         <Footer />
                     </React.Fragment>
                 )

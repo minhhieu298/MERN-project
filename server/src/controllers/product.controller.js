@@ -131,8 +131,6 @@ module.exports.productCtrl = {
           {
             $set: {
               discount: req.body.discount,
-              price_after_discount:
-                product.price * ((100 - Number(req.body.discount)) / 100),
             },
           }
         ).exec((error, p) => {
@@ -143,5 +141,20 @@ module.exports.productCtrl = {
     } else {
       return res.status(400).json({ message: "Không tìm thấy sản phẩm" });
     }
+  },
+  getDiscountAll: async (req, res) => {
+    // const products = await Product.find({ user: req.user.id });
+    // res.status(200).json({ products });
+    await Product.updateMany(
+      { user: req.user.id },
+      {
+        $set: {
+          discount: req.body.discount,
+        },
+      }
+    ).exec((err, data) => {
+      if (err) return res.status(400).json({ message: err.message });
+      if (data) return res.status(200).json({ message: "done" });
+    });
   },
 };

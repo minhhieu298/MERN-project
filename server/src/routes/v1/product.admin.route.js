@@ -28,4 +28,11 @@ route.post(
   auth.authAdmin,
   productCtrl.getDiscount
 );
+
+route.post(
+  "/discount",
+  auth.authUser,
+  auth.authAdmin,
+  productCtrl.getDiscountAll
+);
 module.exports = route;

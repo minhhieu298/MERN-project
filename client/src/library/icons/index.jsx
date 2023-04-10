@@ -26,8 +26,8 @@ import DiscountIcon from '@mui/icons-material/Discount';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { FaThLarge } from 'react-icons/fa'
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
-import { BsListUl, BsArrowLeft } from 'react-icons/bs'
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineCloudUpload, AiOutlineEye } from 'react-icons/ai'
+import { BsListUl, BsArrowLeft, BsFillChatFill } from 'react-icons/bs'
+import { AiOutlineDelete, AiOutlineSend, AiOutlineEdit, AiOutlineCloudUpload, AiOutlineEye } from 'react-icons/ai'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { TbDiscount } from 'react-icons/tb'
 import { GrUserAdmin } from 'react-icons/gr'
@@ -38,6 +38,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DoneIcon from '@mui/icons-material/Done';
 import StarIcon from '@mui/icons-material/Star';
 import { MdOutlineDashboard } from 'react-icons/md'
+
 
 export {
     MenuOutlinedIcon,
@@ -83,5 +84,7 @@ export {
     LocalShippingIcon,
     DoneIcon,
     StarIcon,
-    MdOutlineDashboard
+    AiOutlineSend,
+    MdOutlineDashboard,
+    BsFillChatFill
 }

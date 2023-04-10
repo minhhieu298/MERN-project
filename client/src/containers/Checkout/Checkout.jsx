@@ -73,8 +73,8 @@ const Checkout = () => {
             })),
             payment_method: searchParam.get('payment_method') !== null ? 'Thanh toán qua thẻ' : 'Thanh toán khi nhận hàng'
         }
-        // dispatch(createOrder(payload, token))
-        // navigate(`${PROFILE_PAGE}/${ORDER_PAGE}`)
+        dispatch(createOrder(payload, token))
+        navigate(`${PROFILE_PAGE}/${ORDER_PAGE}`)
         // alert('done')
     }
 

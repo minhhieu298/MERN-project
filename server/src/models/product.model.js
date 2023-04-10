@@ -52,9 +52,9 @@ const productSchema = new Schema(
     discount: {
       type: Number,
     },
-    price_after_discount: {
-      type: Number,
-    },
+    // price_after_discount: {
+    //   type: Number,
+    // },
     sold: {
       type: Number,
       default: 0,
